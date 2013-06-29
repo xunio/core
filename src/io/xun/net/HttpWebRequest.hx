@@ -1,4 +1,4 @@
-package de.xtain.firefly.net;
+package io.xun.net;
 
 import haxe.Http;
 
