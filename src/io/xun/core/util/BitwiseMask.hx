@@ -1,6 +1,6 @@
 package io.xun.core.util;
 
-class BitwiseFlag {
+class BitwiseMask {
 
     private var _mask : Int = 0;
 

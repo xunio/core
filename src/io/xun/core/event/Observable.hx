@@ -1,13 +1,13 @@
 ﻿package io.xun.core.event;
 
-import io.xun.core.util.BitwiseFlag;
+import io.xun.core.util.BitwiseMask;
 
 class Observable implements IObservable {
 
     private static var _registry : Array<Observable>;
 
     private var _observable : IObservable;
-    private var _observer : Map<IObserver, Null<BitwiseFlag>>;
+    private var _observer : Map<IObserver, Null<BitwiseMask>>;
     private var _eventObserversCache : Map<Int, Array<IObserver>>;
 
     private static function getRegistry() : Array<Observable> {
@@ -20,7 +20,7 @@ class Observable implements IObservable {
     public function new(observable : IObservable) {
         getRegistry().push(this);
         _observable = observable;
-        _observer = new Map<IObserver, Null<BitwiseFlag>>();
+        _observer = new Map<IObserver, Null<BitwiseMask>>();
     }
 
     public function clearEventObserversCache() {
@@ -36,7 +36,7 @@ class Observable implements IObservable {
         }
 
         for(observer in _observer.keys()) {
-            var flag : BitwiseFlag = _observer.get(observer);
+            var flag : BitwiseMask = _observer.get(observer);
             if(flag == null || flag.check(event)) {
                 observers.push(observer);
             }
@@ -59,11 +59,11 @@ class Observable implements IObservable {
         if(mask == null) {
             _observer.set(o, null);
         } else {
-            var flags : BitwiseFlag;
+            var flags : BitwiseMask;
             if(_observer.exists(o)) {
                 flags = _observer.get(o);
             } else {
-                flags = new BitwiseFlag();
+                flags = new BitwiseMask();
                 _observer.set(o, flags);
             }
             flags.set(mask);
@@ -73,7 +73,7 @@ class Observable implements IObservable {
     public function detach(o : IObserver, mask : Null<Int> = null) : Void {
         if(_observer.exists(o)) {
             clearEventObserversCache();
-            var flags : BitwiseFlag = _observer.get(o);
+            var flags : BitwiseMask = _observer.get(o);
             if(mask == null) {
                 flags.reset();
             } else {
