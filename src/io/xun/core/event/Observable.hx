@@ -21,6 +21,7 @@ class Observable implements IObservable {
         getRegistry().push(this);
         _observable = observable;
         _observer = new Map<IObserver, Null<BitwiseMask>>();
+        clearEventObserversCache();
     }
 
     public function clearEventObserversCache() {
