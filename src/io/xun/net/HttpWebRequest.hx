@@ -17,7 +17,7 @@ class HttpWebRequest {
     public function new(url : String, ?method : Method) {
         this.RequestUri = url;
         if (method == null) {
-            this.Method = de.xtain.firefly.net.Method.GET;
+            this.Method = io.xun.net.Method.GET;
         } else {
             this.Method = method;
         }

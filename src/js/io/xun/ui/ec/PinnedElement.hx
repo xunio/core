@@ -13,7 +13,10 @@ class PinnedElement implements IObservable {
     private var _containerElement : JQuery;
     private var _observer : Observable;
     private var _isPinned : Bool = false;
+    private var _interval : Int;
     private var _offset : { top : Int, left : Int };
+
+    private inline static var FORCE_RECHECK = 1500;
 
     public function new(element : Element) {
         this._element = new JQuery(element);
@@ -22,6 +25,24 @@ class PinnedElement implements IObservable {
         bindEvents();
         calculateOffset();
         _observer = new Observable(this);
+
+        _interval = js.Browser.window.setInterval(function() {
+            trace(_element.get()[0]);
+            if(!JQuery.contains(js.Browser.document.documentElement, _element.get()[0])) {
+                destroy();
+            } else {
+                resizeCheck();
+            }
+        }, FORCE_RECHECK);
+
+        resizeCheck();
+    }
+
+    public function destroy() {
+        js.Browser.window.clearInterval(_interval);
+        _containerElement.unbind('scroll', scrollCallback);
+        new JQuery(js.Browser.window).unbind('resize', resizeCallback);
+        _observer = null;
     }
 
     public function getElement() : Element {
@@ -30,6 +51,7 @@ class PinnedElement implements IObservable {
 
     private function pin() {
         if(!_isPinned) {
+            trace('pin');
             _observer.notify(PinnedElementEvent.PIN, null);
             _isPinned = true;
         }
@@ -37,6 +59,7 @@ class PinnedElement implements IObservable {
 
     private function unpin() {
         if(_isPinned) {
+            trace('unpin');
             _observer.notify(PinnedElementEvent.UNPIN, null);
             _isPinned = false;
         }
@@ -61,19 +84,23 @@ class PinnedElement implements IObservable {
         }
     }
 
-    private function resizeCheck() {
+    public function resizeCheck() {
         unpin();
         calculateOffset();
         checkOutOfBoundaries();
     }
 
+    private function resizeCallback(event : js.JqEvent) {
+        resizeCheck();
+    }
+
+    private function scrollCallback(event : js.JqEvent) {
+        checkOutOfBoundaries();
+    }
+
     private function bindEvents() {
-        _containerElement.scroll(function(event : js.JqEvent) {
-            checkOutOfBoundaries();
-        });
-        new JQuery(js.Browser.window).resize(function(event : js.JqEvent) {
-            resizeCheck();
-        });
+        _containerElement.bind('scroll', scrollCallback);
+        new JQuery(js.Browser.window).bind('resize', resizeCallback);
     }
 
     public function attach(o : IObserver, mask : Null<Int> = 0) : Void {
@@ -83,7 +110,6 @@ class PinnedElement implements IObservable {
     public function detach(o : IObserver, mask : Null<Int> = null) : Void {
         _observer.detach(o, mask);
     }
-
 }
 
 @:build(io.xun.core.event.ObserverMacro.create([
