@@ -22,8 +22,8 @@ class ContainerBuilder {
     }
 
     public function freezeParameterBag() {
-        if(!Std.is(parameter, FrozenParameterBag)) {
-            parameter = parameter.freeze();
+        if(!parameter.isFrozen()) {
+            parameter = new FrozenParameterBag(parameter);
         }
     }
 

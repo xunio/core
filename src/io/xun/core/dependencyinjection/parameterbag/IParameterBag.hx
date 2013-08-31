@@ -8,7 +8,7 @@ interface IParameterBag {
 
     public function add( parameters : Array<Parameter> ) : Void;
 
-    public function freeze() : FrozenParameterBag;
+    public function isFrozen() : Bool;
 
     public function set( key : String, parameter : Parameter ) : Void;
 

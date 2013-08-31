@@ -5,11 +5,6 @@ import haxe.ds.StringMap;
 
 class ParameterBag extends StringMap<Parameter> implements IParameterBag {
 
-
-    public function freeze() : FrozenParameterBag {
-        return new FrozenParameterBag(this);
-    }
-
     public function clear() : Void {
         for(key in this.keys()) {
             this.remove(key);
@@ -25,6 +20,10 @@ class ParameterBag extends StringMap<Parameter> implements IParameterBag {
         for(parameter in parameters.iterator()) {
             return this.set(parameter.key, parameter);
         }
+    }
+
+    public function isFrozen() : Bool {
+        return false;
     }
 
     override public function set( key : String, parameter : Parameter ) : Void {

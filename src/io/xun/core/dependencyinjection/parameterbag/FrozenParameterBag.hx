@@ -5,16 +5,15 @@ import haxe.ds.StringMap;
 
 class FrozenParameterBag extends ParameterBag {
 
-    public function new( bag : ParameterBag ) {
+    public function new( bag : IParameterBag ) {
         super();
         for (parameter in bag.iterator()) {
             super.set(parameter.key,  parameter);
         }
     }
 
-    override public function freeze() : FrozenParameterBag {
-        throw new FrozenParameterBagException("ParameterBag is frozen");
-        return this;
+    override public function isFrozen() : Bool {
+        return true;
     }
 
     override public function clear() : Void {
