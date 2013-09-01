@@ -1,0 +1,31 @@
+-js out/js/TestRunner.js
+-debug
+-main TestRunner
+-cp ./src
+-cp ../src
+
+--next
+
+-neko out/neko/TestRunner.n
+-debug
+-main TestRunner
+-cp ./src
+-cp ../src
+
+--next
+
+-php out/php
+-debug
+-main TestRunner
+-cp ./src
+-cp ../src
+
+--next
+
+-cpp out/cpp64
+-debug
+-main TestRunner
+-D HXCPP_M64
+-cp ./src
+-cp ../src
+

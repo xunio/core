@@ -16,5 +16,8 @@ $RECYCLE.BIN/
 .DS_Store
 *.iml
 .idea
+
+/tests/out/*
 !empty
 !index.html
+
