@@ -17,6 +17,8 @@ import io.xun.core.dependencyinjection.parameterbag.ParameterBag;
 import io.xun.core.dependencyinjection.parameterbag.IParameterBag;
 import io.xun.core.dependencyinjection.IContainer.IContainerConst;
 
+using io.xun.core.util.L.ArrayExtension;
+
 class Container implements IIntrospectableContainer {
 
     private static inline var CONTAINER = 'service_container';
@@ -240,12 +242,10 @@ class Container implements IIntrospectableContainer {
             }
         }
 
-        return L.unique(
-            L.concat(
+        return L.concat(
                 this.services.keys(),
                 ids.iterator()
-            ).iterator()
-        );
+            ).unique();
     }
 
     public static function getMethodName( id : String ) : String {

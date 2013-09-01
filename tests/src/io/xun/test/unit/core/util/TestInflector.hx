@@ -5,41 +5,41 @@ import io.xun.core.util.Inflector;
 class TestInflector extends haxe.unit.TestCase {
 
     public function testUnderscore() {
-        assertEquals(Inflector.underscore('TestThing'), 'test_thing');
-        assertEquals(Inflector.underscore('testThing'), 'test_thing');
-        assertEquals(Inflector.underscore('TestThingExtra'), 'test_thing_extra');
-        assertEquals(Inflector.underscore('testThingExtra'), 'test_thing_extra');
+        assertEquals('test_thing', Inflector.underscore('TestThing'));
+        assertEquals('test_thing', Inflector.underscore('testThing'));
+        assertEquals('test_thing_extra', Inflector.underscore('TestThingExtra'));
+        assertEquals('test_thing_extra', Inflector.underscore('testThingExtra'));
 
-        assertEquals(Inflector.underscore('TestThing'), 'test_thing');
-        assertEquals(Inflector.underscore('testThing'), 'test_thing');
-        assertEquals(Inflector.underscore('TestThingExtra'), 'test_thing_extra');
-        assertEquals(Inflector.underscore('testThingExtra'), 'test_thing_extra');
+        assertEquals('test_thing', Inflector.underscore('TestThing'));
+        assertEquals('test_thing', Inflector.underscore('testThing'));
+        assertEquals('test_thing_extra', Inflector.underscore('TestThingExtra'));
+        assertEquals('test_thing_extra', Inflector.underscore('testThingExtra'));
 
-        assertEquals(Inflector.underscore(''), '');
-        assertEquals(Inflector.underscore('0'), '0');
+        assertEquals('', Inflector.underscore(''));
+        assertEquals('0', Inflector.underscore('0'));
     }
 
     public function testVariable() {
-        assertEquals(Inflector.variable('test_field'), 'testField');
-        assertEquals(Inflector.variable('test_fieLd'), 'testFieLd');
-        assertEquals(Inflector.variable('test field'), 'testField');
-        assertEquals(Inflector.variable('Test_field'), 'testField');
-        assertEquals(Inflector.variable('  Test_field'), 'testField');
-        assertEquals(Inflector.variable('test est_field'), 'testEstField');
+        assertEquals('testField', Inflector.variable('test_field'));
+        assertEquals('testFieLd', Inflector.variable('test_fieLd'));
+        assertEquals('testField', Inflector.variable('test field'));
+        assertEquals('testField', Inflector.variable('Test_field'));
+        assertEquals('testField', Inflector.variable('  Test_field'));
+        assertEquals('testEstField', Inflector.variable('test est_field'));
     }
 
     public function testHumanize() {
-        assertEquals(Inflector.humanize('posts'), 'Posts');
-        assertEquals(Inflector.humanize('posts_tags'), 'Posts Tags');
-        assertEquals(Inflector.humanize('file_systems'), 'File Systems');
-        assertEquals(Inflector.humanize(' foo file_systems ba '), ' Foo File Systems Ba ');
+        assertEquals('Posts', Inflector.humanize('posts'));
+        assertEquals('Posts Tags', Inflector.humanize('posts_tags'));
+        assertEquals('File Systems', Inflector.humanize('file_systems'));
+        assertEquals(' Foo File Systems Ba ', Inflector.humanize(' foo file_systems ba '));
     }
 
     public function testCamelize() {
-        assertEquals(Inflector.camelize('posts'), 'Posts');
-        assertEquals(Inflector.camelize('posts_tags'), 'PostsTags');
-        assertEquals(Inflector.camelize('file_systems'), 'FileSystems');
-        assertEquals(Inflector.camelize(' foo file_systems ba '), 'FooFileSystemsBa');
+        assertEquals('Posts', Inflector.camelize('posts'));
+        assertEquals('PostsTags', Inflector.camelize('posts_tags'));
+        assertEquals('FileSystems', Inflector.camelize('file_systems'));
+        assertEquals('FooFileSystemsBa', Inflector.camelize(' foo file_systems ba '));
     }
 
 

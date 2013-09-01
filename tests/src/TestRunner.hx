@@ -1,10 +1,13 @@
 package ;
 
+import io.xun.core.util.BitwiseMask;
+
 class TestRunner {
 
     public static function main() {
         var result : Bool = true;
         result = result && io.xun.test.unit.core.Runner.main();
+
         if(!result) {
             #if js
               if( untyped __js__('typeof process != "undefined" && "exit" in process') ) {

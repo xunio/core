@@ -4,8 +4,11 @@ class BitwiseMask {
 
     private var _mask : Int = 0;
 
-    public function new() {
+    public function new(?flag : Int = 0) {
         reset();
+        if(flag != null) {
+            set(flag);
+        }
     }
 
     public static function checkMask(flag : Int, mask : Int) {
@@ -34,6 +37,21 @@ class BitwiseMask {
 
     public function isZero() {
         return _mask == 0;
+    }
+
+    public function toString() : String {
+        var num : Int = _mask;
+        var res : String = '';
+
+        while (num > 0) {
+            if((num & 1) == 1) {
+                res = res + '1';
+            } else {
+                res = res + '0';
+            }
+            num = num >> 1;
+        }
+        return res == '' ? '0' : res;
     }
 
 }
