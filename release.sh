@@ -1,4 +1,4 @@
-for dir in js php cpp32 cpp64 neko; do
+for dir in js php cpp32 cpp64 neko flash; do
   if [ -d "out/release/$dir" ]; then
     rm -Rf "out/release/$dir"
   fi;

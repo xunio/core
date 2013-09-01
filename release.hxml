@@ -23,6 +23,13 @@
 
 --next
 
+-swf out/release/flash/Main.swf
+-main Main
+-cp ./src
+--times
+
+--next
+
 -cpp out/release/cpp64
 -main Main
 --no-traces

@@ -2,7 +2,9 @@
 
 tput sgr0
 
-for dir in js php cpp32 cpp64 neko; do
+if [ "${1}" == "total" ]; then
+
+for dir in js php cpp32 cpp64 neko flash; do
   if [ -d "out/$dir" ]; then
     rm -Rf "out/$dir"
   fi;
@@ -12,6 +14,8 @@ for dir in js php cpp32 cpp64 neko; do
   fi;
   mkdir "out/$dir"
 done;
+
+fi;
 
 time haxe test.hxml
 

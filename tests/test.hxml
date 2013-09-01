@@ -7,7 +7,7 @@
 
 --next
 
--neko out/neko/TestRunner.n
+-php out/php
 -debug
 -main TestRunner
 -cp ./src
@@ -16,7 +16,17 @@
 
 --next
 
--php out/php
+-neko out/neko/TestRunner.n
+-debug
+-main TestRunner
+-cp ./src
+-cp ../src
+--times
+
+
+--next
+
+-swf out/flash/TestRunner.swf
 -debug
 -main TestRunner
 -cp ./src

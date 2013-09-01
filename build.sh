@@ -1,4 +1,6 @@
-for dir in js php cpp32 cpp64 neko; do
+if [ "${1}" == "total" ]; then
+
+for dir in js php cpp32 cpp64 neko flash; do
   if [ -d "out/debug/$dir" ]; then
     rm -Rf "out/debug/$dir"
   fi;
@@ -8,6 +10,8 @@ for dir in js php cpp32 cpp64 neko; do
   fi;
   mkdir "out/debug/$dir"
 done;
+
+fi;
 
 time haxe build.hxml
 
