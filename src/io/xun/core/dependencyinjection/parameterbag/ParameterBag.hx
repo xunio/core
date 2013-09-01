@@ -1,20 +1,27 @@
 package io.xun.core.dependencyinjection.parameterbag;
 
 import io.xun.core.dependencyinjection.ref.Parameter;
+import io.xun.core.dependencyinjection.parameterbag.exception.InvalidArgumentException;
 import haxe.ds.StringMap;
 
-class ParameterBag extends StringMap<Parameter> implements IParameterBag {
+class ParameterBag implements IParameterBag {
+
+    var stringMap : StringMap<Parameter>;
+
+    public function new() : Void {
+        stringMap = new StringMap<Parameter>();
+    }
 
     public function clear() : Void {
         for(key in this.keys()) {
-            this.remove(key);
+            stringMap.remove(key);
         }
     }
 
     public function add( parameters : Array<Parameter> ) : Void {
         for(parameter in parameters.iterator()) {
-            if(this.parameterExists(parameter)) {
-                throw new InvalidParameterException("Parameter already exist");
+            if (this.parameterExists(parameter)) {
+                throw new InvalidArgumentException("Parameter already exist");
             }
         }
         for(parameter in parameters.iterator()) {
@@ -26,42 +33,42 @@ class ParameterBag extends StringMap<Parameter> implements IParameterBag {
         return false;
     }
 
-    override public function set( key : String, parameter : Parameter ) : Void {
-        super.set(key, parameter);
+    public function set( key : String, parameter : Parameter ) : Void {
+        stringMap.set(key, parameter);
     }
 
-    override public function get( key : String ) : Parameter {
-        if(this.exists(key)) {
-            return super.get(key);
+    public function get( key : String ) : Parameter {
+        if (stringMap.exists(key)) {
+            return stringMap.get(key);
         }
-        throw new InvalidParameterException("Parameter does not exist");
+        throw new InvalidArgumentException("Parameter does not exist");
     }
 
     public function parameterExists( parameter : Parameter ) : Bool {
-        return this.exists(parameter.key);
+        return stringMap.exists(parameter.key);
     }
 
-    override public function exists( key : String ) : Bool {
-        return super.exists(key);
+    public function exists( key : String ) : Bool {
+        return stringMap.exists(key);
     }
 
-    override public function remove( key : String ) : Bool {
-        if(this.exists(key)) {
-            return super.remove(key);
+    public function remove( key : String ) : Bool {
+        if (this.exists(key)) {
+            return stringMap.remove(key);
         }
-        throw new InvalidParameterException("Parameter does not exist");
+        throw new InvalidArgumentException("Parameter does not exist");
     }
 
-    override public function keys() : Iterator<String> {
-        return super.keys();
+    public function keys() : Iterator<String> {
+        return stringMap.keys();
     }
 
-    override public function iterator() : Iterator<Parameter> {
-        return super.iterator();
+    public function iterator() : Iterator<Parameter> {
+        return stringMap.iterator();
     }
 
-    override public function toString() : String {
-        return super.toString();
+    public function toString() : String {
+        return stringMap.toString();
     }
 
 }
