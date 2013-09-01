@@ -3,6 +3,7 @@
 -main TestRunner
 -cp ./src
 -cp ../src
+--times
 
 --next
 
@@ -11,6 +12,7 @@
 -main TestRunner
 -cp ./src
 -cp ../src
+--times
 
 --next
 
@@ -19,6 +21,7 @@
 -main TestRunner
 -cp ./src
 -cp ../src
+--times
 
 --next
 
@@ -28,4 +31,4 @@
 -D HXCPP_M64
 -cp ./src
 -cp ../src
-
+--times

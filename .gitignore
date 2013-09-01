@@ -18,6 +18,8 @@ $RECYCLE.BIN/
 .idea
 
 /tests/out/*
+/out/release/*
+/out/debug/*
 !empty
 !index.html
 
