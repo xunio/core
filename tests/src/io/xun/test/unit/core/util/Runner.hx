@@ -2,10 +2,10 @@ package io.xun.test.unit.core.util;
 
 class Runner {
 
-    public static function main() {
-        var r = new haxe.unit.TestRunner();
+    public static function main() : Bool {
+        var r = new io.xun.test.TestRunner();
         r.add(new TestStringUtils());
         r.add(new TestInflector());
-        r.run();
+        return r.run();
     }
 }
