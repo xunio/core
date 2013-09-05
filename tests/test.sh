@@ -57,15 +57,20 @@ cecho "#                                                   #" $blue
 cecho "#   Start testing, good luck :)                     #" $blue
 cecho "#                                                   #" $blue
 cecho "#####################################################" $blue
+
 echo ""
 cecho "### C++ 64-bit" $blue
 cecho "#####################################################" $blue
+if [ -f "./out/cpp64/TestRunner-debug" ]; then
 time ./out/cpp64/TestRunner-debug
 if [ "${?}" -gt "0" ]; then
   cecho "# C++ Test failed!" $red
   TESTRESULT=1
 else
   cecho "# C++ Test ok!" $green
+fi;
+else
+  cecho "# C++ Test not available!" $yellow
 fi;
 
 #echo "### C++ 32-bit"
@@ -75,6 +80,7 @@ fi;
 echo ""
 cecho "## JS" $blue
 cecho "#####################################################" $blue
+if [ $(which node) ]; then
 time node out/js/TestRunner.js
 if [ "${?}" -gt "0" ]; then
   cecho "# JS Test failed!" $red
@@ -82,10 +88,14 @@ if [ "${?}" -gt "0" ]; then
 else
   cecho "# JS Test ok!" $green
 fi;
+else
+  cecho "# JS Test not available!" $yellow
+fi;
 
 echo ""
 cecho "## NekoVM" $blue
 cecho "#####################################################" $blue
+if [ $(which neko) ]; then
 time neko out/neko/TestRunner.n
 if [ "${?}" -gt "0" ]; then
   cecho "# NekoVM Test failed!" $red
@@ -93,16 +103,23 @@ if [ "${?}" -gt "0" ]; then
 else
   cecho "# NekoVM Test ok!" $green
 fi;
+else
+  cecho "# NekoVM Test not available!" $yellow
+fi;
 
 echo ""
 cecho "## PHP" $blue
 cecho "#####################################################" $blue
+if [ $(which php) ]; then
 time php out/php/index.php
 if [ "${?}" -gt "0" ]; then
   cecho "# PHP Test failed!" $red
   TESTRESULT=1
 else
   cecho "# PHP Test ok!" $green
+fi;
+else
+  cecho "# PHP Test not available!" $yellow
 fi;
 
 echo ""
