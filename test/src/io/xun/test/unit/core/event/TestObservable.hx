@@ -106,7 +106,6 @@ class TestObservable extends haxe.unit.TestCase {
         assertEquals(1, observers.length);
         var observers : Array<IObserver> = mockObservable.observable.getEventObservers(4);
         assertEquals(0, observers.length);
-
     }
 
 }

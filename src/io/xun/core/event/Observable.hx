@@ -17,7 +17,8 @@ package io.xun.core.event;
 /* imports and uses */
 
 import io.xun.core.util.BitwiseMask;
-import io.xun.core.util.ObjectMap;
+//import io.xun.core.util.ObjectMap;
+import haxe.ds.ObjectMap;
 
 /**
  * Class Observable
