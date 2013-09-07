@@ -82,6 +82,55 @@ class TestObjectMap extends haxe.unit.TestCase {
         assertEquals(3, i);
     }
 
+    public function testRemove() {
+        var map : ObjectMap<TestObject, Int> = new ObjectMap<TestObject, Int>();
+        var f1 : TestObject = new TestObject();
+        var f2 : TestObject = new TestObject();
+        var f3 : TestObject = new TestObject();
+        var f4 : TestObject = new TestObject();
+        var f5 : TestObject = new TestObject();
+
+        map.set(f1, 2);
+        map.set(f2, 4);
+        map.set(f3, 5);
+        map.set(f4, 8);
+        map.set(f5, 9);
+
+        map.remove(f3);
+        map.remove(f5);
+
+        var values : Array<Int> = new Array<Int>();
+
+        for ( v in map.iterator() ) {
+            assertEquals(0, (v % 2));
+            values.push(v);
+        }
+
+        var i : Int = 0;
+        for ( o in map.keys() ) {
+            i++;
+        }
+
+        assertEquals(3, i);
+    }
+
+
+    public function testExists() {
+        var map : ObjectMap<TestObject, Int> = new ObjectMap<TestObject, Int>();
+        var f1 : TestObject = new TestObject();
+        var f2 : TestObject = new TestObject();
+
+        map.set(f1, 2);
+
+        assertTrue(map.exists(f1));
+        assertFalse(map.exists(f2));
+
+        map.set(f2, 4);
+
+        assertTrue(map.exists(f1));
+        assertTrue(map.exists(f1));
+    }
+
 }
 
 /**

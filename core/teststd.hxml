@@ -1,0 +1,49 @@
+-js out/test/js/TestRunner.js
+-debug
+-main TestRunner
+-cp ./tests
+-cp ./src/js/_core
+-cp ./src
+--times
+
+--next
+
+-php out/test/php
+-debug
+-main TestRunner
+-cp ./tests
+-cp ./src/php/_core
+-cp ./src
+--times
+
+--next
+
+-neko out/test/neko/TestRunner.n
+-debug
+-main TestRunner
+-cp ./tests
+-cp ./src/neko/_core
+-cp ./src
+--times
+
+
+--next
+
+-swf out/test/flash/TestRunner.swf
+-debug
+-main TestRunner
+-cp ./tests
+-cp ./src/flash/_core
+-cp ./src
+--times
+
+--next
+
+-cpp out/test/cpp64
+-debug
+-main TestRunner
+-D HXCPP_M64
+-cp ./tests
+-cp ./src/cpp/_core
+-cp ./src
+--times
