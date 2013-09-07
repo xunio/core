@@ -16,4 +16,4 @@
 #########################################################################################################
 
 ./test.sh
-chromium out/test/flash/TestRunner.swf
+chromium out/test/flash/TestingFramework.swf

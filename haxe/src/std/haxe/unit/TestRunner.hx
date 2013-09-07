@@ -1,34 +1,27 @@
 /*
- * xun.io
- * Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * Copyright (C)2005-2012 Haxe Foundation
  *
- * Licensed under GNU Affero General Public License
- * For full copyright and license information, please see the LICENSE
- * Redistributions of files must retain the above copyright notice.
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
  *
- * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test
- * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
  */
-
 package haxe.unit;
-
-/* imports and uses */
-
 import Reflect;
-import haxe.unit.TestResult;
-import haxe.unit.TestCase;
-import haxe.unit.TestStatus;
 
-
-/**
- * Class TestRunner
- *
- * @author        Maximilian Ruta <mr@xtain.net>
- * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test
- */
 class TestRunner {
     public var result(default, null) : TestResult;
     var cases  : List<TestCase>;
@@ -40,7 +33,7 @@ class TestRunner {
 #end
 
     public static dynamic function print( v : Dynamic ) untyped {
-        #if flash9
+#if flash9
 			if( tf == null ) {
 				tf = new flash.text.TextField();
 				tf.selectable = false;
@@ -71,16 +64,19 @@ class TestRunner {
 		#elseif cpp
 			cpp.Lib.print(v);
 		#elseif js
-			if( untyped __js__('typeof document == "undefined"') ) {
-                process.stdout.write(js.Boot.__string_rec(v,""));
-			} else {
-    			var msg = StringTools.htmlEscape(js.Boot.__string_rec(v,"")).split("\n").join("<br/>");
-                var d = document.getElementById("haxe:trace");
-                if( d == null )
-                    alert("haxe:trace element not found")
-                else
-                    d.innerHTML += msg;
-            }
+  			var msg = js.Boot.__string_rec(v,"");
+  			var d;
+			if( untyped __js__('typeof document != "undefined"')
+				&& ( d = document.getElementById("haxe:trace") ) != null ) {
+                d.innerHTML += StringTools.htmlEscape(msg).split("\n").join("<br/>");
+            } else if( untyped __js__('typeof process != "undefined"')
+            	&& untyped __js__('typeof process.stdout != "undefined"')
+            	&& untyped __js__('"write" in process.stdout') ) {
+                process.stdout.write(msg);
+			} else if( untyped __js__('typeof console != "undefined"')
+				&& untyped __js__('"log" in console') ) {
+				untyped __js__('console.log(msg)');
+			}
 		#elseif cs
 			var str:String = v;
 			untyped __cs__("System.Console.Write(str)");
@@ -145,7 +141,7 @@ class TestRunner {
                     t.currentTest.backtrace = haxe.CallStack.toString(haxe.CallStack.exceptionStack());
                 }catch ( e : Dynamic ){
                     print("E");
-                    #if js
+#if js
 					if( e.message != null ){
 						t.currentTest.error = "exception thrown : "+e+" ["+e.message+"]";
 					}else{
@@ -153,7 +149,7 @@ class TestRunner {
 					}
 					#else
                     t.currentTest.error = "exception thrown : "+e;
-                    #end
+#end
                     t.currentTest.backtrace = haxe.CallStack.toString(haxe.CallStack.exceptionStack());
                 }
                 result.add(t.currentTest);

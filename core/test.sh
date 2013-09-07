@@ -78,7 +78,11 @@ echo ""
 cecho "### C++ 64-bit" $blue
 cecho "#####################################################" $blue
 if [ -f "./out/test/cpp64/TestingFramework-debug" ]; then
-time ./out/test/cpp64/TestingFramework-debug
+if [ "${1}" == "out" ]; then
+  time ./out/test/cpp64/TestingFramework-debug > /dev/null
+else
+  time ./out/test/cpp64/TestingFramework-debug
+fi;
 if [ "${?}" -gt "0" ]; then
   cecho "# C++ Test failed!" $red
   TESTRESULT=1
@@ -97,7 +101,11 @@ echo ""
 cecho "## JS" $blue
 cecho "#####################################################" $blue
 if [ $(which node) ]; then
-time node out/test/js/TestingFramework.js
+if [ "${1}" == "out" ]; then
+  time node out/test/js/TestingFramework.js > /dev/null
+else
+  time node out/test/js/TestingFramework.js
+fi;
 if [ "${?}" -gt "0" ]; then
   cecho "# JS Test failed!" $red
   TESTRESULT=1
@@ -112,7 +120,11 @@ echo ""
 cecho "## NekoVM" $blue
 cecho "#####################################################" $blue
 if [ $(which neko) ]; then
-#time neko out/test/neko/TestingFramework.n
+if [ "${1}" == "out" ]; then
+  time neko out/test/neko/TestingFramework.n > /dev/null
+else
+  time neko out/test/neko/TestingFramework.n
+fi;
 if [ "${?}" -gt "0" ]; then
   cecho "# NekoVM Test failed!" $red
   TESTRESULT=1
@@ -127,7 +139,11 @@ echo ""
 cecho "## PHP" $blue
 cecho "#####################################################" $blue
 if [ $(which php) ]; then
-time php out/test/php/index.php
+if [ "${1}" == "out" ]; then
+  time php out/test/php/index.php > /dev/null
+else
+  time php out/test/php/index.php
+fi;
 if [ "${?}" -gt "0" ]; then
   cecho "# PHP Test failed!" $red
   TESTRESULT=1

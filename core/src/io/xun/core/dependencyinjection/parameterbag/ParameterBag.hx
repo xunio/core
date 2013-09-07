@@ -48,7 +48,7 @@ class ParameterBag implements IParameterBag {
             }
         }
         for(parameter in parameters.iterator()) {
-            return this.set(parameter.key, parameter);
+            this.set(parameter);
         }
     }
 
@@ -56,8 +56,8 @@ class ParameterBag implements IParameterBag {
         return false;
     }
 
-    public function set( key : String, parameter : Parameter ) : Void {
-        stringMap.set(key, parameter);
+    public function set( parameter : Parameter ) : Void {
+        stringMap.set(parameter.key, parameter);
     }
 
     public function get( key : String ) : Parameter {

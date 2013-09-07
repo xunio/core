@@ -23,13 +23,11 @@ package io.xun.test.unit.core;
  */
 class Runner {
 
-    public static function main() : Bool {
-        var result : Bool = true;
-        result = io.xun.test.unit.core.util.Runner.main() && result;
-        result = io.xun.test.unit.core.event.Runner.main() && result;
-
-        //var r = new haxe.unit.TestRunner();
-        //r.run();
-        return result;
+    public static function main() : Array<haxe.unit.TestCase> {
+        var tests : Array<haxe.unit.TestCase> = new Array<haxe.unit.TestCase>();
+        tests = tests.concat(io.xun.test.unit.core.util.Runner.main());
+        tests = tests.concat(io.xun.test.unit.core.event.Runner.main());
+        tests = tests.concat(io.xun.test.unit.core.dependencyinjection.Runner.main());
+        return tests;
     }
 }

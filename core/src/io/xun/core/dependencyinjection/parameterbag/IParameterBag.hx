@@ -31,7 +31,7 @@ interface IParameterBag {
 
     public function isFrozen() : Bool;
 
-    public function set( key : String, parameter : Parameter ) : Void;
+    public function set( parameter : Parameter ) : Void;
 
     public function get( key : String ) : Parameter;
 

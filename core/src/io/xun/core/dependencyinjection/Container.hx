@@ -16,6 +16,8 @@ package io.xun.core.dependencyinjection;
 
 /* imports and uses */
 
+import io.xun.core.util.Inflector;
+import io.xun.core.util.StringUtils;
 import Reflect;
 import haxe.ds.StringMap;
 
@@ -133,7 +135,7 @@ class Container implements IIntrospectableContainer {
      * @author Maximilian Ruta <mr@xtain.net>
      */
     public function setParameter( parameter : Parameter ) : Void {
-        this.parameterBag.set(parameter.key, parameter);
+        this.parameterBag.set(parameter);
     }
 
     /**
@@ -272,9 +274,7 @@ class Container implements IIntrospectableContainer {
     }
 
     public static function getMethodName( id : String ) : String {
-        return 'get' + StringTools.replace(
-            StringTools.replace(id, '_', ''), '.', '_'
-        ) + 'Service';
+        return 'get' + Inflector.camelize(id) + 'Service';
     }
 
     public function register(key : String, dependency : Class<Dynamic>) : Definition {

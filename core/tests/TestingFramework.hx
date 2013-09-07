@@ -27,9 +27,21 @@ import io.xun.core.util.BitwiseMask;
  */
 class TestingFramework {
 
+    public static var RUNS = 1;
+
     public static function main() {
         var result : Bool = true;
-        result = io.xun.test.Runner.main() && result;
+        var tests : Array<haxe.unit.TestCase> = io.xun.test.Runner.main();
+        var runner : haxe.unit.TestRunner;
+
+        var i : Int = 0;
+        for ( i in 0...RUNS ) {
+            runner = new haxe.unit.TestRunner();
+            for ( test in tests.iterator() ) {
+                runner.add(test);
+            }
+            result = runner.run();
+        }
 
         if(!result) {
             #if js

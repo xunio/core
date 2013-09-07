@@ -23,10 +23,10 @@ package io.xun.test;
  */
 class Runner {
 
-    public static function main() : Bool {
-        var result : Bool = true;
-        result = io.xun.test.unit.Runner.main() && result;
-        return result;
+    public static function main() : Array<haxe.unit.TestCase> {
+        var tests : Array<haxe.unit.TestCase> = new Array<haxe.unit.TestCase>();
+        tests = tests.concat(io.xun.test.unit.Runner.main());
+        return tests;
     }
 
 }
