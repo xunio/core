@@ -29,7 +29,7 @@ import io.xun.core.event.Observable;
  * @package       io.xun.test.unit.core.event
  */
 class TestObservable extends haxe.unit.TestCase {
-    /*
+
     public function testConstruct() {
         var mockObservable : MockObservable = new MockObservable();
         assertTrue(true);
@@ -92,7 +92,7 @@ class TestObservable extends haxe.unit.TestCase {
         mockObservable.observable.notify(2, 'foo1');
         assertEquals('foo', mockObserver.data);
     }
-    */
+
     public function testGetEventObservers() {
         var mockObservable : MockObservable = new MockObservable();
         var mockObserver : MockObserver = new MockObserver();

@@ -1,6 +1,6 @@
--js out/test/js/TestRunner.js
+-js out/test/js/TestingFramework.js
 -debug
--main TestRunner
+-main TestingFramework
 -cp ../haxe/src/std/js/_std
 -cp ../haxe/src/std
 -cp ./tests
@@ -12,7 +12,7 @@
 
 -php out/test/php
 -debug
--main TestRunner
+-main TestingFramework
 -cp ../haxe/src/std/php/_std
 -cp ../haxe/src/std
 -cp ./tests
@@ -22,9 +22,9 @@
 
 --next
 
--neko out/test/neko/TestRunner.n
+-neko out/test/neko/TestingFramework.n
 -debug
--main TestRunner
+-main TestingFramework
 -cp ../haxe/src/std/neko/_std
 -cp ../haxe/src/std
 -cp ./tests
@@ -35,9 +35,9 @@
 
 --next
 
--swf out/test/flash/TestRunner.swf
+-swf out/test/flash/TestingFramework.swf
 -debug
--main TestRunner
+-main TestingFramework
 -cp ../haxe/src/std/flash/_std
 -cp ../haxe/src/std
 -cp ./tests
@@ -49,7 +49,7 @@
 
 -cpp out/test/cpp64
 -debug
--main TestRunner
+-main TestingFramework
 -D HXCPP_M64
 -cp ../haxe/src/std/cpp/_std
 -cp ../haxe/src/std

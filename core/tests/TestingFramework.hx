@@ -19,13 +19,13 @@ package ;
 import io.xun.core.util.BitwiseMask;
 
 /**
- * Class TestRunner
+ * Class TestingFramework
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @package
  */
-class TestRunner {
+class TestingFramework {
 
     public static function main() {
         var result : Bool = true;

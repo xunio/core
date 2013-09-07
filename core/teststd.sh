@@ -77,8 +77,8 @@ cecho "#####################################################" $blue
 echo ""
 cecho "### C++ 64-bit" $blue
 cecho "#####################################################" $blue
-if [ -f "./out/teststd/cpp64/TestRunner-debug" ]; then
-time ./out/teststd/cpp64/TestRunner-debug
+if [ -f "./out/teststd/cpp64/TestingFramework-debug" ]; then
+time ./out/teststd/cpp64/TestingFramework-debug
 if [ "${?}" -gt "0" ]; then
   cecho "# C++ Test failed!" $red
   TESTRESULT=1
@@ -91,13 +91,13 @@ fi;
 
 #echo "### C++ 32-bit"
 #echo "#####################################################"
-#./out/teststd/cpp32/TestRunner-debug
+#./out/teststd/cpp32/TestingFramework-debug
 
 echo ""
 cecho "## JS" $blue
 cecho "#####################################################" $blue
 if [ $(which node) ]; then
-time node out/teststd/js/TestRunner.js
+time node out/teststd/js/TestingFramework.js
 if [ "${?}" -gt "0" ]; then
   cecho "# JS Test failed!" $red
   TESTRESULT=1
@@ -112,7 +112,7 @@ echo ""
 cecho "## NekoVM" $blue
 cecho "#####################################################" $blue
 if [ $(which neko) ]; then
-time neko out/teststd/neko/TestRunner.n
+time neko out/teststd/neko/TestingFramework.n
 if [ "${?}" -gt "0" ]; then
   cecho "# NekoVM Test failed!" $red
   TESTRESULT=1

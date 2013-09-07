@@ -12,7 +12,7 @@
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test;
+package haxe.unit;
 
 /* imports and uses */
 
@@ -40,7 +40,37 @@ class TestRunner {
 #end
 
     public static dynamic function print( v : Dynamic ) untyped {
-        #if js
+        #if flash9
+			if( tf == null ) {
+				tf = new flash.text.TextField();
+				tf.selectable = false;
+				tf.width = flash.Lib.current.stage.stageWidth;
+				tf.autoSize = flash.text.TextFieldAutoSize.LEFT;
+				flash.Lib.current.addChild(tf);
+			}
+			tf.appendText(v);
+		#elseif flash
+			var root = flash.Lib.current;
+			if( tf == null ) {
+				root.createTextField("__tf",1048500,0,0,flash.Stage.width,flash.Stage.height+30);
+				tf = root.__tf;
+				tf.selectable = false;
+				tf.wordWrap = true;
+			}
+			var s = flash.Boot.__string_rec(v,"");
+			tf.text += s;
+			while( tf.textHeight > flash.Stage.height ) {
+				var lines = tf.text.split("\r");
+				lines.shift();
+				tf.text = lines.join("\n");
+			}
+		#elseif neko
+			__dollar__print(v);
+		#elseif php
+			php.Lib.print(v);
+		#elseif cpp
+			cpp.Lib.print(v);
+		#elseif js
 			if( untyped __js__('typeof document == "undefined"') ) {
                 process.stdout.write(js.Boot.__string_rec(v,""));
 			} else {
@@ -51,8 +81,12 @@ class TestRunner {
                 else
                     d.innerHTML += msg;
             }
-		#else
-            haxe.unit.TestRunner.print(v);
+		#elseif cs
+			var str:String = v;
+			untyped __cs__("System.Console.Write(str)");
+		#elseif java
+			var str:String = v;
+			untyped __java__("java.lang.System.out.print(str)");
 		#end
     }
 

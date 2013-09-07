@@ -1,6 +1,6 @@
--js out/teststd/js/TestRunner.js
+-js out/teststd/js/TestingFramework.js
 -debug
--main TestRunner
+-main TestingFramework
 -cp ./tests
 -cp ./src/js/_core
 -cp ./src
@@ -10,7 +10,7 @@
 
 -php out/teststd/php
 -debug
--main TestRunner
+-main TestingFramework
 -cp ./tests
 -cp ./src/php/_core
 -cp ./src
@@ -18,9 +18,9 @@
 
 --next
 
--neko out/teststd/neko/TestRunner.n
+-neko out/teststd/neko/TestingFramework.n
 -debug
--main TestRunner
+-main TestingFramework
 -cp ./tests
 -cp ./src/neko/_core
 -cp ./src
@@ -29,9 +29,9 @@
 
 --next
 
--swf out/teststd/flash/TestRunner.swf
+-swf out/teststd/flash/TestingFramework.swf
 -debug
--main TestRunner
+-main TestingFramework
 -cp ./tests
 -cp ./src/flash/_core
 -cp ./src
@@ -41,7 +41,7 @@
 
 -cpp out/teststd/cpp64
 -debug
--main TestRunner
+-main TestingFramework
 -D HXCPP_M64
 -cp ./tests
 -cp ./src/cpp/_core
