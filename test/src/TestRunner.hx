@@ -8,7 +8,7 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       
+ * @package
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
@@ -18,19 +18,18 @@ package ;
 
 import io.xun.core.util.BitwiseMask;
 
-
 /**
  * Class TestRunner
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       
+ * @package
  */
 class TestRunner {
 
     public static function main() {
         var result : Bool = true;
-        result = result && io.xun.test.unit.core.Runner.main();
+        result = result && io.xun.test.Runner.main();
 
         if(!result) {
             #if js
