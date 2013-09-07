@@ -8,18 +8,24 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.core.exception
+ * @package       io.xun.test.unit.core.event
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.core.exception;
+package io.xun.test.unit.core.event;
 
 /**
- * Class LogicException
+ * Class Runner
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.core.exception
+ * @package       io.xun.test.unit.core.event
  */
-class LogicException extends Exception {
+class Runner {
+
+    public static function main() : Bool {
+        var r = new io.xun.test.TestRunner();
+        r.add(new TestObservable());
+        return r.run();
+    }
 }

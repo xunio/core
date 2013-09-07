@@ -8,18 +8,33 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.core.exception
+ * @package       io.xun.test.unit.core.util
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.core.exception;
+package io.xun.test.unit.core.util;
+
+/* imports and uses */
+
+using io.xun.core.util.L.ArrayExtension;
 
 /**
- * Class LogicException
+ * Class TestL
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.core.exception
+ * @package       io.xun.test.unit.core.util
  */
-class LogicException extends Exception {
+class TestL extends haxe.unit.TestCase {
+
+    public function testUnderscore() {
+
+        var checksum : Int = 0;
+        for(i in [1, 1, 2, 3, 4, 4, 5].unique()) {
+            checksum = checksum + i;
+        }
+        assertEquals(15, checksum);
+
+    }
+
 }

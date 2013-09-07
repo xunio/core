@@ -8,18 +8,40 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.core.exception
+ * @package       
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.core.exception;
+package ;
+
+/* imports and uses */
+
+import io.xun.core.util.BitwiseMask;
+
 
 /**
- * Class LogicException
+ * Class TestRunner
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.core.exception
+ * @package       
  */
-class LogicException extends Exception {
+class TestRunner {
+
+    public static function main() {
+        var result : Bool = true;
+        result = result && io.xun.test.unit.core.Runner.main();
+
+        if(!result) {
+            #if js
+              if( untyped __js__('typeof process != "undefined" && "exit" in process') ) {
+                untyped __js__('process.exit(255)');
+              }
+            #elseif flash
+            #else
+            Sys.exit(255);
+            #end
+        }
+    }
+
 }

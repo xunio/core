@@ -1,9 +1,33 @@
+/*
+ * xun.io
+ * Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ *
+ * Licensed under GNU Affero General Public License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @link          http://xun.io/ xun.io Project
+ * @package       io.xun.test.unit.core.event
+ * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ */
+
 package io.xun.test.unit.core.event;
+
+/* imports and uses */
 
 import io.xun.core.event.IObservable;
 import io.xun.core.event.IObserver;
 import io.xun.core.event.Observable;
 
+
+/**
+ * Class TestObservable
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       io.xun.test.unit.core.event
+ */
 class TestObservable extends haxe.unit.TestCase {
 
     public function testConstruct() {
@@ -87,6 +111,13 @@ class TestObservable extends haxe.unit.TestCase {
 
 }
 
+/**
+ * Class MockObservable
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       io.xun.test.unit.core.event.TestObservable
+ */
 class MockObservable implements IObservable {
 
     public var observable : Observable;
@@ -105,6 +136,13 @@ class MockObservable implements IObservable {
 
 }
 
+/**
+ * Class MockObserver
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       io.xun.test.unit.core.event.TestObservable
+ */
 class MockObserver implements IObserver {
 
     public var data : Null<Dynamic> = null;

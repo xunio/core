@@ -1,4 +1,21 @@
+/*
+ * xun.io
+ * Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ *
+ * Licensed under GNU Affero General Public License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @link          http://xun.io/ xun.io Project
+ * @package       js.io.xun.ui.ec
+ * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ */
+
 package js.io.xun.ui.ec;
+
+/* imports and uses */
+
 
 import io.xun.core.event.IObservable;
 import io.xun.core.event.IObserver;
@@ -6,7 +23,13 @@ import io.xun.core.event.Observable;
 import js.JQuery;
 import js.html.Element;
 
-
+/**
+ * Class PinnedElement
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       js.io.xun.ui.ec
+ */
 class PinnedElement implements IObservable {
 
     private var _element : JQuery;
@@ -112,6 +135,13 @@ class PinnedElement implements IObservable {
     }
 }
 
+/**
+ * Class PinnedElementEvent
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       js.io.xun.ui.ec.PinnedElement
+ */
 @:build(io.xun.core.event.ObserverMacro.create([
     PIN,
     UNPIN

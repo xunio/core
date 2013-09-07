@@ -1,4 +1,21 @@
+/*
+ * xun.io
+ * Copyright (c) 2009 Michael Baczynski <http://www.polygonal.de>
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) 2009 Michael Baczynski <http://www.polygonal.de>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @link          http://xun.io/ xun.io Project
+ * @package       io.xun.core.event
+ * @license       http://opensource.org/licenses/MIT The MIT License
+ */
+
 package io.xun.core.event;
+
+/* imports and uses */
 
 import haxe.macro.Context;
 import haxe.macro.Expr;
@@ -8,6 +25,14 @@ import haxe.macro.Type;
 using io.xun.ds.Bits;
 #end
 
+/**
+ * Class ObserverMacro
+ *
+ * @author        Michael Baczynski
+ * @copyright     Copyright (c) 2009 Michael Baczynski <http://www.polygonal.de>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       io.xun.core.event
+ */
 class ObserverMacro
 {
 	/**
