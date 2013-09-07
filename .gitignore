@@ -17,7 +17,7 @@ $RECYCLE.BIN/
 *.iml
 .idea
 
-/tests/out/*
+/test/out/*
 /out/release/*
 /out/debug/*
 !empty
