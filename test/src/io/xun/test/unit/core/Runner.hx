@@ -25,8 +25,8 @@ class Runner {
 
     public static function main() : Bool {
         var result : Bool = true;
-        result = result && io.xun.test.unit.core.util.Runner.main();
-        result = result && io.xun.test.unit.core.event.Runner.main();
+        result = io.xun.test.unit.core.util.Runner.main() && result;
+        result = io.xun.test.unit.core.event.Runner.main() && result;
 
         //var r = new haxe.unit.TestRunner();
         //r.run();

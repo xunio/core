@@ -25,7 +25,7 @@ class Runner {
 
     public static function main() : Bool {
         var result : Bool = true;
-        result = result && io.xun.test.unit.haxe.ds.Runner.main();
+        result = io.xun.test.unit.haxe.ds.Runner.main() && result;
         return result;
     }
 }

@@ -27,25 +27,59 @@ import haxe.ds.ObjectMap;
  */
 class TestObjectMap extends haxe.unit.TestCase {
 
-    private var _map : ObjectMap<ITestObject, Int>;
+    public function testObjectAsKey() {
+        var map : ObjectMap<TestObject, Int> = new ObjectMap<TestObject, Int>();
+        var f1 : TestObject = new TestObject();
+        var f2 : TestObject = new TestObject();
+        var f3 : TestObject = new TestObject();
 
-    private function _testObjectSet( o : ITestObject ) {
-        _map.set(o, 11);
-    }
+        map.set(f1, 2);
+        map.set(f2, 4);
+        map.set(f3, 8);
 
-    private function _testObjectGet() {
-        for ( obj in _map.keys() ) {
-            // this fails. I get back null
-            assertEquals(11, _map.get(obj));
+        var values : Array<Int> = new Array<Int>();
+
+        for ( v in map.iterator() ) {
+            assertEquals(0, (v % 2));
+            values.push(v);
         }
+
+        var i : Int = 0;
+        for ( o in map.keys() ) {
+            assertEquals(values[i], map.get(o));
+            i++;
+        }
+
+        assertEquals(3, i);
     }
 
-    public function testObject() {
-        _map = new ObjectMap<ITestObject, Int>();
+    public function testInterfaceAsKey() {
+        // It seems that hxcpp version 3.0.2 has an bug if you use interfaces as keys
 
-        var f : TestObject = new TestObject();
-        _testObjectSet(f);
-        _testObjectGet();
+        var map : ObjectMap<ITestObject, Int> = new ObjectMap<ITestObject, Int>();
+        var f1 : TestObject = new TestObject();
+        var f2 : TestObject = new TestObject();
+        var f3 : TestObject = new TestObject();
+
+        map.set(f1, 2);
+        map.set(f2, 4);
+        map.set(f3, 8);
+
+        var values : Array<Int> = new Array<Int>();
+
+        for ( v in map.iterator() ) {
+            assertEquals(0, (v % 2));
+            values.push(v);
+        }
+
+        var i : Int = 0;
+        for ( o in map.keys() ) {
+            // fails if the appears
+            assertEquals(values[i], map.get(o));
+            i++;
+        }
+
+        assertEquals(3, i);
     }
 
 }

@@ -29,7 +29,7 @@ class TestRunner {
 
     public static function main() {
         var result : Bool = true;
-        result = result && io.xun.test.Runner.main();
+        result = io.xun.test.Runner.main() && result;
 
         if(!result) {
             #if js
