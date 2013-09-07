@@ -2,7 +2,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src/std/js/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./tests
 -cp ./src/js/_core
 -cp ./src
@@ -14,7 +14,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src/std/php/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./tests
 -cp ./src/php/_core
 -cp ./src
@@ -26,7 +26,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src/std/neko/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./tests
 -cp ./src/neko/_core
 -cp ./src
@@ -39,7 +39,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src/std/flash/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./tests
 -cp ./src/flash/_core
 -cp ./src
@@ -52,7 +52,7 @@
 -main TestRunner
 -D HXCPP_M64
 -cp ../haxe/src/std/cpp/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./tests
 -cp ./src/cpp/_core
 -cp ./src

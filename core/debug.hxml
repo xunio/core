@@ -2,7 +2,7 @@
 -debug
 -main Main
 -cp ../haxe/src/std/js/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./src/js/_core
 -cp ./src
 --times
@@ -13,7 +13,7 @@
 -debug
 -main Main
 -cp ../haxe/src/std/php/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./src/php/_core
 -cp ./src
 --times
@@ -24,7 +24,7 @@
 -debug
 -main Main
 -cp ../haxe/src/std/neko/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./src/neko/_core
 -cp ./src
 --times
@@ -35,7 +35,7 @@
 -debug
 -main Main
 -cp ../haxe/src/std/flash/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./src/flash/_core
 -cp ./src
 --times
@@ -47,7 +47,7 @@
 -main Main
 -D HXCPP_M64
 -cp ../haxe/src/std/cpp/_std
--cp ../haxe/src
+-cp ../haxe/src/std
 -cp ./src/cpp/_core
 -cp ./src
 --times
