@@ -2,16 +2,9 @@
 -main Main
 -D noEmbedJS
 --no-traces
+-cp ../haxe/src/std/js/_std
 -cp ../haxe/src
--cp ./src
---times
-
---next
-
--neko out/production/neko/Main.n
--main Main
---no-traces
--cp ../haxe/src
+-cp ./src/js/_core
 -cp ./src
 --times
 
@@ -20,7 +13,20 @@
 -php out/production/php
 -main Main
 --no-traces
+-cp ../haxe/src/std/cpp/_std
 -cp ../haxe/src
+-cp ./src/cpp/_core
+-cp ./src
+--times
+
+--next
+
+-neko out/production/neko/Main.n
+-main Main
+--no-traces
+-cp ../haxe/src/std/neko/_std
+-cp ../haxe/src
+-cp ./src/neko/_core
 -cp ./src
 --times
 
@@ -28,7 +34,9 @@
 
 -swf out/production/flash/Main.swf
 -main Main
+-cp ../haxe/src/std/flash/_std
 -cp ../haxe/src
+-cp ./src/flash/_core
 -cp ./src
 --times
 
@@ -38,6 +46,8 @@
 -main Main
 --no-traces
 -D HXCPP_M64
+-cp ../haxe/src/std/cpp/_std
 -cp ../haxe/src
+-cp ./src/cpp/_core
 -cp ./src
 --times

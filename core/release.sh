@@ -26,13 +26,11 @@ for dir in js php cpp32 cpp64 neko flash; do
   mkdir "out/production/$dir"
 done;
 
-cd test
 ./test.sh
 if [ "${?}" -gt "0" ]; then
   echo "Could not release. Tests failed!";
   exit 255
 fi;
-cd ..
 
 echo "Start release build!";
 echo ""
