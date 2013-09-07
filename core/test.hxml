@@ -2,7 +2,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src
--cp ./tests/src
+-cp ./tests
 -cp ./src
 --times
 
@@ -12,7 +12,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src
--cp ./tests/src
+-cp ./tests
 -cp ./src
 --times
 
@@ -22,7 +22,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src
--cp ./tests/src
+-cp ./tests
 -cp ./src
 --times
 
@@ -33,7 +33,7 @@
 -debug
 -main TestRunner
 -cp ../haxe/src
--cp ./tests/src
+-cp ./tests
 -cp ./src
 --times
 
@@ -44,6 +44,6 @@
 -main TestRunner
 -D HXCPP_M64
 -cp ../haxe/src
--cp ./tests/src
+-cp ./tests
 -cp ./src
 --times

@@ -23,14 +23,15 @@ for dir in js php cpp32 cpp64 neko flash; do
   if [ -d "out/test/$dir" ]; then
     rm -Rf "out/test/$dir"
   fi;
-  if [ -a "out/test/$dir" ]; then
-    echo "out/test/$dir: Not an directory!"
-    exit 255;
-  fi;
-  mkdir "out/test/$dir"
 done;
 
 fi;
+
+for dir in js php cpp32 cpp64 neko flash; do
+  if ! [ -a "out/test/$dir" ]; then
+    mkdir "out/test/$dir"
+  fi;
+done;
 
 time haxe test.hxml
 
