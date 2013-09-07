@@ -52,7 +52,7 @@
   -------------
 
   There is currently no real documentation. Please see the unit tests
-  in 'test/src'.  In order to run the tests successfully you have to
+  in 'core/tests/src'.  In order to run the tests successfully you have to
   setup and build environment like described in the 'Installation' section
 
   Installation
@@ -84,7 +84,7 @@
 
      o php >= 5.5.3 (older versions mind work also)
 
-  To build the tests simply run the script 'test.sh' in the project root.  If
+  To build the tests simply run the script 'test.sh' in the core directory.  If
   you run it with the argument 'total' (e.g. 'test.sh total') old binaries
   gets purged before building.
 
