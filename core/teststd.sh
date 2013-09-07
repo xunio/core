@@ -33,7 +33,7 @@ for dir in js php cpp32 cpp64 neko flash; do
   fi;
 done;
 
-time haxe test.hxml
+time haxe teststd.hxml
 
 if [ "${?}" -gt "0" ]; then
   echo "Build failed";

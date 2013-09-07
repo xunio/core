@@ -1,4 +1,4 @@
--js out/test/js/TestRunner.js
+-js out/teststd/js/TestRunner.js
 -debug
 -main TestRunner
 -cp ./tests
@@ -8,7 +8,7 @@
 
 --next
 
--php out/test/php
+-php out/teststd/php
 -debug
 -main TestRunner
 -cp ./tests
@@ -18,7 +18,7 @@
 
 --next
 
--neko out/test/neko/TestRunner.n
+-neko out/teststd/neko/TestRunner.n
 -debug
 -main TestRunner
 -cp ./tests
@@ -29,7 +29,7 @@
 
 --next
 
--swf out/test/flash/TestRunner.swf
+-swf out/teststd/flash/TestRunner.swf
 -debug
 -main TestRunner
 -cp ./tests
@@ -39,7 +39,7 @@
 
 --next
 
--cpp out/test/cpp64
+-cpp out/teststd/cpp64
 -debug
 -main TestRunner
 -D HXCPP_M64
