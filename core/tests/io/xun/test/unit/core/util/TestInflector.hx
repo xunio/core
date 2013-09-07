@@ -45,6 +45,7 @@ class TestInflector extends haxe.unit.TestCase {
     public function testVariable() {
         assertEquals('testField', Inflector.variable('test_field'));
         assertEquals('testFieLd', Inflector.variable('test_fieLd'));
+        assertEquals('testFieLd', Inflector.variable('test.fieLd'));
         assertEquals('testField', Inflector.variable('test field'));
         assertEquals('testField', Inflector.variable('Test_field'));
         assertEquals('testField', Inflector.variable('  Test_field'));
@@ -54,6 +55,7 @@ class TestInflector extends haxe.unit.TestCase {
     public function testHumanize() {
         assertEquals('Posts', Inflector.humanize('posts'));
         assertEquals('Posts Tags', Inflector.humanize('posts_tags'));
+        assertEquals('Posts Tags', Inflector.humanize('posts.tags'));
         assertEquals('File Systems', Inflector.humanize('file_systems'));
         assertEquals(' Foo File Systems Ba ', Inflector.humanize(' foo file_systems ba '));
     }
@@ -61,6 +63,7 @@ class TestInflector extends haxe.unit.TestCase {
     public function testCamelize() {
         assertEquals('Posts', Inflector.camelize('posts'));
         assertEquals('PostsTags', Inflector.camelize('posts_tags'));
+        assertEquals('PostsTags', Inflector.camelize('posts.tags'));
         assertEquals('FileSystems', Inflector.camelize('file_systems'));
         assertEquals('FooFileSystemsBa', Inflector.camelize(' foo file_systems ba '));
     }

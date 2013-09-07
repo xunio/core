@@ -27,7 +27,7 @@ using io.xun.core.util.L.ArrayExtension;
  */
 class TestL extends haxe.unit.TestCase {
 
-    public function testUnderscore() {
+    public function testUnique() {
 
         var checksum : Int = 0;
         for(i in [1, 1, 2, 3, 4, 4, 5].unique()) {

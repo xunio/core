@@ -16,6 +16,8 @@ package io.xun.core.dependencyinjection;
 
 /* imports and uses */
 
+import Reflect;
+import io.xun.core.util.Inflector;
 import io.xun.core.util.Inflector;
 import io.xun.core.util.StringUtils;
 import Reflect;
@@ -46,12 +48,12 @@ using io.xun.core.util.L.ArrayExtension;
  */
 class Container implements IIntrospectableContainer {
 
-    private static inline var CONTAINER = 'service_container';
+    public static inline var CONTAINER = 'service_container';
 
     public var parameterBag(default, null) : IParameterBag;
 
-    private var services : StringMap<Dynamic>;
-    private var methodMap : StringMap<Dynamic -> Dynamic>;
+    private var services : StringMap<Class<Dynamic>>;
+    private var methodMap : StringMap<Dynamic>;
     private var aliases : StringMap<String>;
 
     private var loading : Array<String>;
@@ -72,7 +74,7 @@ class Container implements IIntrospectableContainer {
         this.parameterBag = parameterBag;
 
         this.services = new StringMap<Class<Dynamic>>();
-        this.methodMap = new StringMap<Dynamic -> Dynamic>();
+        this.methodMap = new StringMap<Dynamic>();
         this.aliases = new StringMap<String>();
 
         this.loading = new Array<String>();
@@ -187,11 +189,10 @@ class Container implements IIntrospectableContainer {
                 throw new InvalidArgumentException();
             }
             */
-            service = cast this.services.get(id);
-            return service;
+            return this.services.get(id);
         }
 
-        if (L.has(this.loading, id)) {
+        if (Lambda.has(this.loading, id)) {
             throw new ServiceCircularReferenceException(id);
         }
 
@@ -206,6 +207,7 @@ class Container implements IIntrospectableContainer {
                 }
                 return null;
             }
+            this.methodMap.set(id, method);
         }
 
 
@@ -218,7 +220,7 @@ class Container implements IIntrospectableContainer {
                 throw new InvalidServiceType(id);
             }
             */
-            service = cast methodResult;
+            service = methodResult;
         } catch( e : Dynamic ) {
             this.loading.remove(id);
 
@@ -235,6 +237,7 @@ class Container implements IIntrospectableContainer {
         }
 
         this.loading.remove(id);
+
         return service;
     }
 
@@ -256,21 +259,23 @@ class Container implements IIntrospectableContainer {
      */
     public function getServiceIds() : Array<String> {
         var ids : Array<String> = new Array<String>();
-        var fields : Array<String> = Type.getInstanceFields(this);
+        var fields : Array<String> = Type.getInstanceFields(Type.getClass(this));
         var fieldMatch : EReg = ~/^get(.+)Service$/;
 
         for(field in fields.iterator()) {
             var field : String = field;
-            if (Reflect.isFunction(field)
+            if (Reflect.isFunction(Reflect.field(this, field))
                  && fieldMatch.match(field)) {
-                ids.push(fieldMatch.matched(1));
+                ids.push(Inflector.underscore(fieldMatch.matched(1)));
             }
         }
 
-        return L.concat(
-                this.services.keys(),
-                ids.iterator()
-            ).unique();
+        return Lambda.array(
+            Lambda.concat(
+                ids,
+                L.fromIterator(this.services.keys())
+            )
+        ).unique();
     }
 
     public static function getMethodName( id : String ) : String {

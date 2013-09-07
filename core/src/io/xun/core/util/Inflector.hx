@@ -109,7 +109,7 @@ class Inflector {
     public static function humanize( lowerCaseAndUnderscoredWord : String ) : String {
         var result : Null<String> = cache('humanize', lowerCaseAndUnderscoredWord);
         if (result == null) {
-            result = StringUtils.upperCaseWords(StringTools.replace(lowerCaseAndUnderscoredWord, '_', ' '));
+            result = StringUtils.upperCaseWords(StringTools.replace(StringTools.replace(lowerCaseAndUnderscoredWord, '.', ' '), '_', ' '));
             cache('humanize', cast(result, String));
         }
         return cast(result, String);

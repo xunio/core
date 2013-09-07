@@ -14,6 +14,8 @@
 
 package io.xun.core.util;
 
+import Lambda;
+
 /**
  * Class L
  *
@@ -22,6 +24,16 @@ package io.xun.core.util;
  * @package       io.xun.core.util
  */
 class L extends Lambda {
+
+    public static function fromIterator<T>( iter : Iterator<T> ) : Iterable<T> {
+        var arr : Array<T> = [];
+
+        for ( elm in iter ) {
+            arr.push(elm);
+        }
+
+        return arr;
+    }
 
 }
 
