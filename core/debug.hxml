@@ -1,6 +1,7 @@
 -js out/debug/js/Main.js
 -debug
 -main Main
+-cp ../haxe/src
 -cp ./src
 --times
 
@@ -9,6 +10,7 @@
 -php out/debug/php
 -debug
 -main Main
+-cp ../haxe/src
 -cp ./src
 --times
 
@@ -17,6 +19,7 @@
 -neko out/debug/neko/Main.n
 -debug
 -main Main
+-cp ../haxe/src
 -cp ./src
 --times
 
@@ -25,6 +28,7 @@
 -swf out/debug/flash/Main.swf
 -debug
 -main Main
+-cp ../haxe/src
 -cp ./src
 --times
 
@@ -34,5 +38,6 @@
 -debug
 -main Main
 -D HXCPP_M64
+-cp ../haxe/src
 -cp ./src
 --times
