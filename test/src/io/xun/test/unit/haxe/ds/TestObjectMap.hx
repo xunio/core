@@ -35,6 +35,7 @@ class TestObjectMap extends haxe.unit.TestCase {
 
     private function _testObjectGet() {
         for ( obj in _map.keys() ) {
+            // this fails. I get back null
             assertEquals(11, _map.get(obj));
         }
     }
