@@ -23,10 +23,8 @@ package io.xun.test.unit.core.dependencyinjection;
  */
 class Runner {
 
-    public static function main() : Array<haxe.unit.TestCase> {
-        var tests : Array<haxe.unit.TestCase> = new Array<haxe.unit.TestCase>();
-        tests = tests.concat(io.xun.test.unit.core.dependencyinjection.parameterbag.Runner.main());
-        tests.push(new TestContainer());
-        return tests;
+    public static function main(runner : haxe.unit.TestRunner) {
+        io.xun.test.unit.core.dependencyinjection.parameterbag.Runner.main(runner);
+        runner.add(new TestContainer());
     }
 }

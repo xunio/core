@@ -23,12 +23,10 @@ package io.xun.test.unit.core.util;
  */
 class Runner {
 
-    public static function main() : Array<haxe.unit.TestCase> {
-        var tests : Array<haxe.unit.TestCase> = new Array<haxe.unit.TestCase>();
-        tests.push(new TestL());
-        tests.push(new TestStringUtils());
-        tests.push(new TestInflector());
-        tests.push(new TestBitwiseMask());
-        return tests;
+    public static function main(runner : haxe.unit.TestRunner) {
+        runner.add(new TestL());
+        runner.add(new TestStringUtils());
+        runner.add(new TestInflector());
+        runner.add(new TestBitwiseMask());
     }
 }

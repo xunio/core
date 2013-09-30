@@ -15,7 +15,7 @@
 #                                                                                                       #
 #########################################################################################################
 
-for dir in js php cpp32 cpp64 neko flash; do
+for dir in js php java cs cpp32 cpp64 neko flash; do
   if [ -d "out/production/$dir" ]; then
     rm -Rf "out/production/$dir"
   fi;

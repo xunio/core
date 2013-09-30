@@ -23,11 +23,9 @@ package io.xun.test.unit.core;
  */
 class Runner {
 
-    public static function main() : Array<haxe.unit.TestCase> {
-        var tests : Array<haxe.unit.TestCase> = new Array<haxe.unit.TestCase>();
-        tests = tests.concat(io.xun.test.unit.core.util.Runner.main());
-        tests = tests.concat(io.xun.test.unit.core.event.Runner.main());
-        tests = tests.concat(io.xun.test.unit.core.dependencyinjection.Runner.main());
-        return tests;
+    public static function main(runner : haxe.unit.TestRunner) {
+        io.xun.test.unit.core.util.Runner.main(runner);
+        io.xun.test.unit.core.event.Runner.main(runner);
+        io.xun.test.unit.core.dependencyinjection.Runner.main(runner);
     }
 }

@@ -55,7 +55,7 @@ class TestContainer extends haxe.unit.TestCase {
     }
 
     public function testHas() {
-        var container : Container = new ExtendedContainer();
+        var container : ExtendedContainer = new ExtendedContainer();
 
         assertFalse(container.has('foo'));
         container.set('foo', 'foo2');
@@ -65,7 +65,7 @@ class TestContainer extends haxe.unit.TestCase {
     }
 
     public function testGetServiceIds() {
-        var container : Container = new ExtendedContainer();
+        var container : ExtendedContainer = new ExtendedContainer();
 
         container.set('foo', 'foo2');
         container.set('foo1', 'foo3');
@@ -75,6 +75,7 @@ class TestContainer extends haxe.unit.TestCase {
         }
     }
 
+    /*
     public function testRegister() {
         // TODO
     }
@@ -82,6 +83,7 @@ class TestContainer extends haxe.unit.TestCase {
     public function testInitialized() {
         // TODO
     }
+    */
 
 
 }

@@ -19,7 +19,7 @@ tput sgr0
 
 if [ "${1}" == "total" ]; then
 
-for dir in js php cpp32 cpp64 neko flash; do
+for dir in js php java cs cpp32 cpp64 neko flash; do
   if [ -d "out/test/$dir" ]; then
     rm -Rf "out/test/$dir"
   fi;
@@ -27,7 +27,7 @@ done;
 
 fi;
 
-for dir in js php cpp32 cpp64 neko flash; do
+for dir in js php java cs cpp32 cpp64 neko flash; do
   if ! [ -a "out/test/$dir" ]; then
     mkdir "out/test/$dir"
   fi;
@@ -152,6 +152,36 @@ else
 fi;
 else
   cecho "# PHP Test not available!" $yellow
+fi;
+
+echo ""
+cecho "### Java" $blue
+cecho "#####################################################" $blue
+if [ "${1}" == "out" ]; then
+  time java -jar ./out/test/java/java.jar > /dev/null
+else
+  time java -jar ./out/test/java/java.jar
+fi;
+if [ "${?}" -gt "0" ]; then
+  cecho "# Java Test failed!" $red
+  TESTRESULT=1
+else
+  cecho "# Java Test ok!" $green
+fi;
+
+echo ""
+cecho "### C#" $blue
+cecho "#####################################################" $blue
+if [ "${1}" == "out" ]; then
+  time mono ./out/test/cs/bin/cs.exe > /dev/null
+else
+  time mono ./out/test/cs/bin/cs.exe
+fi;
+if [ "${?}" -gt "0" ]; then
+  cecho "# C# Test failed!" $red
+  TESTRESULT=1
+else
+  cecho "# C# Test ok!" $green
 fi;
 
 echo ""

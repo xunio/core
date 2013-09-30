@@ -19,7 +19,7 @@ tput sgr0
 
 if [ "${1}" == "total" ]; then
 
-for dir in js php cpp32 cpp64 neko flash; do
+for dir in js php java cs cpp32 cpp64 neko flash; do
   if [ -d "out/teststd/$dir" ]; then
     rm -Rf "out/teststd/$dir"
   fi;
@@ -27,7 +27,7 @@ done;
 
 fi;
 
-for dir in js php cpp32 cpp64 neko flash; do
+for dir in js php java cs cpp32 cpp64 neko flash; do
   if ! [ -a "out/teststd/$dir" ]; then
     mkdir "out/teststd/$dir"
   fi;
@@ -136,6 +136,28 @@ else
 fi;
 else
   cecho "# PHP Test not available!" $yellow
+fi;
+
+echo ""
+cecho "### Java" $blue
+cecho "#####################################################" $blue
+time java -jar ./out/teststd/java/java.jar
+if [ "${?}" -gt "0" ]; then
+  cecho "# Java Test failed!" $red
+  TESTRESULT=1
+else
+  cecho "# Java Test ok!" $green
+fi;
+
+echo ""
+cecho "### C#" $blue
+cecho "#####################################################" $blue
+time mono ./out/teststd/cs/bin/cs.exe
+if [ "${?}" -gt "0" ]; then
+  cecho "# C# Test failed!" $red
+  TESTRESULT=1
+else
+  cecho "# C# Test ok!" $green
 fi;
 
 echo ""

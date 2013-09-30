@@ -23,9 +23,7 @@ package io.xun.test.unit.haxe.ds;
  */
 class Runner {
 
-    public static function main() : Array<haxe.unit.TestCase> {
-        var tests : Array<haxe.unit.TestCase> = new Array<haxe.unit.TestCase>();
-        tests.push(new io.xun.test.unit.haxe.ds.TestObjectMap());
-        return tests;
+    public static function main(runner : haxe.unit.TestRunner) {
+        runner.add(new io.xun.test.unit.haxe.ds.TestObjectMap());
     }
 }

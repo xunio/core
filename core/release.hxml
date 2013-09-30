@@ -1,53 +1,91 @@
 -js out/production/js/Main.js
 -main Main
 -D noEmbedJS
+-D XUN_IO_BENCH
 --no-traces
--cp ../haxe/src/std/js/_std
 -cp ../haxe/src/std
--cp ./src/js/_core
+-cp ../haxe/src/std/js/_std
+-cp ./tests
 -cp ./src
+-cp ./src/js/_std
 --times
 
 --next
 
 -php out/production/php
 -main Main
+-D XUN_IO_BENCH
 --no-traces
--cp ../haxe/src/std/cpp/_std
 -cp ../haxe/src/std
--cp ./src/cpp/_core
+-cp ../haxe/src/std/php/_std
+-cp ./tests
 -cp ./src
+-cp ./src/php/_std
 --times
 
 --next
 
 -neko out/production/neko/Main.n
 -main Main
+-D XUN_IO_BENCH
 --no-traces
--cp ../haxe/src/std/neko/_std
 -cp ../haxe/src/std
--cp ./src/neko/_core
+-cp ../haxe/src/std/neko/_std
+-cp ./tests
 -cp ./src
+-cp ./src/neko/_std
 --times
 
 --next
 
 -swf out/production/flash/Main.swf
 -main Main
--cp ../haxe/src/std/flash/_std
+-D XUN_IO_BENCH
+--no-traces
 -cp ../haxe/src/std
--cp ./src/flash/_core
+-cp ../haxe/src/std/flash/_std
+-cp ./tests
 -cp ./src
+-cp ./src/flash/_std
+--times
+
+--next
+
+-java out/production/java
+-main TestingFramework
+-D XUN_IO_BENCH
+--no-traces
+-cp ../haxe/src/std
+-cp ../haxe/src/std/java/_std
+-cp ./tests
+-cp ./src
+-cp ./src/java/_std
+--times
+
+--next
+
+-cs out/production/cs
+-main TestingFramework
+-D XUN_IO_BENCH
+--no-traces
+-D haxe3
+-cp ../haxe/src/std
+-cp ../haxe/src/std/cs/_std
+-cp ./tests
+-cp ./src
+-cp ./src/cs/_std
 --times
 
 --next
 
 -cpp out/production/cpp64
 -main Main
+-D XUN_IO_BENCH
 --no-traces
 -D HXCPP_M64
--cp ../haxe/src/std/cpp/_std
 -cp ../haxe/src/std
--cp ./src/cpp/_core
+-cp ../haxe/src/std/cpp/_std
+-cp ./tests
 -cp ./src
+-cp ./src/cpp/_std
 --times

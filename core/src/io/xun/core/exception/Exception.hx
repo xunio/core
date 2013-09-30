@@ -26,12 +26,16 @@ class Exception {
     private var message : String;
 
 
-    public function new(message : String) {
+    public function new(message : String = '') {
         this.message = message;
     }
 
-    public function toString() {
+    public function getMessage() {
         return this.message;
+    }
+
+    public function toString() {
+        return Type.getClassName(Type.getClass(this)) + ': ' + this.message;
     }
 
 }

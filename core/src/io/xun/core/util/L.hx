@@ -14,6 +14,8 @@
 
 package io.xun.core.util;
 
+import haxe.io.Bytes;
+import io.xun.core.exception.OutOfBoundsException;
 import Lambda;
 
 /**
@@ -56,6 +58,20 @@ class ArrayExtension {
             }
         }
         return r;
+    }
+
+    public static function copyTo<T>(source : Array<T>, target : Array<T>, length : Int, srcPos : Int = 0, targetPos : Int = 0) : Void {
+        if (source.length < length) {
+            throw new OutOfBoundsException('source fewer items that sould be copied');
+        }
+        if (target.length < targetPos) {
+            throw new OutOfBoundsException('targetPos is higher than gratest index of target');
+            //targetPos = target.length;
+        }
+
+        for( i in 0...length ) {
+            target[i + targetPos] = source[i + srcPos];
+        }
     }
 
 

@@ -2,8 +2,8 @@
 -debug
 -main TestingFramework
 -cp ./tests
--cp ./src/js/_core
 -cp ./src
+-cp ./src/js/_std
 --times
 
 --next
@@ -12,8 +12,8 @@
 -debug
 -main TestingFramework
 -cp ./tests
--cp ./src/php/_core
 -cp ./src
+-cp ./src/php/_std
 --times
 
 --next
@@ -22,19 +22,38 @@
 -debug
 -main TestingFramework
 -cp ./tests
--cp ./src/neko/_core
 -cp ./src
+-cp ./src/neko/_std
 --times
-
 
 --next
 
 -swf out/teststd/flash/TestingFramework.swf
 -debug
+-D fdb
 -main TestingFramework
 -cp ./tests
--cp ./src/flash/_core
 -cp ./src
+-cp ./src/flash/_std
+--times
+
+--next
+
+-java out/teststd/java
+-main TestingFramework
+-cp ./tests
+-cp ./src
+-cp ./src/java/_std
+--times
+
+--next
+
+-cs out/teststd/cs
+-main TestingFramework
+-D haxe3
+-cp ./tests
+-cp ./src
+-cp ./src/cs/_std
 --times
 
 --next
@@ -44,6 +63,6 @@
 -main TestingFramework
 -D HXCPP_M64
 -cp ./tests
--cp ./src/cpp/_core
 -cp ./src
+-cp ./src/cpp/_std
 --times

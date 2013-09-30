@@ -27,19 +27,19 @@ import io.xun.core.util.BitwiseMask;
  */
 class TestingFramework {
 
+    #if XUN_IO_BENCH
+    public static var RUNS = 5000;
+    #else
     public static var RUNS = 1;
+    #end
 
     public static function main() {
         var result : Bool = true;
-        var tests : Array<haxe.unit.TestCase> = io.xun.test.Runner.main();
-        var runner : haxe.unit.TestRunner;
+        var runner : haxe.unit.TestRunner = new haxe.unit.TestRunner();
+        io.xun.test.Runner.main(runner);
 
         var i : Int = 0;
         for ( i in 0...RUNS ) {
-            runner = new haxe.unit.TestRunner();
-            for ( test in tests.iterator() ) {
-                runner.add(test);
-            }
             result = runner.run();
         }
 

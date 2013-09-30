@@ -16,12 +16,11 @@ package io.xun.core.dependencyinjection;
 
 /* imports and uses */
 
+import io.xun.core.exception.RuntimeException;
 import Reflect;
 import io.xun.core.util.Inflector;
 import io.xun.core.util.Inflector;
 import io.xun.core.util.StringUtils;
-import Reflect;
-import haxe.ds.StringMap;
 
 import io.xun.core.dependencyinjection.exception.InvalidServiceType;
 import io.xun.core.dependencyinjection.exception.ServiceCircularReferenceException;
@@ -52,15 +51,15 @@ class Container implements IIntrospectableContainer {
 
     public var parameterBag(default, null) : IParameterBag;
 
-    private var services : StringMap<Class<Dynamic>>;
-    private var methodMap : StringMap<Dynamic>;
-    private var aliases : StringMap<String>;
+    private var services : Map<String, Dynamic>;
+    private var methodMap : Map<String, Dynamic>;
+    private var aliases : Map<String, String>;
 
     private var loading : Array<String>;
-    private var scopes : Array<Dynamic>;
-    private var scopeChildren : Array<Dynamic>;
-    private var scopedServices : Array<Dynamic>;
-    private var scopeStacks : Array<Dynamic>;
+    private var scopes : Map<String, String>;
+    private var scopeChildren : Map<String, Dynamic>;
+    private var scopedServices : Map<String, Dynamic>;
+    private var scopeStacks : Map<String, Dynamic>;
 
     /**
      * Constructor
@@ -73,15 +72,15 @@ class Container implements IIntrospectableContainer {
         }
         this.parameterBag = parameterBag;
 
-        this.services = new StringMap<Class<Dynamic>>();
-        this.methodMap = new StringMap<Dynamic>();
-        this.aliases = new StringMap<String>();
+        this.services = new Map<String, Dynamic>();
+        this.methodMap = new Map<String, Dynamic>();
+        this.aliases = new Map<String, String>();
 
         this.loading = new Array<String>();
-        this.scopes = new Array<Dynamic>();
-        this.scopeChildren = new Array<Dynamic>();
-        this.scopedServices = new Array<Dynamic>();
-        this.scopeStacks = new Array<Dynamic>();
+        this.scopes = new Map<String, String>();
+        this.scopeChildren = new Map<String, Dynamic>();
+        this.scopedServices = new Map<String, Dynamic>();
+        this.scopeStacks = new Map<String, Dynamic>();
 
         this.set(CONTAINER, this);
     }
@@ -152,7 +151,6 @@ class Container implements IIntrospectableContainer {
         var id : String = id.toLowerCase();
 
         this.services.set(id, service);
-
     }
 
     /**
@@ -244,7 +242,7 @@ class Container implements IIntrospectableContainer {
     /**
      * Returns true if the given service has actually been initialized
      *
-     * @auhtor Maximilian Ruta <mr@xtain.net>
+     * @author Maximilian Ruta <mr@xtain.net>
      * @return true if service has already been initialized, false otherwise
      */
     public function initialized( id : String ) : Bool {
@@ -254,7 +252,7 @@ class Container implements IIntrospectableContainer {
     /**
      * Gets all service ids.
      *
-     * @auhtor Maximilian Ruta <mr@xtain.net>
+     * @author Maximilian Ruta <mr@xtain.net>
      * @return An array of all defined service ids
      */
     public function getServiceIds() : Array<String> {
@@ -262,7 +260,7 @@ class Container implements IIntrospectableContainer {
         var fields : Array<String> = Type.getInstanceFields(Type.getClass(this));
         var fieldMatch : EReg = ~/^get(.+)Service$/;
 
-        for(field in fields.iterator()) {
+        for (field in fields.iterator()) {
             var field : String = field;
             if (Reflect.isFunction(Reflect.field(this, field))
                  && fieldMatch.match(field)) {
@@ -276,6 +274,28 @@ class Container implements IIntrospectableContainer {
                 L.fromIterator(this.services.keys())
             )
         ).unique();
+    }
+
+    /**
+     * This is called when you enter a scope
+     *
+     * @author Maximilian Ruta <mr@xtain.net>
+     *
+     **/
+    public function enterScope(name : String) {
+
+        if (!Lambda.has(scopes, name))  {
+            throw new InvalidArgumentException('The sope "${name}" does not exist.');
+        }
+
+        if (IContainerConst.SCOPE_CONTAINER != scopes.get(name)
+            && !scopedServices.exists(scopes.get(name))
+        ) {
+            throw new RuntimeException('The parent scope "${scopes.get(name)}" must be active when entering this scope.');
+        }
+
+
+
     }
 
     public static function getMethodName( id : String ) : String {

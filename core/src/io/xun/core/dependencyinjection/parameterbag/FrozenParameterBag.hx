@@ -29,32 +29,46 @@ import haxe.ds.StringMap;
  */
 class FrozenParameterBag extends ParameterBag {
 
+    private var frozen : Bool = false;
+
     public function new( bag : IParameterBag ) {
         super();
         for(parameter in bag.iterator()) {
-            super.set(parameter);
+            this.set(parameter);
         }
+        frozen = true;
     }
 
     override public function isFrozen() : Bool {
-        return true;
+        return frozen;
     }
 
     override public function clear() : Void {
-        throw new FrozenParameterBagException("Impossible to call clear() on a frozen ParameterBag.");
+        if (isFrozen()) {
+            throw new FrozenParameterBagException("Impossible to call clear() on a frozen ParameterBag.");
+        }
+        super.clear();
     }
 
     override public function add( parameters : Array<Parameter> ) : Void {
-        throw new FrozenParameterBagException("Impossible to call add() on a frozen ParameterBag");
+        if (isFrozen()) {
+            throw new FrozenParameterBagException("Impossible to call add() on a frozen ParameterBag");
+        }
+        super.add(parameters);
     }
 
     override public function set( parameter : Parameter ) : Void {
-        throw new FrozenParameterBagException("Impossible to call set() on a frozen ParameterBag");
+        if (isFrozen()) {
+            throw new FrozenParameterBagException("Impossible to call set() on a frozen ParameterBag");
+        }
+        super.set(parameter);
     }
 
     override public function remove( key : String ) : Bool {
-        throw new FrozenParameterBagException("Impossible to call remove() on a frozen ParameterBag");
-        return false;
+        if (isFrozen()) {
+            throw new FrozenParameterBagException("Impossible to call remove() on a frozen ParameterBag");
+        }
+        return super.remove(key);
     }
 
 }
