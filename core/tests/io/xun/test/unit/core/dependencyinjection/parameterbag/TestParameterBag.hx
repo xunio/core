@@ -44,6 +44,8 @@ class TestParameterBag extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : InvalidArgumentException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
         p.set(new Parameter('test', 'foo2'));
@@ -70,6 +72,8 @@ class TestParameterBag extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : InvalidArgumentException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
         p.set(param);

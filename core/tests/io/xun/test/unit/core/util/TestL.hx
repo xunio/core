@@ -67,6 +67,8 @@ class TestL extends haxe.unit.TestCase {
         } catch(e : OutOfBoundsException) {
             assertEquals('targetPos is higher than gratest index of target', e.getMessage());
             return;
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
         assertTrue(false);
     }
@@ -81,6 +83,8 @@ class TestL extends haxe.unit.TestCase {
         } catch(e : OutOfBoundsException) {
             assertEquals('source fewer items that sould be copied', e.getMessage());
             return;
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
         assertTrue(false);
     }

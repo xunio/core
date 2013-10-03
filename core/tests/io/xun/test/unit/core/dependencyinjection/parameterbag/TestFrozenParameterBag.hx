@@ -44,6 +44,8 @@ class TestFrozenParameterBag extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : FrozenParameterBagException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
         try {
@@ -51,6 +53,8 @@ class TestFrozenParameterBag extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : FrozenParameterBagException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
         try {
@@ -58,6 +62,8 @@ class TestFrozenParameterBag extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : FrozenParameterBagException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
         try {
@@ -65,6 +71,8 @@ class TestFrozenParameterBag extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : FrozenParameterBagException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
         assertTrue(pf.isFrozen());

@@ -24,6 +24,6 @@ package io.xun.test.unit.crypt;
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
-        //runner.add(new TestBase64());
+        runner.add(new TestBase64());
     }
 }

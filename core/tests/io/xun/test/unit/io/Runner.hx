@@ -25,6 +25,8 @@ import io.xun.test.unit.io.TestByteArrayInputSteam;
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
+        runner.add(new TestByteUtils());
         runner.add(new TestByteArrayInputSteam());
+        runner.add(new TestPipeInputSteam());
     }
 }

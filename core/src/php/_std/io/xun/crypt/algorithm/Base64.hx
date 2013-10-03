@@ -21,6 +21,7 @@ package io.xun.crypt.algorithm;
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @package       io.xun.crypt.algorithm
  */
+import haxe.io.Bytes;
 class Base64 {
 
     /**
@@ -28,9 +29,11 @@ class Base64 {
      *
      * @author Maximilian Ruta <mr@xtain.net>
      */
-    public static function encode(data : String) : String {
-        data = io.xun.crypt.algorithm.implementation.Base64.prepareEncode(data);
-        return io.xun.crypt.algorithm.implementation.Base64.afterEncode(untyped __php__("base64_encode($data)"));
+    public static function encode(data : Bytes) : Bytes {
+        return io.xun.crypt.algorithm.implementation.Base64.encode(data);
+        //return data;
+        //data = io.xun.crypt.algorithm.implementation.Base64.prepareEncode(data);
+        //return io.xun.crypt.algorithm.implementation.Base64.afterEncode(untyped __php__("base64_encode($data)"));
     }
 
     /**
@@ -38,8 +41,10 @@ class Base64 {
      *
      * @author Maximilian Ruta <mr@xtain.net>
      */
-    public static function decode(data : String) : String {
-        data = io.xun.crypt.algorithm.implementation.Base64.prepareDecode(data);
-        return io.xun.crypt.algorithm.implementation.Base64.afterDecode(untyped __php__("base64_decode($data)"));
+    public static function decode(data : Bytes) : Bytes {
+        return io.xun.crypt.algorithm.implementation.Base64.decode(data);
+        //return data;
+        //data = io.xun.crypt.algorithm.implementation.Base64.prepareDecode(data);
+        //return io.xun.crypt.algorithm.implementation.Base64.afterDecode(untyped __php__("base64_decode($data)"));
     }
 }

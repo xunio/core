@@ -28,7 +28,7 @@ import haxe.io.Bytes;
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @package       io.xun.io
  */
-class ByteArrayInputStream extends InputStream implements IObservable {
+class ByteArrayInputStream extends InputStream {
 
     private var buffer : Bytes;
     private var pos : Int = 0;
@@ -105,34 +105,15 @@ class ByteArrayInputStream extends InputStream implements IObservable {
     override public function close() : Void {
     }
 
-    public function attach(o : IObserver, mask : Null<Int> = 0) : Void {
+    override public function attach(o : IObserver, mask : Null<Int> = 0) : Void {
         this.observable.attach(o, mask);
         if (!(this.alreadyNotified.exists(o) && this.alreadyNotified.get(o))) {
-            this.observable.notify(ByteArrayInputStreamEvent.DATA, null);
+            this.observable.notify(InputStream.InputStreamEvent.DATA, null);
             this.alreadyNotified.set(o, true);
         }
     }
 
-    public function detach(o : IObserver, mask : Null<Int> = null) : Void {
+    override public function detach(o : IObserver, mask : Null<Int> = null) : Void {
         this.observable.detach(o, mask);
     }
 }
-
-
-/**
- * Class ByteArrayInputStream
- *
- * @author        Maximilian Ruta <mr@xtain.net>
- * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       js.io.xun.ui.ec.ByteArrayInputStream
- */
-@:build(io.xun.core.event.ObserverMacro.create([
-DATA
-]))
-class ByteArrayInputStreamEvent {
-    public inline static var DATA;
-    public inline static var GROUP_ID;
-    public inline static var GROUP_MASK;
-    public inline static var EVENT_MASK;
-}
-

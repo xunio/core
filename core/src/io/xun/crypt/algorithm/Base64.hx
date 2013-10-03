@@ -14,6 +14,8 @@
 
 package io.xun.crypt.algorithm;
 
+import haxe.io.Bytes;
+
 /**
  * Class Base64
  *
@@ -28,7 +30,7 @@ class Base64 {
      *
      * @author Maximilian Ruta <mr@xtain.net>
      */
-    public static function encode(data : String) : String {
+    public static function encode(data : Bytes) : Bytes {
         return io.xun.crypt.algorithm.implementation.Base64.encode(data);
     }
 
@@ -37,7 +39,7 @@ class Base64 {
      *
      * @author Maximilian Ruta <mr@xtain.net>
      */
-    public static function decode(data : String) : String {
+    public static function decode(data : Bytes) : Bytes {
         return io.xun.crypt.algorithm.implementation.Base64.decode(data);
     }
 

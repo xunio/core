@@ -20,6 +20,8 @@ import io.xun.core.exception.OutOfBoundsException;
 import haxe.io.Bytes;
 import haxe.io.BytesData;
 import io.xun.io.ByteArrayInputStream;
+import io.xun.io.InputStream;
+import io.xun.io.InputStream.InputStreamEvent;
 
 /**
  * Class TestByteArrayInputSteam
@@ -102,6 +104,8 @@ class TestByteArrayInputSteam extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : OutOfBoundsException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
         sourceBytes = Bytes.ofString('12');
@@ -112,8 +116,18 @@ class TestByteArrayInputSteam extends haxe.unit.TestCase {
             assertTrue(false);
         } catch(e : OutOfBoundsException) {
             assertTrue(true);
+        } catch(e : Dynamic) {
+            assertTrue(false);
         }
 
+        sourceBytes = Bytes.ofString('1234');
+        targetBytes = Bytes.alloc(5);
+        stream = new ByteArrayInputStream(sourceBytes);
+
+        targetBytes.set(3, 1);
+        targetBytes.set(4, 2);
+        assertEquals(3, stream.readOffset(targetBytes, 0, 3));
+        assertEquals('3132330102', targetBytes.toHex());
     }
 
     public function testSkip() {
@@ -123,7 +137,7 @@ class TestByteArrayInputSteam extends haxe.unit.TestCase {
 
         sourceBytes = Bytes.ofString('1234');
         stream = new ByteArrayInputStream(sourceBytes);
-        stream.skip(2);
+        assertEquals(2, stream.skip(2));
         targetBytes = Bytes.alloc(2);
         assertEquals(2, stream.readOffset(targetBytes));
         assertEquals('3334', targetBytes.toHex());
@@ -131,15 +145,27 @@ class TestByteArrayInputSteam extends haxe.unit.TestCase {
 
         sourceBytes = Bytes.ofString('1234');
         stream = new ByteArrayInputStream(sourceBytes);
-        stream.skip(5);
+        assertEquals(4, stream.skip(5));
         targetBytes = Bytes.alloc(1);
         assertEquals(-1, stream.readOffset(targetBytes));
 
 
         sourceBytes = Bytes.ofString('1234');
         stream = new ByteArrayInputStream(sourceBytes);
-        stream.skip(5);
+        assertEquals(4, stream.skip(4));
+        assertEquals(0, stream.skip(2));
         assertEquals(0, stream.available());
+    }
+
+    public function testToBytes() {
+        var sourceBytes : Bytes;
+        var targetBytes : Bytes;
+        var stream : ByteArrayInputStream;
+
+        sourceBytes = Bytes.ofString('1234');
+        stream = new ByteArrayInputStream(sourceBytes);
+        targetBytes = stream.toBytes();
+        assertEquals('31323334', targetBytes.toHex());
     }
 
     public function testMarkSupported() {
@@ -179,7 +205,7 @@ class TestByteArrayInputSteam extends haxe.unit.TestCase {
         sourceBytes = Bytes.ofString('1234');
         stream = new ByteArrayInputStream(sourceBytes);
         var ob : TestByteArrayInputSteamObserver = new TestByteArrayInputSteamObserver();
-        stream.attach(ob, ByteArrayInputStreamEvent.DATA);
+        stream.attach(ob, InputStreamEvent.DATA);
         assertEquals(4, ob.read);
         assertEquals('31323334', ob.targetBytes.toHex());
     }
@@ -187,7 +213,7 @@ class TestByteArrayInputSteam extends haxe.unit.TestCase {
 }
 
 /**
- * Class MockObserver
+ * Class TestByteArrayInputSteamObserver
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
@@ -204,8 +230,8 @@ class TestByteArrayInputSteamObserver implements IObserver {
 
     public function onUpdate( type : Int, source : IObservable, userData : Dynamic ) : Void {
         switch(type) {
-            case ByteArrayInputStreamEvent.DATA:
-                var stream : ByteArrayInputStream = cast source;
+            case InputStreamEvent.DATA:
+                var stream : InputStream = cast source;
                 read = stream.readOffset(targetBytes);
         }
     }
