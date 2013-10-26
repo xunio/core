@@ -8,27 +8,19 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.core.dependencyinjection.ref
+ * @package       io.xun.core.dependencyinjection
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.core.dependencyinjection.ref;
+package io.xun.core.dependencyinjection;
+
+import haxe.ds.StringMap;
 
 /**
- * Class Parameter
+ * Class ServiceMap
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.core.dependencyinjection.ref
+ * @package       io.xun.core.dependencyinjection
  */
-class Parameter implements IArgument {
-
-    public var key : String;
-    public var value : Dynamic;
-
-    public function new(key : String, value : Dynamic) {
-        this.key = key;
-        this.value = value;
-    }
-
-}
+typedef ServiceMap = StringMap<Dynamic>;

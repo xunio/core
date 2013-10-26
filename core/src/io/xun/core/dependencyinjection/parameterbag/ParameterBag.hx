@@ -16,8 +16,8 @@ package io.xun.core.dependencyinjection.parameterbag;
 
 /* imports and uses */
 
+import io.xun.core.exception.InvalidArgumentException;
 import io.xun.core.dependencyinjection.ref.Parameter;
-import io.xun.core.dependencyinjection.parameterbag.exception.InvalidArgumentException;
 import haxe.ds.StringMap;
 
 /**
@@ -29,10 +29,10 @@ import haxe.ds.StringMap;
  */
 class ParameterBag implements IParameterBag {
 
-    var stringMap : StringMap<Parameter>;
+    var stringMap : Map<String, Parameter>;
 
     public function new() : Void {
-        stringMap = new StringMap<Parameter>();
+        stringMap = new Map<String, Parameter>();
     }
 
     public function clear() : Void {
@@ -57,10 +57,12 @@ class ParameterBag implements IParameterBag {
     }
 
     public function set( parameter : Parameter ) : Void {
+        parameter.key = parameter.key.toLowerCase();
         stringMap.set(parameter.key, parameter);
     }
 
     public function get( key : String ) : Parameter {
+        key = key.toLowerCase();
         if (stringMap.exists(key)) {
             return stringMap.get(key);
         }

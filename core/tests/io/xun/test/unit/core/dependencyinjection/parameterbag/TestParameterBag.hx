@@ -14,7 +14,7 @@
 
 package io.xun.test.unit.core.dependencyinjection.parameterbag;
 
-import io.xun.core.dependencyinjection.parameterbag.exception.InvalidArgumentException;
+import io.xun.core.exception.InvalidArgumentException;
 import io.xun.core.dependencyinjection.ref.Parameter;
 import io.xun.core.dependencyinjection.parameterbag.ParameterBag;
 

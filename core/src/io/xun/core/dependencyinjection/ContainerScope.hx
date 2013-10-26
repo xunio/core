@@ -8,19 +8,33 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.core.dependencyinjection.parameterbag.exception
+ * @package       io.xun.core.dependencyinjection
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.core.dependencyinjection.parameterbag.exception;
-
+package io.xun.core.dependencyinjection;
 
 /**
- * Class InvalidArgumentException
+ * Class ContainerScope
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.core.dependencyinjection.parameterbag.exception
+ * @package       io.xun.core.dependencyinjection
  */
-class InvalidArgumentException extends io.xun.core.exception.InvalidArgumentException {
+class ContainerScope {
+
+    public var parentServices : ServiceMap;
+
+    public var services : ServiceMap;
+
+    /**
+     * Constructor
+     *
+     * @author Maximilian Ruta <mr@xtain.net>
+     */
+    public function new() {
+        services = new ServiceMap();
+        parentServices = new ServiceMap();
+    }
+
 }

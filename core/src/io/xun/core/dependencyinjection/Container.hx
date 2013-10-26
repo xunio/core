@@ -16,9 +16,10 @@ package io.xun.core.dependencyinjection;
 
 /* imports and uses */
 
+import io.xun.core.exception.InvalidArgumentException;
+import haxe.ds.StringMap;
 import io.xun.core.exception.RuntimeException;
 import Reflect;
-import io.xun.core.util.Inflector;
 import io.xun.core.util.Inflector;
 import io.xun.core.util.StringUtils;
 
@@ -26,9 +27,6 @@ import io.xun.core.dependencyinjection.exception.InvalidServiceType;
 import io.xun.core.dependencyinjection.exception.ServiceCircularReferenceException;
 import io.xun.core.dependencyinjection.exception.InactiveScopeException;
 import io.xun.core.dependencyinjection.exception.ServiceNotFoundException;
-import io.xun.core.dependencyinjection.parameterbag.exception.InvalidArgumentException;
-
-import io.xun.core.util.L;
 
 import io.xun.core.dependencyinjection.ref.Parameter;
 import io.xun.core.dependencyinjection.parameterbag.FrozenParameterBag;
@@ -36,6 +34,8 @@ import io.xun.core.dependencyinjection.parameterbag.ParameterBag;
 import io.xun.core.dependencyinjection.parameterbag.IParameterBag;
 import io.xun.core.dependencyinjection.IContainer.IContainerConst;
 
+using Lambda;
+using io.xun.core.util.L;
 using io.xun.core.util.L.ArrayExtension;
 
 /**
@@ -51,15 +51,15 @@ class Container implements IIntrospectableContainer {
 
     public var parameterBag(default, null) : IParameterBag;
 
-    private var services : Map<String, Dynamic>;
+    private var services : ServiceMap;
     private var methodMap : Map<String, Dynamic>;
     private var aliases : Map<String, String>;
 
     private var loading : Array<String>;
     private var scopes : Map<String, String>;
-    private var scopeChildren : Map<String, Dynamic>;
-    private var scopedServices : Map<String, Dynamic>;
-    private var scopeStacks : Map<String, Dynamic>;
+    private var scopeChildren : Map<String, Array<String>>;
+    private var scopedServices : Map<String, ServiceMap>;
+    private var scopeStacks : Map<String, Array<Map<String, ServiceMap>>>;
 
     /**
      * Constructor
@@ -72,15 +72,15 @@ class Container implements IIntrospectableContainer {
         }
         this.parameterBag = parameterBag;
 
-        this.services = new Map<String, Dynamic>();
+        this.services = new ServiceMap();
         this.methodMap = new Map<String, Dynamic>();
         this.aliases = new Map<String, String>();
 
         this.loading = new Array<String>();
         this.scopes = new Map<String, String>();
-        this.scopeChildren = new Map<String, Dynamic>();
-        this.scopedServices = new Map<String, Dynamic>();
-        this.scopeStacks = new Map<String, Dynamic>();
+        this.scopeChildren = new Map<String, Array<String>>();
+        this.scopedServices = new Map<String, ServiceMap>();
+        this.scopeStacks = new Map<String, Array<Map<String, ServiceMap>>>();
 
         this.set(CONTAINER, this);
     }
@@ -109,6 +109,16 @@ class Container implements IIntrospectableContainer {
      */
     public function isFrozen() : Bool {
         return parameterBag.isFrozen();
+    }
+
+    /**
+     * Gets an parameter from ParameterBag.
+     *
+     * @author Maximilian Ruta <mr@xtain.net>
+     * @throws io.xun.core.dependencyinjection.parameterbag.InvalidArgumentException if the parameter is not defined
+     */
+    public function getParameterBag() : IParameterBag {
+        return this.parameterBag;
     }
 
     /**
@@ -147,10 +157,36 @@ class Container implements IIntrospectableContainer {
      *
      * @author Maximilian Ruta <mr@xtain.net>
      */
-    public function set( id : String, service : Dynamic ) : Void {
+    public function set( id : String, service : Null<Dynamic>, scope : String = IContainerConst.SCOPE_CONTAINER ) : Void {
+        if (IContainerConst.SCOPE_PROTOTYPE == scope) {
+            throw new InvalidArgumentException('You cannot set service "${id}" of scope "prototype".');
+        }
+
         var id : String = id.toLowerCase();
 
-        this.services.set(id, service);
+        if (IContainerConst.SCOPE_CONTAINER != scope) {
+            if (!scopedServices.exists(scope)) {
+                throw new RuntimeException('You cannot set service "${id}" of inactive scope.');
+            }
+
+            scopedServices.get(scope).set(id, service);
+        }
+
+        services.set(id, service);
+
+        var methodName : String = getSynchronizeMethodName(id);
+        var method : Dynamic = Reflect.field(this, methodName);
+        if (method != null && Reflect.isFunction(method)) {
+            Reflect.callMethod(this, method, []);
+        }
+
+        if (IContainerConst.SCOPE_CONTAINER != scope && service == null) {
+            scopedServices.get(scope).remove(id);
+        }
+
+        if (service == null) {
+            services.remove(id);
+        }
     }
 
     /**
@@ -190,7 +226,7 @@ class Container implements IIntrospectableContainer {
             return this.services.get(id);
         }
 
-        if (Lambda.has(this.loading, id)) {
+        if (this.loading.has(id)) {
             throw new ServiceCircularReferenceException(id);
         }
 
@@ -268,12 +304,42 @@ class Container implements IIntrospectableContainer {
             }
         }
 
-        return Lambda.array(
-            Lambda.concat(
-                ids,
-                L.fromIterator(this.services.keys())
-            )
-        ).unique();
+        return ids.concat(
+            this.services.keys().fromIterator()
+        ).array().unique();
+    }
+
+    public function addScope(scope : IScope) {
+        var name : String = scope.getName();
+        var parentScope : String = scope.getParentName();
+
+        if (IContainerConst.SCOPE_CONTAINER == name || IContainerConst.SCOPE_PROTOTYPE == name) {
+            throw new InvalidArgumentException('The scope "${name}" is reserved.');
+        }
+        if (scopes.exists(name)) {
+            throw new InvalidArgumentException('A scope with name "${name}" already exists.');
+        }
+        if (IContainerConst.SCOPE_CONTAINER != parentScope && !scopes.exists(parentScope)) {
+            throw new InvalidArgumentException('The parent scope "${parentScope}" does not exist, or is invalid.');
+        }
+
+        scopes.set(name, parentScope);
+        scopeChildren.set(name, new Array<String>());
+
+        // normalize the child relations
+        while (parentScope != IContainerConst.SCOPE_CONTAINER) {
+            scopeChildren.get(parentScope).push(name);
+            parentScope = scopes.get(parentScope);
+        }
+    }
+
+    /**
+     * Returns whether this container has a certain scope
+     *
+     * @author Maximilian Ruta <mr@xtain.net>
+     */
+    public function hasScope( name : String ) : Bool {
+        return scopes.exists(name);
     }
 
     /**
@@ -281,10 +347,9 @@ class Container implements IIntrospectableContainer {
      *
      * @author Maximilian Ruta <mr@xtain.net>
      *
-     **/
+     */
     public function enterScope(name : String) {
-
-        if (!Lambda.has(scopes, name))  {
+        if (!scopes.exists(name))  {
             throw new InvalidArgumentException('The sope "${name}" does not exist.');
         }
 
@@ -295,11 +360,108 @@ class Container implements IIntrospectableContainer {
         }
 
 
+        // check if a scope of this name is already active, if so we need to
+        // remove all services of this scope, and those of any of its child
+        // scopes from the global services map
+        var services : Map<String, ServiceMap> = new Map<String, ServiceMap>();
+        if (scopedServices.exists(name)) {
+            var diffs : Array<Array<String>> = new Array<Array<String>>();
+            services.set(name, scopedServices.get(name));
+            diffs.push(services.get(name).keys().fromIterator());
+            scopedServices.remove(name);
 
+            var currentServiceMap : ServiceMap;
+            for (child in scopeChildren.get(name).iterator()) {
+                if (scopedServices.exists(child)) {
+                    currentServiceMap = scopedServices.get(child);
+                    scopedServices.remove(child);
+                    services.set(child, currentServiceMap);
+                    diffs.push(services.get(child).keys().fromIterator());
+                }
+            }
+
+            var lastServices : ServiceMap = this.services;
+            this.services = new ServiceMap();
+            for (service in lastServices.keys().diff(diffs.flatten())) {
+                this.services.set(service, lastServices.get(service));
+            }
+
+            var stack : Array<Map<String, ServiceMap>>;
+            if (scopeStacks.exists(name)) {
+                stack = scopeStacks.get(name);
+            } else {
+                stack = new Array<Map<String, ServiceMap>>();
+                scopeStacks.set(name, stack);
+            }
+            stack.push(services);
+        }
+
+        scopedServices.set(name, new ServiceMap());
+        scopedServices.get(name).set(CONTAINER, this);
+    }
+
+    public function leaveScope(name) {
+        if (!scopedServices.exists(name)) {
+            throw new InvalidArgumentException('The scope "${name}}" is not active.');
+        }
+
+        // remove all services of this scope, or any of its child scopes from
+        // the global service map
+        var diffMap : Map<String, String> = new Map();
+        var services : Array<ServiceMap> = new Array<ServiceMap>();
+        var removableServices : Array<String> = new Array<String>();
+
+        for (child in [name].concat(scopeChildren.get(name))) {
+            if (!scopedServices.exists(child)) {
+                continue;
+            }
+
+            services.push(scopedServices.get(child));
+            removableServices.push(child);
+
+            for (key in scopedServices.get(child).keys()) {
+                if (!diffMap.exists(key)) {
+                    diffMap.set(key, child);
+                }
+            }
+        }
+
+        var childService : ServiceMap;
+
+        var lastServices : ServiceMap = this.services;
+        var services : Array<String> = lastServices.keys().diff(diffMap.keys().fromIterator());
+        this.services = new ServiceMap();
+        for (service in services) {
+            childService = scopedServices.get(diffMap.get(service));
+            if (childService.exists(service)) {
+                this.services.set(service, childService.get(service));
+            }
+        }
+
+        for (removableChild in removableServices) {
+            scopedServices.remove(removableChild);
+        }
+
+        var stackedServiceMap : Map<String, ServiceMap>;
+        // check if we need to restore services of a previous scope of this type
+        if (scopeStacks.exists(name) && scopeStacks.get(name).length > 0) {
+            stackedServiceMap = scopeStacks.get(name).pop();
+            scopedServices.append(stackedServiceMap);
+
+            for (array in stackedServiceMap.iterator()) {
+                for (id in array.keys()) {
+                    set(id, array.get(id), name);
+                }
+            }
+        }
     }
 
     public static function getMethodName( id : String ) : String {
         return 'get' + Inflector.camelize(id) + 'Service';
+    }
+
+    public static function getSynchronizeMethodName( id : String ) : String {
+        return 'synchronize' + Inflector.camelize(id) + 'Service';
     }
 
     public function register(key : String, dependency : Class<Dynamic>) : Definition {

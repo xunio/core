@@ -28,7 +28,7 @@ import io.xun.core.util.BitwiseMask;
 class TestingFramework {
 
     #if XUN_IO_BENCH
-    public static var RUNS = 5000;
+    public static var RUNS = 100;
     #else
     public static var RUNS = 1;
     #end

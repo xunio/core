@@ -20,7 +20,7 @@ import io.xun.core.event.IObserver;
 import io.xun.core.exception.NotImplementedException;
 import haxe.io.Bytes;
 import io.xun.core.exception.OutOfBoundsException;
-import io.xun.core.dependencyinjection.parameterbag.exception.InvalidArgumentException;
+import io.xun.core.exception.InvalidArgumentException;
 import io.xun.core.exception.VirtualMethodCallException;
 import haxe.io.Bytes;
 import io.xun.core.event.IObservable;
