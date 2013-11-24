@@ -59,19 +59,6 @@
 
 --next
 
--cs out/test/cs
--debug
--main TestingFramework
--D haxe3
--cp ../haxe/src/std
--cp ../haxe/src/std/cs/_std
--cp ./tests
--cp ./src
--cp ./src/cs/_std
---times
-
---next
-
 -cpp out/test/cpp64
 -debug
 -main TestingFramework
