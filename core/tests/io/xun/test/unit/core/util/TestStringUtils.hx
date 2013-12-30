@@ -36,4 +36,8 @@ class TestStringUtils extends haxe.unit.TestCase {
         assertEquals('5test', StringUtils.upperCaseWords('5test'));
     }
 
+    public function testEscapeShellArgument() {
+        assertEquals("'kevin\\'s birthday'", StringUtils.escapeShellArgument("kevin's birthday"));
+    }
+
 }

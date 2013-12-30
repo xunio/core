@@ -52,4 +52,17 @@ class StringUtils extends StringTools {
         #end
     }
 
+    public static function escapeShellArgument(arg : String) : String {
+        var ret = '';
+
+        var reg : EReg = ~/[^\\]'/;
+
+        ret = reg.map(arg, function (match : EReg) {
+            var m : String = match.matched(0);
+            return m.substr(0, m.length - 1) + '\\\'';
+        });
+
+        return "'" + ret + "'";
+    }
+
 }
