@@ -31,9 +31,16 @@ for dir in js php java cs cpp32 cpp64 neko flash; do
   if ! [ -a "out/test/$dir" ]; then
     mkdir "out/test/$dir"
   fi;
+  if ! [ -a "out/test/$dir/ndll" ]; then
+    mkdir "out/test/$dir/ndll"
+  fi;
 done;
 
-time haxe test.hxml
+RUNPWD=$PWD
+
+time haxe test.hxml -D linux
+
+cd ../native/cpp/clipboard && make && cp ./bin/clipboard.ndll $RUNPWD/out/test/cpp64/ndll/clipboard.ndll; cd $RUNPWD
 
 if [ "${?}" -gt "0" ]; then
   echo "Build failed";
@@ -78,11 +85,13 @@ echo ""
 cecho "### C++ 64-bit" $blue
 cecho "#####################################################" $blue
 if [ -f "./out/test/cpp64/TestingFramework-debug" ]; then
+cd ./out/test/cpp64/
 if [ "${1}" == "out" ]; then
-  time ./out/test/cpp64/TestingFramework-debug > /dev/null
+  time ./TestingFramework-debug > /dev/null
 else
-  time ./out/test/cpp64/TestingFramework-debug
+  time ./TestingFramework-debug
 fi;
+cd "${RUNPWD}"
 if [ "${?}" -gt "0" ]; then
   cecho "# C++ Test failed!" $red
   TESTRESULT=1

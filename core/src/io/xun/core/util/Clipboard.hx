@@ -8,28 +8,22 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test.unit.core.util
+ * @package       io.xun.core.util
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.core.util;
+package io.xun.core.util;
 
 /**
- * Class Runner
+ * Class Clipboard
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test.unit.core.util
+ * @package       io.xun.core.util
  */
-class Runner {
-
-    public static function main(runner : haxe.unit.TestRunner) {
-        runner.add(new TestL());
-        runner.add(new TestStringUtils());
-        runner.add(new TestInflector());
-        runner.add(new TestBitwiseMask());
-        #if (linux && cpp)
-        runner.add(new TestClipboard());
-        #end
-    }
-}
+#if linux
+typedef Clipboard = io.xun.cp.lnx.core.util.Clipboard;
+#else
+#error
+typedef Clipboard = IClipboard;
+#end

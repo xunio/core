@@ -264,6 +264,7 @@ class TestContainer extends haxe.unit.TestCase {
         container.addScope(new Scope('foo'));
         assertTrue(container.hasScope('foo'));
     }
+
     /*
     public function testEnterLeaveCurrentScope() {
         var container : ExtendedContainer = new ExtendedContainer();
@@ -307,6 +308,14 @@ class TestContainer extends haxe.unit.TestCase {
         assertEquals(scopedFoo1[0], scopedFoo3[0]);
         assertEquals(scopedFoo1[1], scopedFoo3[1]);
         assertEquals(scopedFoo1[2], scopedFoo3[2]);
+
+    }
+
+    public function testEnterLeaveScopeWithChildScopes() {
+        var container : ExtendedContainer = new ExtendedContainer();
+        container.addScope(new Scope('foo'));
+        container.addScope(new Scope('bar', 'foo'));
+
 
     }
     */

@@ -14,6 +14,8 @@
 
 package io.xun.crypt.algorithm;
 
+import haxe.io.Bytes;
+
 /**
  * Class Base64
  *
@@ -21,7 +23,6 @@ package io.xun.crypt.algorithm;
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @package       io.xun.crypt.algorithm
  */
-import haxe.io.Bytes;
 class Base64 {
 
     /**
