@@ -27,8 +27,8 @@ import io.xun.core.util.clipboard.IClipboard;
  */
 class Clipboard extends AbstractClipboard implements IClipboard {
 
-    private static var _getText : Void -> Null<String> = cpp.Lib.load("ndll/clipboard", "getText", 0);
-    private static var _setText : String -> Bool = cpp.Lib.load("ndll/clipboard", "setText", 1);
+    private static var _getText : Void -> Null<String> = neko.Lib.load("ndll/clipboard", "getText", 0);
+    private static var _setText : String -> Bool = neko.Lib.load("ndll/clipboard", "setText", 1);
 
     /**
      * Constructor
@@ -36,18 +36,17 @@ class Clipboard extends AbstractClipboard implements IClipboard {
      * @author Maximilian Ruta <mr@xtain.net>
      */
     public function new() {
-        super();
     }
 
-    override public function isAvailable() : Bool {
+    public function isAvailable() : Bool {
         return true;
     }
 
-    override public function getText() : Null<String> {
+    public function getText() : Null<String> {
         return _getText();
     }
 
-    override public function setText(value : String) : Void {
+    public function setText(value : String) : Void {
         if(!_setText(value)) {
             throw new ClipboardException();
         }

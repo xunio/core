@@ -38,9 +38,10 @@ done;
 
 RUNPWD=$PWD
 
-time haxe test.hxml -D linux
+time haxe test.hxml
 
-cd ../native/cpp/clipboard && make && cp ./bin/clipboard.ndll $RUNPWD/out/test/cpp64/ndll/clipboard.ndll; cd $RUNPWD
+cd ../native/cpp/clipboard && make && cp ./bin/clipboard.ndll $RUNPWD/out/test/cpp64/ndll/clipboard.ndll && cp ./bin/clipboard.ndll $RUNPWD/out/test/neko/ndll/clipboard.ndll
+cd $RUNPWD
 
 if [ "${?}" -gt "0" ]; then
   echo "Build failed";
@@ -129,11 +130,13 @@ echo ""
 cecho "## NekoVM" $blue
 cecho "#####################################################" $blue
 if [ $(which neko) ]; then
+cd ./out/test/neko/
 if [ "${1}" == "out" ]; then
-  time neko out/test/neko/TestingFramework.n > /dev/null
+  time neko TestingFramework.n > /dev/null
 else
-  time neko out/test/neko/TestingFramework.n
+  time neko TestingFramework.n
 fi;
+cd "${RUNPWD}"
 if [ "${?}" -gt "0" ]; then
   cecho "# NekoVM Test failed!" $red
   TESTRESULT=1

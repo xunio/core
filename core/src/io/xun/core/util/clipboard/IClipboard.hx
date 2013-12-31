@@ -8,26 +8,27 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test.unit.core.util
+ * @package       io.xun.core.util
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.core.util;
+package io.xun.core.util.clipboard;
 
 /**
- * Class Runner
+ * Interface IClipboard
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test.unit.core.util
+ * @package       io.xun.core.util
  */
-class Runner {
+interface IClipboard {
 
-    public static function main(runner : haxe.unit.TestRunner) {
-        io.xun.test.unit.core.util.clipboard.Runner.main(runner);
-        runner.add(new TestL());
-        runner.add(new TestStringUtils());
-        runner.add(new TestInflector());
-        runner.add(new TestBitwiseMask());
-    }
+    public function isNotifiable() : Bool;
+
+    public function isAvailable() : Bool;
+
+    public function getText() : Null<String>;
+
+    public function setText(value : String) : Void;
+
 }

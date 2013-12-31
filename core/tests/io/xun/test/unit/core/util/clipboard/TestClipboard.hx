@@ -12,9 +12,9 @@
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.core.util;
+package io.xun.test.unit.core.util.clipboard;
 
-import io.xun.core.util.Clipboard;
+import io.xun.core.util.clipboard.Clipboard;
 
 /**
  * Class TestClipboard

@@ -8,26 +8,26 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test.unit.core.util
+ * @package       io.xun.core.util.clipboard
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.core.util;
+package io.xun.core.util.clipboard;
 
 /**
- * Class Runner
+ * Interface NotifiableClipboard
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test.unit.core.util
+ * @package       io.xun.core.util.clipboard
  */
-class Runner {
+interface NotifiableClipboard {
 
-    public static function main(runner : haxe.unit.TestRunner) {
-        io.xun.test.unit.core.util.clipboard.Runner.main(runner);
-        runner.add(new TestL());
-        runner.add(new TestStringUtils());
-        runner.add(new TestInflector());
-        runner.add(new TestBitwiseMask());
-    }
+    /**
+     * Constructor
+     *
+     * @author Maximilian Ruta <mr@xtain.net>
+     */
+    public function onData() : Void;
+
 }

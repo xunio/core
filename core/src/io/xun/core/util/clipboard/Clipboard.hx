@@ -12,13 +12,37 @@
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.core.util;
+package io.xun.core.util.clipboard;
 
 /**
- * Class ClipboardException
+ * Class Clipboard
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @package       io.xun.core.util
  */
-class ClipboardException extends io.xun.core.exception.RuntimeException {}
+#if linux
+typedef Clipboard = io.xun.cp.lnx.core.util.Clipboard;
+#else
+#error
+typedef Clipboard = IClipboard;
+#end
+
+
+/**
+ * Class ClipboardEvent
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       io.xun.io.Clipboard
+ */
+@:build(io.xun.core.event.ObserverMacro.create([
+CHANGED
+]))
+class ClipboardEvent {
+    public inline static var CHANGED;
+    public inline static var GROUP_ID;
+    public inline static var GROUP_MASK;
+    public inline static var EVENT_MASK;
+}
+

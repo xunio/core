@@ -12,18 +12,13 @@
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.core.util;
+package io.xun.core.util.clipboard;
 
 /**
- * Class Clipboard
+ * Class ClipboardException
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @package       io.xun.core.util
  */
-#if linux
-typedef Clipboard = io.xun.cp.lnx.core.util.Clipboard;
-#else
-#error
-typedef Clipboard = IClipboard;
-#end
+class ClipboardException extends io.xun.core.exception.RuntimeException {}

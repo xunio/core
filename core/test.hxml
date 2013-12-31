@@ -6,6 +6,7 @@
 -cp ./tests
 -cp ./src
 -cp ./src/js/_std
+-D linux
 --times
 
 --next
@@ -18,6 +19,7 @@
 -cp ./tests
 -cp ./src
 -cp ./src/php/_std
+-D linux
 --times
 
 --next
@@ -30,6 +32,7 @@
 -cp ./tests
 -cp ./src
 -cp ./src/neko/_std
+-D linux
 --times
 
 --next
@@ -43,6 +46,7 @@
 -cp ./tests
 -cp ./src
 -cp ./src/flash/_std
+-D linux
 --times
 
 --next
@@ -55,6 +59,20 @@
 -cp ./tests
 -cp ./src
 -cp ./src/java/_std
+-D linux
+--times
+
+--next
+
+-cs out/test/cs
+-debug
+-main TestingFramework
+-cp ../haxe/src/std
+-cp ../haxe/src/std/cs/_std
+-cp ./tests
+-cp ./src
+-cp ./src/cs/_std
+-D linux
 --times
 
 --next
@@ -68,4 +86,5 @@
 -cp ./tests
 -cp ./src
 -cp ./src/cpp/_std
+-D linux
 --times
