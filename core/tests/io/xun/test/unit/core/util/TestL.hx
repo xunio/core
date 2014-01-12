@@ -211,4 +211,19 @@ class TestL extends haxe.unit.TestCase {
         assertEquals('baa5', arr1.get('test5'));
     }
 
+    public function testToMap() {
+        var d : {
+        test1 : String,
+        test2 : String
+        } = {
+        test1 : 'foo1',
+        test2 : 'foo2'
+        };
+
+        var m : Map<String, Dynamic> = L.toMap(d);
+
+        assertEquals('foo1', m.get('test1'));
+        assertEquals('foo2', m.get('test2'));
+    }
+
 }

@@ -71,6 +71,15 @@ class L extends Lambda {
         }
     }
 
+    public static function toMap(object : {}) : Map<String, Dynamic> {
+        var fields : Array<String> = Reflect.fields(object);
+        var map : Map<String, Dynamic> = new Map<String, Dynamic>();
+        for (name in fields) {
+            map.set(name, Reflect.field(object, name));
+        }
+        return map;
+    }
+
 }
 
 /**
