@@ -8,24 +8,30 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test.unit.io
+ * @package       io.xun.sys
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.io;
+package io.xun.sys;
 
 /**
- * Class Runner
+ * Enum OS
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test.unit.io
+ * @package       io.xun.sys
  */
-class Runner {
-
-    public static function main(runner : haxe.unit.TestRunner) {
-        runner.add(new TestByteUtils());
-        runner.add(new TestByteArrayInputSteam());
-        runner.add(new TestPipeInputSteam());
-    }
+enum OS {
+    Windows;
+    Unix;
+    SunOS;
+    OpenBSD;
+    NetBSD;
+    Linux;
+    IRIX64;
+    HPUX;
+    FreeBSD;
+    Darwin;
+    CYGWIN_NT51;
 }
+

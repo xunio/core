@@ -1,6 +1,7 @@
 -js out/test/js/TestingFramework.js
 -debug
 -main TestingFramework
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/js/_std
 -cp ./tests
@@ -14,6 +15,7 @@
 -php out/test/php
 -debug
 -main TestingFramework
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/php/_std
 -cp ./tests
@@ -27,6 +29,7 @@
 -neko out/test/neko/TestingFramework.n
 -debug
 -main TestingFramework
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/neko/_std
 -cp ./tests
@@ -41,6 +44,7 @@
 -debug
 -D fdb
 -main TestingFramework
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/flash/_std
 -cp ./tests
@@ -54,6 +58,7 @@
 -java out/test/java
 -debug
 -main TestingFramework
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/java/_std
 -cp ./tests
@@ -67,6 +72,7 @@
 -cs out/test/cs
 -debug
 -main TestingFramework
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/cs/_std
 -cp ./tests
@@ -81,6 +87,7 @@
 -debug
 -main TestingFramework
 -D HXCPP_M64
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/cpp/_std
 -cp ./tests

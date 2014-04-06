@@ -8,24 +8,26 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test.unit.io
+ * @package       io.xun.core.exception
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.io;
+package io.xun.core.exception;
 
 /**
- * Class Runner
+ * Class DefaultException
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test.unit.io
+ * @package       io.xun.core.exception
  */
-class Runner {
+class DefaultException extends Exception {
 
-    public static function main(runner : haxe.unit.TestRunner) {
-        runner.add(new TestByteUtils());
-        runner.add(new TestByteArrayInputSteam());
-        runner.add(new TestPipeInputSteam());
+    private var previousDefault(default, null) : Null<Exception> = null;
+
+    public function new(previousDefault : Dynamic, message : String = '', code : Int = 0, previous : Null<Exception> = null) {
+        super(message, code, previous);
+        this.previousDefault = previousDefault;
     }
+
 }

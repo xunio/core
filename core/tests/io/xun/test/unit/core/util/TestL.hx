@@ -67,7 +67,7 @@ class TestL extends haxe.unit.TestCase {
             arr1.copyTo(arr2, 3, 0, 6);
             assertTrue(false);
         } catch(e : OutOfBoundsException) {
-            assertEquals('targetPos is higher than gratest index of target', e.getMessage());
+            assertEquals('targetPos is higher than gratest index of target', e.message);
             return;
         } catch(e : Dynamic) {
             assertTrue(false);
@@ -83,7 +83,7 @@ class TestL extends haxe.unit.TestCase {
             arr1.copyTo(arr2, 6, 0, 6);
             assertTrue(false);
         } catch(e : OutOfBoundsException) {
-            assertEquals('source fewer items that sould be copied', e.getMessage());
+            assertEquals('source fewer items that sould be copied', e.message);
             return;
         } catch(e : Dynamic) {
             assertTrue(false);

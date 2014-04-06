@@ -8,24 +8,37 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test.unit.io
+ * @package       io.xun.test.unit.async
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.io;
+package io.xun.test.unit.async;
+
+import io.xun.async.Promise;
 
 /**
- * Class Runner
+ * Class TestPromise
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test.unit.io
+ * @package       io.xun.test.unit.async
  */
-class Runner {
+class TestPromise extends haxe.unit.TestCase {
 
-    public static function main(runner : haxe.unit.TestRunner) {
-        runner.add(new TestByteUtils());
-        runner.add(new TestByteArrayInputSteam());
-        runner.add(new TestPipeInputSteam());
+    private var _promiseValue : Int = 0;
+
+    public function testPromise() {
+        var promise : Promise<Int> = new Promise<Int>();
+
+        _promiseValue = 0;
+        promise.then(function (value : Int) {
+            _promiseValue = value;
+            assertEquals(1, _promiseValue);
+        });
+
+        assertEquals(0, _promiseValue);
+        promise.resolve(1);
     }
+
 }
+

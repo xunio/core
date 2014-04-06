@@ -23,15 +23,14 @@ package io.xun.core.exception;
  */
 class Exception {
 
-    private var message : String;
+    public var message(default, null) : String = '';
+    public var code(default, null) : Int = 0;
+    public var previous(default, null) : Null<Exception> = null;
 
-
-    public function new(message : String = '') {
+    public function new(message : String = '', code : Int = 0, previous : Null<Exception> = null) {
         this.message = message;
-    }
-
-    public function getMessage() {
-        return this.message;
+        this.code = code;
+        this.previous = previous;
     }
 
     public function toString() {

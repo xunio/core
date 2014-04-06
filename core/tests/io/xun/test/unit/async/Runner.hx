@@ -8,24 +8,24 @@
  *
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @link          http://xun.io/ xun.io Project
- * @package       io.xun.test.unit.io
+ * @package       io.xun.test.unit.async
  * @license       http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-package io.xun.test.unit.io;
+package io.xun.test.unit.async;
 
 /**
  * Class Runner
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       io.xun.test.unit.io
+ * @package       io.xun.test.unit.async
  */
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
-        runner.add(new TestByteUtils());
-        runner.add(new TestByteArrayInputSteam());
-        runner.add(new TestPipeInputSteam());
+        io.xun.test.unit.async.sys.Runner.main(runner);
+        io.xun.test.unit.async.io.Runner.main(runner);
+        runner.add(new TestPromise());
     }
 }
