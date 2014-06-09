@@ -31,32 +31,32 @@ class Process {
 	var childProcess : NodeChildProcess;
 	var childProcessExitCode : Null<Int> = null;
 
-    public function new( cmd : String, args : Array<String> ) : Void {
+	public function new( cmd : String, args : Array<String> ) : Void {
 		childProcess = Node.child_process.spawn(cmd, args);
-	    childProcess.once('close', function(code : Int, signal : String) : Void {
-		    childProcessExitCode = code;
-	    });
-	    stdin = new js.nodejs.io.Output(childProcess.stdin);
-	    stdout = new js.nodejs.io.Input(childProcess.stdout);
-	    stderr = new js.nodejs.io.Input(childProcess.stderr);
-    }
+		childProcess.once('close', function(code : Int, signal : String) : Void {
+			childProcessExitCode = code;
+		});
+		stdin = new js.nodejs.io.Output(childProcess.stdin);
+		stdout = new js.nodejs.io.Input(childProcess.stdout);
+		stderr = new js.nodejs.io.Input(childProcess.stderr);
+	}
 
-    public function getPid() : Int {
-        return childProcess.pid;
-    }
+	public function getPid() : Int {
+		return childProcess.pid;
+	}
 
 	public function exitCode() : Int {
 		while (childProcessExitCode == null) {
 			js.nodejs.Sys.processMessages();
 		}
-        return childProcessExitCode;
-    }
+		return childProcessExitCode;
+	}
 
 	public function close() : Void {
-	    childProcess.kill('SIGKILL');
-    }
+		childProcess.kill('SIGKILL');
+	}
 
 	public function kill() : Void {
-        childProcess.kill('SIGTERM');
-    }
+		childProcess.kill('SIGTERM');
+	}
 }
