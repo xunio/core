@@ -144,12 +144,4 @@ class Input implements IInput {
         return r;
     }
 
-    #if (flash || js)
-    public function getDoubleSig(bytes : Array<Int>) : Promise<Dynamic> {
-        var r : Promise<Dynamic> = new Promise<Dynamic>();
-        r.resolve(input.readBype(bytes));
-        return r;
-    }
-    #end
-
 }

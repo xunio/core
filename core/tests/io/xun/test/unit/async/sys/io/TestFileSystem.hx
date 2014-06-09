@@ -14,7 +14,9 @@
 
 package io.xun.test.unit.async.sys.io;
 
+import io.xun.async.Promise;
 import io.xun.async.sys.FileSystem;
+import sys.FileStat;
 
 /**
  * Class TestFileSystem
@@ -25,6 +27,24 @@ import io.xun.async.sys.FileSystem;
  */
 class TestFileSystem extends haxe.unit.TestCase {
 
+    public function testReadDirectory() {
+        var s : FileStat = sys.FileSystem.stat('/');
+        var p : Promise<FileStat> = FileSystem.stat('/');
+        p.then(function (v : FileStat) {
+            assertEquals(s.gid, v.gid);
+            assertEquals(s.uid, v.uid);
+            assertEquals(s.atime.getTime(), v.atime.getTime());
+            assertEquals(s.mtime.getTime(), v.mtime.getTime());
+            assertEquals(s.ctime.getTime(), v.ctime.getTime());
+            assertEquals(s.size, v.size);
+            assertEquals(s.dev, v.dev);
+            assertEquals(s.ino, v.ino);
+            assertEquals(s.nlink, v.nlink);
+            assertEquals(s.rdev, v.rdev);
+            assertEquals(s.mode, v.mode);
+        });
+        p.block();
+    }
 
 }
 

@@ -36,6 +36,8 @@ class System {
         return untyped __php__('sys_get_temp_dir()');
         #elseif (js && nodejs)
         return untyped __js__("require('os').tmpdir()");
+        #elseif cs
+        return untyped __cs__("System.IO.Path.GetTempPath()");
         #elseif java
         //return untyped __java__("java.nio.file.Files.createTempDirectory(null).toString()");
         #end
@@ -60,6 +62,8 @@ class System {
         return untyped __js__("require('path').sep");
         #elseif java
         return untyped __java__("java.io.File.separator");
+		#elseif neko
+        return '/';
         #end
         throw new NotImplementedOnThisPlatformException();
     }

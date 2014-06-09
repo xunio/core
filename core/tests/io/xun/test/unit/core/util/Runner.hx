@@ -24,7 +24,7 @@ package io.xun.test.unit.core.util;
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
-        io.xun.test.unit.core.util.clipboard.Runner.main(runner);
+        //io.xun.test.unit.core.util.clipboard.Runner.main(runner);
         runner.add(new TestL());
         runner.add(new TestStd());
         runner.add(new TestStringUtils());

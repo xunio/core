@@ -16,7 +16,8 @@ package ;
 
 /* imports and uses */
 
-import io.xun.core.util.BitwiseMask;
+//import io.xun.test.Runner;
+import io.xun.test.Runner;
 
 /**
  * Class TestingFramework
@@ -36,7 +37,7 @@ class TestingFramework {
     public static function main() {
         var result : Bool = true;
         var runner : haxe.unit.TestRunner = new haxe.unit.TestRunner();
-        io.xun.test.Runner.main(runner);
+        Runner.main(runner);
 
         var i : Int = 0;
         for ( i in 0...RUNS ) {
@@ -45,9 +46,8 @@ class TestingFramework {
 
         if(!result) {
             #if js
-              if( untyped __js__('typeof process != "undefined" && "exit" in process') ) {
-                untyped __js__('process.exit(255)');
-              }
+            //Sys.exit();
+            untyped __js__("process.exit(255)");
             #elseif flash
             #else
             Sys.exit(255);

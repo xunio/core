@@ -24,7 +24,7 @@ package io.xun.test.unit.async.sys.io;
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
-        //runner.add(new TestFileSystem());
+        runner.add(new TestFileSystem());
         //runner.add(new TestFile());
     }
 

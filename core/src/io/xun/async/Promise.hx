@@ -14,6 +14,8 @@
 
 package io.xun.async;
 
+import promhx.base.EventLoop;
+
 /**
  * Class Promise
  *
@@ -23,5 +25,25 @@ package io.xun.async;
  */
 class Promise<T> extends promhx.Promise<T> {
 
+    public static function until<T>(p : Promise<T>) : Promise<T> {
+        while (p.isPending()) {
+            EventLoop.finish();
+	        if (p.isPending()) {
+	            try {
+	                Sys.sleep(0.1);
+	            } catch(e : Dynamic) {}
+	        }
+
+        }
+
+        return p;
+    }
+
+    public function block() : Void {
+        until(this);
+    }
+
+
 }
+
 

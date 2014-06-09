@@ -15,6 +15,7 @@
 package io.xun.test.unit.async.sys.io;
 
 import io.xun.async.Promise;
+import io.xun.async.sys.io.IFileInput;
 import io.xun.async.sys.io.File;
 
 /**
@@ -26,12 +27,25 @@ import io.xun.async.sys.io.File;
  */
 class TestFile extends haxe.unit.TestCase {
 
-    public function testGetContent() {
-        var p : Promise<String> = File.getContent('/tmp/test');
-        p.then(function (value : String) {
-            assertEquals('test123', value);
-        });
-    }
+	public function testGetContent() {
+		var p : Promise<String> = File.getContent('/tmp/test');
+		p.then(function (value : String) {
+			assertEquals('test123', value);
+		});
+		p.block();
+	}
+
+	public function testRead() {
+		var p : Promise<IFileInput> = File.read('/tmp/test', false);
+		p.then(function (file : IFileInput) {
+			var pb : Promise<Int> = file.readByte();
+			pb.then(function(value : Int) {
+				trace(value);
+			});
+			pb.block();
+		});
+		p.block();
+	}
 
 }
 

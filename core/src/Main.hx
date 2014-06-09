@@ -15,18 +15,20 @@ package ;
 
 /* imports and uses */
 
-
 /**
  * Class Main
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  */
-@:expose
 class Main {
 
     public static function main() {
-        TestingFramework.main();
+        #if (js && nodejs)
+		new js.nodejs.Node.NodeFiber(TestingFramework.main).run();
+		#else
+	    TestingFramework.main();
+		#end
     }
 
 }

@@ -37,8 +37,5 @@ interface IInput {
     public function readUInt24() : Promise<Dynamic>;
     public function readInt32() : Promise<Dynamic>;
     public function readString( len : Int ) : Promise<String>;
-    #if (flash || js)
-    public function getDoubleSig(bytes : Array<Int>) : Promise<Dynamic>;
-    #end
 
 }

@@ -29,6 +29,6 @@ class Runner {
         io.xun.test.unit.io.Runner.main(runner);
         io.xun.test.unit.crypt.Runner.main(runner);
         io.xun.test.unit.core.Runner.main(runner);
-        io.xun.test.unit.async.Runner.main(runner);
+        //io.xun.test.unit.async.Runner.main(runner);
     }
 }
