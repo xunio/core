@@ -685,7 +685,7 @@ typedef NodeDGSocket = { > NodeEventEmitter,
 	function send(buf:NodeBuffer,offset:Int,length:Int,port:Int,address:String,cb:NodeUDPCallback):Void;
 	function bind(port:Int,?address:String):Void;
 	function close():Void;
-	function address():Dynamic;
+	function address():{ address : String, family : Dynamic, port : Int };
 	function setBroadcast(flag:Bool):Void;
 	function setTTL(ttl:Int):Void;
 	function setMulticastTTL(ttl:Int):Void;
