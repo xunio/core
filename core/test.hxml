@@ -1,6 +1,7 @@
 -js out/test/js/TestingFramework.js
+--macro allowPackage("sys")
 -debug
--main TestingFramework
+-main Main
 -cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/js/_std
@@ -8,6 +9,7 @@
 -cp ./src
 -cp ./src/js/_std
 -D linux
+-D nodejs
 --times
 
 --next
@@ -50,34 +52,6 @@
 -cp ./tests
 -cp ./src
 -cp ./src/flash/_std
--D linux
---times
-
---next
-
--java out/test/java
--debug
--main TestingFramework
--cp /usr/lib/haxe/lib/promhx/0,2,11/
--cp ../haxe/src/std
--cp ../haxe/src/std/java/_std
--cp ./tests
--cp ./src
--cp ./src/java/_std
--D linux
---times
-
---next
-
--cs out/test/cs
--debug
--main TestingFramework
--cp /usr/lib/haxe/lib/promhx/0,2,11/
--cp ../haxe/src/std
--cp ../haxe/src/std/cs/_std
--cp ./tests
--cp ./src
--cp ./src/cs/_std
 -D linux
 --times
 

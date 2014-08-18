@@ -14,6 +14,8 @@
 
 package io.xun.test.unit.core.dependencyinjection;
 
+import io.xun.core.exception.LogicException;
+import io.xun.core.dependencyinjection.ServiceMap;
 import io.xun.core.dependencyinjection.exception.ServiceCircularReferenceException;
 import io.xun.core.dependencyinjection.exception.ServiceNotFoundException;
 import io.xun.core.exception.Exception;
@@ -64,7 +66,12 @@ class TestContainer extends haxe.unit.TestCase {
         assertEquals('bar', container.getParameterBag().get('foo').value);
     }
 
-    public function testParameter() {
+	public function testGetParameterBag() {
+		var container : Container = new Container();
+		assertEquals(false, container.getParameterBag().all().keys().hasNext());
+	}
+
+	public function testParameter() {
         var container : Container = new Container();
         var parameter : Parameter = new Parameter('foo', 'baa');
 
@@ -168,20 +175,48 @@ class TestContainer extends haxe.unit.TestCase {
 
         assertEquals(container.__bar, container.get('bar'));
         assertEquals(container.__foo_bar, container.get('foo_bar'));
-        assertEquals(container.__foo_baz, container.get('foo.baz'));
+	    assertEquals(container.__foo_baz, container.get('foo.baz'));
 
         container.set('bar', foo);
         assertEquals(foo, container.get('bar'));
 
-        try {
-            container.get('');
-            assertTrue(false);
-        } catch(e : Exception) {
-            assertTrue(true);
-        } catch(e : Dynamic) {
-            assertTrue(false);
-        }
+	    try {
+		    container.get('');
+		    assertTrue(false);
+	    } catch(e : Exception) {
+		    assertTrue(Std.is(e, ServiceNotFoundException));
+	    } catch(e : Dynamic) {
+		    assertTrue(false);
+	    }
+
+	    try {
+		    container.get('abc');
+		    assertTrue(false);
+	    } catch(e : Exception) {
+		    assertTrue(Std.is(e, ServiceNotFoundException));
+	    } catch(e : Dynamic) {
+		    assertTrue(false);
+	    }
     }
+
+	public function testSetAlsoSetsScopedService()
+	{
+		var fu : Array<String> = new Array<String>();
+		fu.push('test123');
+
+		var c : Container = new Container();
+		c.addScope(new Scope('foo'));
+		c.enterScope('foo');
+		c.set('foo', fu, 'foo');
+
+		var scopedServices : Map<String, ServiceMap> = cast Reflect.field(c, "scopedServices");
+
+		if (scopedServices.exists('foo')) {
+			if (scopedServices.get('foo').exists('foo')) {
+				assertEquals(fu, scopedServices.get('foo').get('foo'));
+			}
+		}
+	}
 
     public function testGetServiceIds() {
         var container : ExtendedContainer = new ExtendedContainer();
@@ -265,7 +300,6 @@ class TestContainer extends haxe.unit.TestCase {
         assertTrue(container.hasScope('foo'));
     }
 
-    /*
     public function testEnterLeaveCurrentScope() {
         var container : ExtendedContainer = new ExtendedContainer();
 
@@ -316,9 +350,155 @@ class TestContainer extends haxe.unit.TestCase {
         container.addScope(new Scope('foo'));
         container.addScope(new Scope('bar', 'foo'));
 
+	    assertFalse(container.isScopeActive('foo'));
 
+	    container.enterScope('foo');
+	    container.enterScope('bar');
+
+	    assertTrue(container.isScopeActive('foo'));
+	    assertFalse(container.has('a'));
+
+	    var a = new Array<String>();
+	    container.set('a', a, 'bar');
+
+	    var scopedServices : Map<String, ServiceMap> = cast Reflect.field(container, "scopedServices");
+
+	    if (scopedServices.exists('bar') && scopedServices.get('bar').exists('a')) {
+		    assertTrue(true);
+	        assertEquals(a, scopedServices.get('bar').get('a'));
+	    } else {
+	        assertTrue(false);
+	    }
+
+	    assertTrue(container.has('a'));
+	    container.leaveScope('foo');
+
+	    scopedServices = cast Reflect.field(container, "scopedServices");
+	    assertFalse(scopedServices.exists('bar'));
+
+	    assertFalse(container.isScopeActive('foo'));
+	    assertFalse(container.has('a'));
     }
-    */
+
+	public function testEnterScopeRecursivelyWithInactiveChildScopes()
+	{
+		var container : Container = new Container();
+		container.addScope(new Scope('foo'));
+		container.addScope(new Scope('bar', 'foo'));
+
+		assertFalse(container.isScopeActive('foo'));
+
+		container.enterScope('foo');
+
+		assertTrue(container.isScopeActive('foo'));
+		assertFalse(container.isScopeActive('bar'));
+		assertFalse(container.has('a'));
+
+		container.enterScope('foo');
+
+		var scopedServices : Map<String, ServiceMap> = cast Reflect.field(container, "scopedServices");
+
+		assertFalse(scopedServices.exists('a'));
+
+		assertTrue(container.isScopeActive('foo'));
+		assertFalse(container.isScopeActive('bar'));
+		assertFalse(container.has('a'));
+	}
+
+	public function testLeaveScopeNotActive()
+	{
+		var container : Container = new Container();
+		container.addScope(new Scope('foo'));
+
+		try {
+			container.leaveScope('foo');
+			assertTrue(false);
+		} catch (e : Exception) {
+			assertTrue(Std.is(e, LogicException));
+		}
+
+		try {
+			container.leaveScope('bar');
+			assertTrue(false);
+		} catch (e : Exception) {
+			assertTrue(Std.is(e, LogicException));
+		}
+	}
+
+	public function testAddScopeDoesNotAllowBuiltInScopes()
+	{
+		var container : Container = new Container();
+
+		try {
+			container.addScope(new Scope(IContainerConst.SCOPE_CONTAINER));
+			assertTrue(false);
+		} catch (e : Exception) {
+			assertTrue(Std.is(e, InvalidArgumentException));
+		}
+
+		try {
+			container.addScope(new Scope(IContainerConst.SCOPE_PROTOTYPE));
+			assertTrue(false);
+		} catch (e : Exception) {
+			assertTrue(Std.is(e, InvalidArgumentException));
+		}
+
+	}
+
+	public function testAddScopeDoesNotAllowExistingScope()
+	{
+		var container : Container = new Container();
+
+		container.addScope(new Scope('test'));
+
+		try {
+			container.addScope(new Scope('test'));
+			assertTrue(false);
+		} catch (e : Exception) {
+			assertTrue(Std.is(e, InvalidArgumentException));
+		}
+
+	}
+
+	public function testAddScopeDoesNotAllowInvalidParentScope()
+	{
+		var container : Container = new Container();
+
+		try {
+			container.addScope(new Scope('foo', IContainerConst.SCOPE_PROTOTYPE));
+			assertTrue(false);
+		} catch (e : Exception) {
+			assertTrue(Std.is(e, InvalidArgumentException));
+		}
+
+		try {
+			container.addScope(new Scope('foo', 'bar'));
+			assertTrue(false);
+		} catch (e : Exception) {
+			assertTrue(Std.is(e, InvalidArgumentException));
+		}
+
+	}
+
+	public function testAddScope()
+	{
+		var container : Container = new Container();
+
+		container.addScope(new Scope('foo'));
+		container.addScope(new Scope('bar', 'foo'));
+
+		var scopes : Map<String, String> = cast Reflect.field(container, "scopes");
+
+		assertEquals('container', scopes.get('foo'));
+		assertEquals('foo', scopes.get('bar'));
+
+		var scopeChildren : Map<String, Array<String>> = cast Reflect.field(container, "scopeChildren");
+
+		assertEquals(0, scopeChildren.get('bar').length);
+		assertEquals(1, scopeChildren.get('foo').length);
+		assertEquals('bar', scopeChildren.get('foo').pop());
+	}
+
 
 }
 
