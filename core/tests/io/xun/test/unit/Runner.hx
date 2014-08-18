@@ -25,7 +25,7 @@ class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
         io.xun.test.unit.sys.Runner.main(runner);
-        io.xun.test.unit.haxe.Runner.main(runner);
+        //io.xun.test.unit.haxe.Runner.main(runner);
         io.xun.test.unit.io.Runner.main(runner);
         io.xun.test.unit.crypt.Runner.main(runner);
         io.xun.test.unit.core.Runner.main(runner);

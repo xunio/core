@@ -61,15 +61,19 @@ class ParameterBag implements IParameterBag {
         stringMap.set(parameter.key, parameter);
     }
 
-    public function get( key : String ) : Parameter {
-        key = key.toLowerCase();
-        if (stringMap.exists(key)) {
-            return stringMap.get(key);
-        }
-        throw new InvalidArgumentException("Parameter does not exist");
-    }
+	public function get( key : String ) : Parameter {
+		key = key.toLowerCase();
+		if (stringMap.exists(key)) {
+			return stringMap.get(key);
+		}
+		throw new InvalidArgumentException("Parameter does not exist");
+	}
 
-    public function parameterExists( parameter : Parameter ) : Bool {
+	public function all() : Map<String, Parameter> {
+		return stringMap;
+	}
+
+	public function parameterExists( parameter : Parameter ) : Bool {
         return stringMap.exists(parameter.key);
     }
 
