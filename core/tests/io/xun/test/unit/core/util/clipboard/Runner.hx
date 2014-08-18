@@ -24,8 +24,8 @@ package io.xun.test.unit.core.util.clipboard;
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
-        #if (linux && (cpp))
-        runner.add(new TestClipboard());
-        #end
+        //#if (linux && (cpp))
+        //runner.add(new TestClipboard());
+        //#end
     }
 }

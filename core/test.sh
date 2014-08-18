@@ -40,8 +40,8 @@ RUNPWD=$PWD
 
 time haxe test.hxml
 
-cd ../native/cpp/clipboard && make && cp ./bin/clipboard.ndll $RUNPWD/out/test/cpp64/ndll/clipboard.ndll && cp ./bin/clipboard.ndll $RUNPWD/out/test/neko/ndll/clipboard.ndll
-cd $RUNPWD
+#cd ../native/cpp/clipboard && make && cp ./bin/clipboard.ndll $RUNPWD/out/test/cpp64/ndll/clipboard.ndll && cp ./bin/clipboard.ndll $RUNPWD/out/test/neko/ndll/clipboard.ndll
+#cd $RUNPWD
 
 if [ "${?}" -gt "0" ]; then
   echo "Build failed";
