@@ -107,14 +107,23 @@ fi;
 #echo "#####################################################"
 #./out/test/cpp32/TestingFramework-debug
 
+NODECMD=""
+if [ $(which node) ]; then
+  NODECMD="node"
+else
+if [ $(which nodejs) ]; then
+  NODECMD="nodejs"
+fi
+fi
+
 echo ""
 cecho "## JS" $blue
 cecho "#####################################################" $blue
-if [ $(which node) ]; then
+if [ "${NODECMD}" ]; then
 if [ "${1}" == "out" ]; then
-  time node out/test/js/TestingFramework.js > /dev/null
+  time "${NODECMD}" out/test/js/TestingFramework.js > /dev/null
 else
-  time node out/test/js/TestingFramework.js
+  time "${NODECMD}" out/test/js/TestingFramework.js
 fi;
 if [ "${?}" -gt "0" ]; then
   cecho "# JS Test failed!" $red
