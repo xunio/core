@@ -25,20 +25,21 @@ import io.xun.core.exception.NotImplementedOnThisPlatformException;
  */
 class System {
 
-    public static var DIRECTORY_SEPARATOR : Null<String> = null;
-    public static var PATH_SEPARATOR : Null<String> = null;
-    public static var TEMP_DIECTORY : Null<String> = null;
-    public static var OS : Null<OS> = null;
-    public static var OS_FAMILY : Null<OSFamily> = null;
+    public static var DIRECTORY_SEPARATOR : Null<String>;
+    public static var PATH_SEPARATOR : Null<String>;
+    public static var TEMP_DIECTORY : Null<String>;
+    public static var OS : Null<OS>;
+    public static var OS_FAMILY : Null<OSFamily>;
 
-    public static function getTempDirectory() : String {
+	public static function getTempDirectory() : String {
         #if php
         return untyped __php__('sys_get_temp_dir()');
         #elseif (js && nodejs)
         return untyped __js__("require('os').tmpdir()");
         #elseif cs
-        return untyped __cs__("System.IO.Path.GetTempPath()");
+        return untyped __cs__("global::System.IO.Path.GetTempPath()");
         #elseif java
+        return untyped __java__('java.lang.System.getProperty("java.io.tmpdir")');
         //return untyped __java__("java.nio.file.Files.createTempDirectory(null).toString()");
         #end
         throw new NotImplementedOnThisPlatformException();
@@ -49,6 +50,8 @@ class System {
         return untyped __php__('PATH_SEPARATOR');
         #elseif (js && nodejs)
         return untyped __js__("require('path').delimiter");
+        #elseif cs
+        return untyped __cs__("new string(global::System.IO.Path.PathSeparator, 1)");
         #elseif java
         return untyped __java__("java.io.File.pathSeparator");
         #end
@@ -60,15 +63,25 @@ class System {
         return untyped __php__('DIRECTORY_SEPARATOR');
         #elseif (js && nodejs)
         return untyped __js__("require('path').sep");
+        #elseif cs
+        return untyped __cs__("new string(global::System.IO.Path.DirectorySeparatorChar, 1)");
         #elseif java
         return untyped __java__("java.io.File.separator");
 		#elseif neko
-        return '/';
+		var path : String = sys.FileSystem.fullPath('.');
+		var pathParent : String = sys.FileSystem.fullPath('..');
+        return path.substr(pathParent.length, 1);
         #end
         throw new NotImplementedOnThisPlatformException();
     }
 
     public static function __init__() {
+	    System.DIRECTORY_SEPARATOR = null;
+	    System.PATH_SEPARATOR = null;
+	    System.TEMP_DIECTORY = null;
+	    System.OS = null;
+	    System.OS_FAMILY = null;
+
         try {
             System.DIRECTORY_SEPARATOR = getDirectorySeperator();
         } catch (e : NotImplementedOnThisPlatformException) {}

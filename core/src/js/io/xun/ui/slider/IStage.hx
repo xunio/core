@@ -2,9 +2,9 @@ package js.io.xun.ui.slider;
 
 import js.html.Element;
 
-interface StageInterface
+interface IStage
 {
-	public function setSlider(slider : SliderInterface);
+	public function setSlider(slider : ISlider);
 
 	public function getContent() : Element;
 

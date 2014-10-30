@@ -38,13 +38,15 @@ class TestProcess extends haxe.unit.TestCase {
 	}
 
 	public function testReadWrite() {
+		#if !java
 		var args : Array<String> = new Array<String>();
 		var process = new sys.io.Process('/usr/bin/cat', args);
 		process.stdin.writeString('test');
 		assertEquals('test', process.stdout.readString(4));
 		process.stdin.writeString('äöüöäü');
 		assertEquals('äöü', process.stdout.readString(6));
-		process.close();
+		process.kill();
+		#end
 	}
 }
 

@@ -24,8 +24,10 @@ package io.xun.test.unit.haxe.sys;
 class Runner {
 
 	public static function main(runner : haxe.unit.TestRunner) {
+		#if !flash
 		io.xun.test.unit.haxe.sys.io.Runner.main(runner);
 		io.xun.test.unit.haxe.sys.net.Runner.main(runner);
+		#end
 	}
 
 }

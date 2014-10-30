@@ -4,7 +4,7 @@ import js.html.Element;
 
 interface SliderTemplateInterface
 {
-	public function addStage(stage : StageInterface) : Void;
+	public function addStage(stage : IStage) : Void;
 
 	public function switchStage(stagePosition : Int) : Void;
 
@@ -12,7 +12,7 @@ interface SliderTemplateInterface
 
 	public function getStagesContainer() : Element;
 
-	public function getStageContainer(stage : StageInterface) : Element;
+	public function getStageContainer(stage : IStage) : Element;
 
 	public function getNextButton() : Null<Element>;
 

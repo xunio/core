@@ -5,11 +5,11 @@ import io.xun.core.exception.OutOfRangeException;
 import io.xun.core.event.Observable;
 import io.xun.core.event.ObserverMacro;
 
-class Slider implements SliderInterface
+class Slider implements ISlider
 {
 	private var _observer : Observable;
-	private var _stages : Array<StageInterface> = [];
-	private var _currentStage : Null<StageInterface> = null;
+	private var _stages : Array<IStage> = [];
+	private var _currentStage : Null<IStage> = null;
 	private var _currentStagePosition : Null<Int> = null;
 	private var _sliderTemplate : SliderTemplateInterface;
 
@@ -19,7 +19,7 @@ class Slider implements SliderInterface
 		_observer = new Observable(this);
 	}
 
-	public function addStage(stage : StageInterface) : Void
+	public function addStage(stage : IStage) : Void
 	{
 		stage.setSlider(this);
 		_stages.push(stage);
@@ -27,7 +27,7 @@ class Slider implements SliderInterface
 		stage.initialize();
 	}
 
-	public function getStage(stagePosition : Int) : StageInterface
+	public function getStage(stagePosition : Int) : IStage
 	{
 		if (_stages.length <= stagePosition) {
 			throw new OutOfRangeException("No stage with index " + stagePosition + " exists");
@@ -36,7 +36,7 @@ class Slider implements SliderInterface
 		return _stages[stagePosition];
 	}
 
-	public function getStages() : Array<StageInterface>
+	public function getStages() : Array<IStage>
 	{
 		return _stages;
 	}
@@ -51,7 +51,7 @@ class Slider implements SliderInterface
 		return _sliderTemplate.getStagesContainer();
 	}
 
-	public function getCurrentStage() : Null<StageInterface>
+	public function getCurrentStage() : Null<IStage>
 	{
 		if (_currentStagePosition == null || _stages.length <= 0) {
 			return null;
@@ -75,7 +75,7 @@ class Slider implements SliderInterface
 			throw new OutOfRangeException("No stage with index " + stagePosition + " exists");
 		}
 
-		var oldStage : Null<StageInterface> = _currentStage;
+		var oldStage : Null<IStage> = _currentStage;
 
 		_currentStage = _stages[stagePosition];
 		_currentStagePosition = stagePosition;
@@ -148,5 +148,5 @@ class SliderEvent {
  */
 typedef SliderEventStateChange = {
 	stagePosition: Int,
-	stage: StageInterface
+	stage: IStage
 }

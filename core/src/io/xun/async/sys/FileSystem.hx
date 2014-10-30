@@ -14,6 +14,7 @@
 
 package io.xun.async.sys;
 
+import io.xun.async.Promise;
 import io.xun.sys.System;
 import io.xun.async.Promise;
 import io.xun.core.exception.DefaultException;
@@ -35,67 +36,95 @@ class FileSystem {
 
     public static function exists( path : String ) : Promise<Bool> {
         var r : Promise<Bool> = new Promise<Bool>();
-        r.resolve(sys.FileSystem.exists(path));
+	    try {
+	        r.resolve(sys.FileSystem.exists(path));
+	    } catch (e : Dynamic) {
+		    r.reject(e);
+	    }
         return r;
     }
 
-    public static function rename( path : String, newPath : String, callback : Null<Exception> -> Void ) : Void {
+    public static function rename( path : String, newPath : String ) : Promise<Void> {
+        var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.rename(path, newPath);
-            callback(null);
+	        r.resolve(null);
         } catch (e : Dynamic) {
-            callback(new DefaultException(e));
+            r.reject(e);
         }
+	    return r;
     }
 
     public static function stat( path : String ) : Promise<FileStat> {
         var r : Promise<FileStat> = new Promise<FileStat>();
-        r.resolve(sys.FileSystem.stat(path));
+	    try {
+	        r.resolve(sys.FileSystem.stat(path));
+	    } catch (e : Dynamic) {
+		    r.reject(e);
+	    }
         return r;
     }
 
     public static function fullPath( relPath : String ) : Promise<String> {
         var r : Promise<String> = new Promise<String>();
-        r.resolve(sys.FileSystem.fullPath(relPath));
+	    try {
+	        r.resolve(sys.FileSystem.fullPath(relPath));
+	    } catch (e : Dynamic) {
+		    r.reject(e);
+	    }
         return r;
     }
 
     public static function isDirectory( path : String ) : Promise<Bool> {
         var r : Promise<Bool> = new Promise<Bool>();
-        r.resolve(sys.FileSystem.isDirectory(path));
+	    try {
+	        r.resolve(sys.FileSystem.isDirectory(path));
+	    } catch (e : Dynamic) {
+		    r.reject(e);
+	    }
         return r;
     }
 
-    public static function createDirectory( path : String, callback : Null<Exception> -> Void ) : Void {
+    public static function createDirectory( path : String ) : Promise<Void> {
+	    var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.createDirectory(path);
-            callback(null);
+	        r.resolve(null);
         } catch (e : Dynamic) {
-            callback(new DefaultException(e));
+	        r.reject(e);
         }
+	    return r;
     }
 
-    public static function deleteFile( path : String, callback : Null<Exception> -> Void ) : Void {
+    public static function deleteFile( path : String ) : Promise<Void> {
+	    var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.deleteFile(path);
-            callback(null);
+	        r.resolve(null);
         } catch (e : Dynamic) {
-            callback(new DefaultException(e));
+	        r.reject(e);
         }
+	    return r;
     }
 
-    public static function deleteDirectory( path : String, callback : Null<Exception> -> Void ) : Void {
+    public static function deleteDirectory( path : String ) : Promise<Void> {
+	    var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.deleteDirectory(path);
-            callback(null);
+	        r.resolve(null);
         } catch (e : Dynamic) {
-            callback(new DefaultException(e));
+	        r.reject(e);
         }
+	    return r;
     }
 
     public static function readDirectory( path : String ) : Promise<Array<String>> {
         var r : Promise<Array<String>> = new Promise<Array<String>>();
-        r.resolve(sys.FileSystem.readDirectory(path));
+	    try {
+	        r.resolve(sys.FileSystem.readDirectory(path));
+	    } catch (e : Dynamic) {
+		    r.reject(e);
+	    }
         return r;
     }
 }

@@ -28,13 +28,15 @@ class FileOutput extends io.xun.async.io.Output implements IFileOutput {
         this.fileOutput = fileOutput;
     }
 
-    public function seek(p : Int, pos : FileSeek, callback : Null<Exception> -> Void) : Void {
+    public function seek(p : Int, pos : FileSeek ) : Promise<Void> {
+	    var r : Promise<Void> = new Promise<Void>();
         try {
             this.fileOutput.seek(p, pos);
-            callback(null);
+	        r.resolve();
         } catch (e : Dynamic) {
-            callback(new DefaultException(e));
+			r.reject(e);
         }
+	    return r;
     }
 
     public function tell() : Promise<Int> {

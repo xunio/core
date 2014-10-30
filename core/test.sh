@@ -39,11 +39,12 @@ done;
 RUNPWD=$PWD
 
 time haxe test.hxml
+EXITCODE="${?}"
 
 #cd ../native/cpp/clipboard && make && cp ./bin/clipboard.ndll $RUNPWD/out/test/cpp64/ndll/clipboard.ndll && cp ./bin/clipboard.ndll $RUNPWD/out/test/neko/ndll/clipboard.ndll
 #cd $RUNPWD
 
-if [ "${?}" -gt "0" ]; then
+if [ "${EXITCODE}" -gt "0" ]; then
   echo "Build failed";
   exit 255
 fi;
@@ -89,11 +90,13 @@ if [ -f "./out/test/cpp64/TestingFramework-debug" ]; then
 cd ./out/test/cpp64/
 if [ "${1}" == "out" ]; then
   time ./TestingFramework-debug > /dev/null
+  EXITCODE="${?}"
 else
   time ./TestingFramework-debug
+  EXITCODE="${?}"
 fi;
 cd "${RUNPWD}"
-if [ "${?}" -gt "0" ]; then
+if [ "${EXITCODE}" -gt "0" ]; then
   cecho "# C++ Test failed!" $red
   TESTRESULT=1
 else
@@ -120,12 +123,19 @@ echo ""
 cecho "## JS" $blue
 cecho "#####################################################" $blue
 if [ "${NODECMD}" ]; then
+cd out/test/js/
+if ! [ -d "node_modules" ]; then
+  npm install fibers
+fi;
+cd ../../..
 if [ "${1}" == "out" ]; then
   time "${NODECMD}" out/test/js/TestingFramework.js > /dev/null
+  EXITCODE="${?}"
 else
   time "${NODECMD}" out/test/js/TestingFramework.js
+  EXITCODE="${?}"
 fi;
-if [ "${?}" -gt "0" ]; then
+if [ "${EXITCODE}" -gt "0" ]; then
   cecho "# JS Test failed!" $red
   TESTRESULT=1
 else
@@ -142,11 +152,13 @@ if [ $(which neko) ]; then
 cd ./out/test/neko/
 if [ "${1}" == "out" ]; then
   time neko TestingFramework.n > /dev/null
+  EXITCODE="${?}"
 else
   time neko TestingFramework.n
+  EXITCODE="${?}"
 fi;
 cd "${RUNPWD}"
-if [ "${?}" -gt "0" ]; then
+if [ "${EXITCODE}" -gt "0" ]; then
   cecho "# NekoVM Test failed!" $red
   TESTRESULT=1
 else
@@ -162,10 +174,12 @@ cecho "#####################################################" $blue
 if [ $(which php) ]; then
 if [ "${1}" == "out" ]; then
   time php out/test/php/index.php > /dev/null
+  EXITCODE="${?}"
 else
   time php out/test/php/index.php
+  EXITCODE="${?}"
 fi;
-if [ "${?}" -gt "0" ]; then
+if [ "${EXITCODE}" -gt "0" ]; then
   cecho "# PHP Test failed!" $red
   TESTRESULT=1
 else
@@ -179,11 +193,13 @@ echo ""
 cecho "### Java" $blue
 cecho "#####################################################" $blue
 if [ "${1}" == "out" ]; then
-  time java -jar ./out/test/java/java.jar > /dev/null
+  time java -jar ./out/test/java/TestingFramework-Debug.jar > /dev/null
+  EXITCODE="${?}"
 else
-  time java -jar ./out/test/java/java.jar
+  time java -jar ./out/test/java/TestingFramework-Debug.jar
+  EXITCODE="${?}"
 fi;
-if [ "${?}" -gt "0" ]; then
+if [ "${EXITCODE}" -gt "0" ]; then
   cecho "# Java Test failed!" $red
   TESTRESULT=1
 else
@@ -194,11 +210,13 @@ echo ""
 cecho "### C#" $blue
 cecho "#####################################################" $blue
 if [ "${1}" == "out" ]; then
-  time mono ./out/test/cs/bin/cs.exe > /dev/null
+  time mono ./out/test/cs/bin/TestingFramework-Debug.exe > /dev/null
+  EXITCODE="${?}"
 else
-  time mono ./out/test/cs/bin/cs.exe
+  time mono ./out/test/cs/bin/TestingFramework-Debug.exe
+  EXITCODE="${?}"
 fi;
-if [ "${?}" -gt "0" ]; then
+if [ "${EXITCODE}" -gt "0" ]; then
   cecho "# C# Test failed!" $red
   TESTRESULT=1
 else

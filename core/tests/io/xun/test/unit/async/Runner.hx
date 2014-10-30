@@ -24,8 +24,10 @@ package io.xun.test.unit.async;
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
+		#if !flash
         io.xun.test.unit.async.sys.Runner.main(runner);
         io.xun.test.unit.async.io.Runner.main(runner);
+	    #end
         runner.add(new TestPromise());
     }
 }

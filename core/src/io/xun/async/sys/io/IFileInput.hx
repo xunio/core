@@ -20,7 +20,7 @@ import sys.io.FileSeek;
 
 interface IFileInput extends io.xun.async.io.IInput {
 
-    function seek( p : Int, pos : FileSeek, callback : Null<Exception> -> Void ) : Void;
+    function seek( p : Int, pos : FileSeek ) : Promise<Void>;
     function tell() : Promise<Int>;
     function eof() : Promise<Bool>;
 

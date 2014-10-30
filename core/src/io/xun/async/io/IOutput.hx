@@ -20,30 +20,30 @@ import haxe.io.Bytes;
 
 interface IOutput {
 
-    public function flush(callback : Null<Exception> -> Void) : Void;
+    public function flush() : Promise<Void>;
 
-    public function close(callback : Null<Exception> -> Void) : Void;
+    public function close() : Promise<Bool>;
 
-    public function writeByte(c : Int, callback : Null<Exception> -> Void) : Void;
+    public function writeByte(c : Int) : Promise<Bool>;
 
     public function writeBytes( buf : Bytes, pos : Int, len : Int ) : Promise<Int>;
 
     #if flash9
-    public function writeFloat( f : Float, callback : Null<Exception> -> Void ) : Void;
+    public function writeFloat( f : Float ) : Promise<Void>;
 
-    public function writeDouble( f : Float, callback : Null<Exception> -> Void ) : Void;
+    public function writeDouble( f : Float ) : Promise<Void>;
 
-    public function writeInt8( x : Int, callback : Null<Exception> -> Void ) : Void;
+    public function writeInt8( x : Int ) : Promise<Void>;
 
-    public function writeInt16( x : Int, callback : Null<Exception> -> Void ) : Void;
+    public function writeInt16( x : Int ) : Promise<Void>;
 
-    public function writeUInt16( x : Int, callback : Null<Exception> -> Void ) : Void;
+    public function writeUInt16( x : Int ) : Promise<Void>;
 
-    public function writeInt32( x : Int, callback : Null<Exception> -> Void ) : Void;
+    public function writeInt32( x : Int ) : Promise<Void>;
 
-    public function prepare( size : Int, callback : Null<Exception> -> Void ) : Void;
+    public function prepare( size : Int ) : Promise<Void>;
 
-    public function writeString( s : String, callback : Null<Exception> -> Void ) : Void;
+    public function writeString( s : String ) : Promise<Void>;
     #end
 
 }

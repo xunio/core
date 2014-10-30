@@ -24,7 +24,7 @@ interface IInput {
     public function readBytes( s : Bytes, pos : Int, len : Int ) : Promise<Int>;
     public function close( callback : Null<Exception> -> Void ) : Void;
     public function readAll( ?bufsize : Int ) : Promise<Bytes>;
-    public function readFullBytes( s : Bytes, pos : Int, len : Int, callback : Null<Exception> -> Void ) : Void;
+    public function readFullBytes( s : Bytes, pos : Int, len : Int ) : Promise<Void>;
     public function read( nbytes : Int ) : Promise<Bytes>;
     public function readUntil( end : Int ) : Promise<String>;
     public function readLine() : Promise<String>;

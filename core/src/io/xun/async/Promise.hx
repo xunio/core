@@ -28,11 +28,13 @@ class Promise<T> extends promhx.Promise<T> {
     public static function until<T>(p : Promise<T>) : Promise<T> {
         while (p.isPending()) {
             EventLoop.finish();
-	        if (p.isPending()) {
-	            try {
-	                Sys.sleep(0.1);
-	            } catch(e : Dynamic) {}
-	        }
+            if (p.isPending()) {
+                try {
+                    #if !flash
+                    Sys.sleep(0.1);
+	                #end
+                } catch(e : Dynamic) {}
+            }
 
         }
 
@@ -42,7 +44,6 @@ class Promise<T> extends promhx.Promise<T> {
     public function block() : Void {
         until(this);
     }
-
 
 }
 

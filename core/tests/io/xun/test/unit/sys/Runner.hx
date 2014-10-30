@@ -24,7 +24,7 @@ package io.xun.test.unit.sys;
 class Runner {
 
     public static function main(runner : haxe.unit.TestRunner) {
-        //runner.add(new TestSystem());
+        runner.add(new TestSystem());
     }
 
 }
