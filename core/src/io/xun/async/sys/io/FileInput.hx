@@ -28,7 +28,7 @@ class FileInput extends io.xun.async.io.Input implements IFileInput {
         this.fileInput = fileInput;
     }
 
-    public function seek(p : Int, pos : FileSeek ) : Promise<Bool> {
+    public function seek(p : Int, pos : FileSeek ) : Promise<Void> {
 	    var r : Promise<Void> = new Promise<Void>();
         try {
             this.fileInput.seek(p, pos);
