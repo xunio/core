@@ -1,8 +1,9 @@
 package io.xun.async.sys.net;
 
+import haxe.io.Bytes;
 import haxe.io.BytesData;
 
 interface ISocketDataEvent
 {
-	public function getData() : BytesData;
+	public function getBytes() : Bytes;
 }

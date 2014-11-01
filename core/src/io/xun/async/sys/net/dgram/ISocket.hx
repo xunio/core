@@ -1,20 +1,24 @@
 package io.xun.async.sys.net.dgram;
 
-import sys.net.Host;
+import haxe.io.Bytes;
+import sys.net.Address;
 import io.xun.core.event.ObserverMacro;
 import io.xun.core.event.IObservable;
 import haxe.io.BytesData;
+import io.xun.async.Promise;
 
 interface ISocket implements IObservable
 {
 
-	public function send(buffer : BytesData, offset : Int, length : Int, host : Host, port : Int) : Promise<BytesData>;
+	public function loop() : Void;
 
-	public function bind(host : Host, port : Int);
+	public function send(buffer : Bytes, offset : Int, length : Int, address : Address) : Promise<Int>;
 
-	public function close();
+	public function bind(address : Address) : Void;
 
-	public function setTimeout(timeout : Int);
+	public function close() : Void;
+
+	public function setTimeout(timeout : Int) : Void;
 
 }
 
@@ -28,13 +32,13 @@ interface ISocket implements IObservable
  */
 @:build(io.xun.core.event.ObserverMacro.create([
 LISTENING,
-MESSAGE,
+DATA,
 ERROR,
 CLOSE
 ]))
 class SocketEvent {
 	public inline static var LISTENING;
-	public inline static var MESSAGE;
+	public inline static var DATA;
 	public inline static var ERROR;
 	public inline static var CLOSE;
 	public inline static var GROUP_ID;

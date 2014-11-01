@@ -1,20 +1,22 @@
 package io.xun.async.sys.net;
 
-import sys.net.Host;
+import haxe.io.Bytes;
+import sys.net.Address;
 import haxe.io.BytesData;
 import io.xun.core.event.IObservable;
 import io.xun.core.event.ObserverMacro;
+import io.xun.async.Promise;
 
 interface ISocket implements IObservable
 {
 
-	public function connect(host : Host, port : Int) : Void;
+	public function connect(address : Address) : Void;
 
 	public function setFastSend(fastSend : Bool) : Void;
 
-	public function write(data : BytesData) : Void;
+	public function write(data : Bytes) : Void;
 
-	public function destory() : Void;
+	public function close() : Void;
 
 	public function setTimeout(timeout : Int) : Void;
 

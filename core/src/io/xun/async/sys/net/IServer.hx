@@ -1,13 +1,15 @@
 package io.xun.async.sys.net;
 
+import sys.net.Address;
 import sys.net.Host;
 import io.xun.core.event.ObserverMacro;
 import io.xun.core.event.IObservable;
+import io.xun.async.Promise;
 
 interface IServer implements IObservable
 {
 
-	public function listen(host : Host, port : Int) : Void;
+	public function listen(address : Address) : Void;
 
 	public function close() : Void;
 

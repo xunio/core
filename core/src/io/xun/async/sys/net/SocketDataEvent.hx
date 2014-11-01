@@ -1,17 +1,18 @@
 package io.xun.async.sys.net;
 
-import haxe.io.BytesData;
+import haxe.io.Bytes;
+
 class SocketDataEvent implements ISocketDataEvent
 {
-	private var data : BytesData;
+	private var bytes : Bytes;
 
-	public function new(data : BytesData)
+	public function new(bytes : Bytes)
 	{
-		this.data = data;
+		this.bytes = bytes;
 	}
 
-	public function getData() : BytesData
+	public function getBytes() : Bytes
 	{
-		return data;
+		return bytes;
 	}
 }

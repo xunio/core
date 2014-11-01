@@ -1,5 +1,6 @@
 package io.xun.async.sys.net;
 
+import sys.net.Address;
 import io.xun.async.sys.net.ISocket.SocketEvent;
 import io.xun.async.sys.net.Socket;
 import io.xun.async.sys.net.IServer.ServerEvent;
@@ -8,6 +9,7 @@ import io.xun.core.event.IObservable;
 import io.xun.core.event.IObserver;
 import sys.net.Host;
 import haxe.io.Error;
+import io.xun.async.Promise;
 
 class Server implements IServer implements IObserver
 {
@@ -23,7 +25,7 @@ class Server implements IServer implements IObserver
 	public function new()
 	{
 		mode = getMode();
-		observer = new Observable();
+		observer = new Observable(this);
 		socket = new Socket();
 		switch (mode) {
 			case MODE_NONBLOCKING:
@@ -77,10 +79,10 @@ class Server implements IServer implements IObserver
 		}
 	}
 
-	public function listen(host : Host, port : Int) : Void
+	public function listen(address : Address) : Void
 	{
 		try {
-			socket.bind(host, port);
+			socket.bind(address.getHost().toString(), address.port);
 			socket.listen(1);
 			observer.notify(ServerEvent.LISTENING, null);
 		} catch (e : Dynamic) {

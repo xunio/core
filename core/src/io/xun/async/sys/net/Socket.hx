@@ -1,5 +1,6 @@
 package io.xun.async.sys.net;
 
+import sys.net.Address;
 import io.xun.async.sys.net.SocketErrorEvent;
 import haxe.io.Bytes;
 import haxe.io.BytesData;
@@ -9,6 +10,7 @@ import io.xun.core.event.IObserver;
 import haxe.io.BytesData;
 import sys.net.Host;
 import haxe.io.Error;
+import io.xun.async.Promise;
 
 class Socket implements ISocket
 {
@@ -22,7 +24,7 @@ class Socket implements ISocket
 	public function new(socket : Null<sys.net.Socket> = null)
 	{
 		mode = getMode();
-		observer = new Observable();
+		observer = new Observable(this);
 		if (socket == null) {
 			socket = new sys.net.Socket();
 		}
@@ -40,7 +42,7 @@ class Socket implements ISocket
 		switch (mode) {
 			case MODE_NONBLOCKING:
 				try {
-					var buffer : BytesData = Bytes.ofString(this.socket.read()).getData();
+					var buffer : Bytes = Bytes.ofString(this.socket.read());
 					observer.notify(SocketEvent.DATA, new SocketDataEvent(buffer));
 				} catch (e : Dynamic) {
 					switch (e) {
@@ -53,7 +55,7 @@ class Socket implements ISocket
 							observer.notify(SocketEvent.TIMEOUT, null);
 
 							observer.notify(SocketEvent.ERROR, new SocketErrorEvent(e));
-							destory();
+							close();
 							throw e;
 					}
 				}
@@ -62,13 +64,13 @@ class Socket implements ISocket
 		}
 	}
 
-	public function connect(host : Host, port : Int) : Void
+	public function connect(address : Address) : Void
 	{
 		try {
-			this.socket.connect(host, port);
+			this.socket.connect(address.getHost().toString(), address.port);
 		} catch (e : Dynamic) {
 			observer.notify(SocketEvent.ERROR, new SocketErrorEventt(e));
-			destory();
+			close();
 			throw e;
 		}
 		this.observer.notify(SocketEvent.CONNECT, null);
@@ -80,24 +82,24 @@ class Socket implements ISocket
 			this.socket.setFastSend(fastSend);
 		} catch (e : Dynamic) {
 			observer.notify(SocketEvent.ERROR, new SocketErrorEventt(e));
-			destory();
+			close();
 			throw e;
 		}
 	}
 
-	public function write(data : BytesData) : Void
+	public function write(data : Bytes) : Void
 	{
 		try {
 			this.socket.write(data.toString());
 		} catch (e : Dynamic) {
 			observer.notify(SocketEvent.ERROR, new SocketErrorEventt(e));
-			destory();
+			close();
 			throw e;
 		}
 		observer.notify(SocketEvent.DRAIN, null);
 	}
 
-	public function destory() : Void
+	public function close() : Void
 	{
 		try {
 			this.socket.close();
@@ -114,7 +116,7 @@ class Socket implements ISocket
 			this.socket.setTimeout(timeout);
 		} catch (e : Dynamic) {
 			observer.notify(SocketEvent.ERROR, new SocketErrorEventt(e));
-			destory();
+			close();
 			throw e;
 		}
 	}
