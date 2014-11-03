@@ -37,24 +37,28 @@ interface ISlider extends IObservable
  */
 @:build(io.xun.core.event.ObserverMacro.create([
 PRE_STAGE_CHANGE,
-POST_STAGE_CHANGE
+POST_STAGE_CHANGE,
+PRE_STAGE_ADDED,
+POST_STAGE_ADDED
 ]))
 class SliderEvent {
     public inline static var PRE_STAGE_CHANGE;
     public inline static var POST_STAGE_CHANGE;
+    public inline static var PRE_STAGE_ADDED;
+    public inline static var POST_STAGE_ADDED;
     public inline static var GROUP_ID;
     public inline static var GROUP_MASK;
     public inline static var EVENT_MASK;
 }
 
 /**
- * Type SliderEventStateChange
+ * Type SliderEventState
  *
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  * @package       js.io.xun.ui.slider.Slider
  */
-typedef SliderEventStateChange = {
+typedef SliderEventState = {
 stagePosition: Int,
 stage: IStage
 }
