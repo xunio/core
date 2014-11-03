@@ -1,6 +1,6 @@
 package js.io.xun.ui.slider;
 
-import js.io.xun.ui.slider.ISlider.SliderEventStateChange;
+import js.io.xun.ui.slider.ISlider.SliderEventState;
 import js.io.xun.ui.slider.ISlider.SliderEvent;
 import io.xun.core.event.IObserver;
 import js.html.Element;
@@ -33,8 +33,18 @@ class Slider implements ISlider
 	public function addStage(stage : IStage) : Void
 	{
 		stage.setSlider(this);
-		_stages.push(stage);
-		_sliderTemplate.addStage(stage);
+
+        var eventData : SliderEventState = {
+        stagePosition: _stages.length,
+        stage: stage
+        };
+        _observer.notify(SliderEvent.PRE_STAGE_ADDED, eventData);
+
+        _stages.push(stage);
+        _sliderTemplate.addStage(stage);
+
+        _observer.notify(SliderEvent.POST_STAGE_ADDED, eventData);
+
 		stage.initialize();
 	}
 
@@ -91,7 +101,7 @@ class Slider implements ISlider
 		_currentStage = _stages[stagePosition];
 		_currentStagePosition = stagePosition;
 		_sliderTemplate.switchStage(stagePosition);
-		var eventData : SliderEventStateChange = {
+		var eventData : SliderEventState = {
 			stagePosition: _currentStagePosition,
 			stage: _currentStage
 		};
