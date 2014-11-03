@@ -2,7 +2,7 @@ package js.io.xun.ui.slider;
 
 import js.html.Element;
 
-interface SliderTemplateInterface
+interface ISliderTemplate
 {
 	public function addStage(stage : IStage) : Void;
 
