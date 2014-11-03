@@ -21,11 +21,17 @@ package ;
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  */
+import js.Browser;
+import js.html.Document;
+import js.html.Element;
 class Slider {
 
 	public static function main() {
-		var template : SliderTem
+        var container : Element = js.Browser.document.getElementById("sliderContainer");
+		var template : js.io.xun.ui.slider.DefaultTemplate = new js.io.xun.ui.slider.DefaultTemplate(container);
 		var slider : js.io.xun.ui.slider.Slider = new js.io.xun.ui.slider.Slider(template);
+        var stage : js.io.xun.ui.slider.DefaultStage = new js.io.xun.ui.slider.DefaultStage();
+        slider.addStage(stage);
 	}
 
 }
