@@ -4,7 +4,7 @@ import js.html.Element;
 
 interface IStage
 {
-	public function setSlider(slider : ISlider);
+	public function setSlider(slider : ISlider) : Void;
 
 	public function getContent() : Element;
 
