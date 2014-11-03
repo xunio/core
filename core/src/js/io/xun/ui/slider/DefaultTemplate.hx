@@ -8,6 +8,16 @@ class DefaultTemplate implements ISliderTemplate
     var _container : JQuery;
 
     public function addStage(stage:IStage):Void {
+        new JQuery(getStagesContainer()).append(stage.getContainer());
+
+        // add buttons but only if both the template and the stage does support it
+        var buttons : Null<Element> = getSlideButtonContainer();
+        if (buttons != null) {
+            var button : Null<Element> = stage.getButton();
+            if(button != null) {
+                new JQuery(buttons).append(button);
+            }
+        }
     }
 
     public function switchStage(stagePosition:Int):Void {
@@ -18,26 +28,30 @@ class DefaultTemplate implements ISliderTemplate
     }
 
     public function getStagesContainer():Element {
-        return _container.find(".stagesContainer").get(0);
+        return getElement(".stagesContainer");
     }
 
     public function getStageContainer(stage:IStage):Element {
-        return stage.getContent();
+        return stage.getContainer();
     }
 
     public function getNextButton():Null<Element> {
-        return _container.find(".next").get(0);
+        return getElement(".next");
     }
 
     public function getPrevButton():Null<Element> {
-        return _container.find(".prev").get(0);
+        return getElement(".prev");
     }
 
     public function getSlideButtonContainer():Null<Element> {
-        return _container.find(".slideButtons").get(0);
+        return getElement(".slideButtons");
     }
 
     public function new(mainElement : Element) {
         _container = new JQuery(mainElement);
 	}
+
+    private function getElement(name : String) {
+        return _container.find(name).get(0);
+    }
 }
