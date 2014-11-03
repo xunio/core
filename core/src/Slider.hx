@@ -21,17 +21,57 @@ package ;
  * @author        Maximilian Ruta <mr@xtain.net>
  * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
  */
+import js.JQuery;
+import io.xun.core.event.IObservable;
+import io.xun.core.event.IObserver;
+import js.io.xun.ui.slider.ISlider.SliderEvent;
+import js.JQuery;
 import js.Browser;
 import js.html.Document;
 import js.html.Element;
-class Slider {
+class Slider implements IObserver {
+
+
+    public function onUpdate(type:Int, source:IObservable, userData:Dynamic):Void {
+        switch (type) {
+            case SliderEvent.POST_STAGE_ADDED:
+                var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
+
+                var jc : JQuery = new JQuery(slideEvt.stage.getContainer());
+                jc.hide();
+                jc.click( function( evt : JqEvent ) { trace("clicked" + evt.currentTarget.textContent); } );
+
+                //add button event if button does exist
+                var b : Null<Element> = slideEvt.stage.getButton();
+                if(b != null) {
+                    var jb : JQuery = new JQuery(b);
+                    jb.click( function( evt : JqEvent ) {
+                        var slider : js.io.xun.ui.slider.ISlider = cast source;
+                        slider.switchStage(slideEvt.stagePosition);
+                    } );
+                }
+        }
+    }
+
+    public function new() {
+        var container : Element = js.Browser.document.getElementById("sliderContainer");
+        var template : js.io.xun.ui.slider.DefaultTemplate = new js.io.xun.ui.slider.DefaultTemplate(container);
+
+        var slider : js.io.xun.ui.slider.Slider = new js.io.xun.ui.slider.Slider(template);
+        slider.attach(this, SliderEvent.POST_STAGE_ADDED);
+
+        slider.addStage(new js.io.xun.ui.slider.DefaultStage("AAA"));
+        slider.addStage(new js.io.xun.ui.slider.DefaultStage("BBB"));
+        slider.addStage(new js.io.xun.ui.slider.DefaultStage("CCC"));
+
+        slider.switchStage(0);
+    }
 
 	public static function main() {
-        var container : Element = js.Browser.document.getElementById("sliderContainer");
-		var template : js.io.xun.ui.slider.DefaultTemplate = new js.io.xun.ui.slider.DefaultTemplate(container);
-		var slider : js.io.xun.ui.slider.Slider = new js.io.xun.ui.slider.Slider(template);
-        var stage : js.io.xun.ui.slider.DefaultStage = new js.io.xun.ui.slider.DefaultStage();
-        slider.addStage(stage);
+        var j : JQuery = new JQuery(js.Browser.document.body);
+        j.ready(function(e : JqEvent) {
+            new Slider();
+        });
 	}
 
 }
