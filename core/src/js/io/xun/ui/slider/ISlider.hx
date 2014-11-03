@@ -1,9 +1,10 @@
 package js.io.xun.ui.slider;
 
+import io.xun.core.event.ObserverMacro;
 import js.html.Element;
 import io.xun.core.event.IObservable;
 
-interface ISlider implements IObservable
+interface ISlider extends IObservable
 {
 	public function addStage(stage : IStage) : Void;
 
@@ -25,4 +26,35 @@ interface ISlider implements IObservable
 
 	public function switchPrevStage() : Void;
 
+}
+
+/**
+ * Class SliderEvent
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       js.io.xun.ui.slider.Slider
+ */
+@:build(io.xun.core.event.ObserverMacro.create([
+PRE_STAGE_CHANGE,
+POST_STAGE_CHANGE
+]))
+class SliderEvent {
+    public inline static var PRE_STAGE_CHANGE;
+    public inline static var POST_STAGE_CHANGE;
+    public inline static var GROUP_ID;
+    public inline static var GROUP_MASK;
+    public inline static var EVENT_MASK;
+}
+
+/**
+ * Type SliderEventStateChange
+ *
+ * @author        Maximilian Ruta <mr@xtain.net>
+ * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
+ * @package       js.io.xun.ui.slider.Slider
+ */
+typedef SliderEventStateChange = {
+stagePosition: Int,
+stage: IStage
 }

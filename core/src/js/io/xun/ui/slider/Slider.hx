@@ -1,19 +1,30 @@
 package js.io.xun.ui.slider;
 
+import js.io.xun.ui.slider.ISlider.SliderEventStateChange;
+import js.io.xun.ui.slider.ISlider.SliderEvent;
+import io.xun.core.event.IObserver;
 import js.html.Element;
 import io.xun.core.exception.OutOfRangeException;
 import io.xun.core.event.Observable;
-import io.xun.core.event.ObserverMacro;
 
 class Slider implements ISlider
 {
-	private var _observer : Observable;
+
+    public function attach(o:IObserver, mask:Null<Int> = 0):Void {
+        _observer.attach(o,mask);
+    }
+
+    public function detach(o:IObserver, mask:Null<Int> = null):Void {
+        _observer.detach(o,mask);
+    }
+
+    private var _observer : Observable;
 	private var _stages : Array<IStage> = [];
 	private var _currentStage : Null<IStage> = null;
 	private var _currentStagePosition : Null<Int> = null;
-	private var _sliderTemplate : SliderTemplateInterface;
+	private var _sliderTemplate : ISliderTemplate;
 
-	public function new(sliderTemplate : SliderTemplateInterface)
+	public function new(sliderTemplate : ISliderTemplate)
 	{
 		_sliderTemplate = sliderTemplate;
 		_observer = new Observable(this);
@@ -118,35 +129,4 @@ class Slider implements ISlider
 		switchStage(nextPosition);
 	}
 
-}
-
-/**
- * Class SliderEvent
- *
- * @author        Maximilian Ruta <mr@xtain.net>
- * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       js.io.xun.ui.slider.Slider
- */
-@:build(io.xun.core.event.ObserverMacro.create([
-PRE_STAGE_CHANGE,
-POST_STAGE_CHANGE
-]))
-class SliderEvent {
-	public inline static var PRE_STAGE_CHANGE;
-	public inline static var POST_STAGE_CHANGE;
-	public inline static var GROUP_ID;
-	public inline static var GROUP_MASK;
-	public inline static var EVENT_MASK;
-}
-
-/**
- * Type SliderEventStateChange
- *
- * @author        Maximilian Ruta <mr@xtain.net>
- * @copyright     Copyright (c) 2013 XTAIN oHG, <https://company.xtain.net>
- * @package       js.io.xun.ui.slider.Slider
- */
-typedef SliderEventStateChange = {
-	stagePosition: Int,
-	stage: IStage
 }
