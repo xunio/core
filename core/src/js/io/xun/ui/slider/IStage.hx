@@ -6,7 +6,8 @@ interface IStage
 {
 	public function setSlider(slider : ISlider) : Void;
 
-	public function getContent() : Element;
+	public function getContainer() : Element;
+    public function getButton() : Null<Element>;
 
 	public function show() : Void;
 
