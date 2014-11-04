@@ -78,7 +78,7 @@ class Slider implements IObserver {
         var template : js.io.xun.ui.slider.DefaultTemplate = new js.io.xun.ui.slider.DefaultTemplate(container);
 
         var slider : js.io.xun.ui.slider.Slider = new js.io.xun.ui.slider.Slider(template);
-        slider.attach(this, SliderEvent.POST_STAGE_ADDED);
+        slider.attach(this, SliderEvent.POST_STAGE_ADDED | SliderEvent.POST_STAGE_CHANGE);
 
         slider.addStage(new js.io.xun.ui.slider.DefaultStage("AAA"));
         slider.addStage(new js.io.xun.ui.slider.DefaultStage("BBB"));
@@ -89,8 +89,6 @@ class Slider implements IObserver {
         //add prev and next buttons, use helper function for that
         addButton(template.getPrevButton, slider.switchPrevStage);
         addButton(template.getNextButton, slider.switchNextStage);
-
-        slider.attach(this, SliderEvent.POST_STAGE_CHANGE);
 
     }
 
