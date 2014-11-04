@@ -38,10 +38,15 @@ class Slider implements ISlider
         stagePosition: _stages.length,
         stage: stage,
         oldStagePosition: null,
-        oldStage: null
+        oldStage: null,
+        veto: false
         };
         _observer.notify(SliderEvent.PRE_STAGE_ADDED, eventData);
 
+        if(eventData.veto) {
+            _observer.notify(SliderEvent.VETOED_STAGE_ADDED, eventData);
+            return;
+        }
         _stages.push(stage);
         _sliderTemplate.addStage(stage);
 
@@ -106,16 +111,24 @@ class Slider implements ISlider
 		var oldStage : Null<IStage> = _currentStage;
         var oldStagePosition : Null<Int> = _currentStagePosition;
 
-		_currentStage = _stages[stagePosition];
-		_currentStagePosition = stagePosition;
-		_sliderTemplate.switchStage(stagePosition);
 		var eventData : SliderEventState = {
-			stagePosition: _currentStagePosition,
-			stage: _currentStage,
+			stagePosition: stagePosition,
+			stage: _stages[stagePosition],
             oldStage: oldStage,
-            oldStagePosition: oldStagePosition
+            oldStagePosition: oldStagePosition,
+            veto: false
 		};
 		_observer.notify(SliderEvent.PRE_STAGE_CHANGE, eventData);
+
+        if(eventData.veto) {
+            _observer.notify(SliderEvent.VETOED_STAGE_CHANGE, eventData);
+            return;
+        }
+
+        _currentStage = _stages[stagePosition];
+        _currentStagePosition = stagePosition;
+        _sliderTemplate.switchStage(stagePosition);
+
 		if (oldStage != null) {
 			oldStage.hide();
 		}
