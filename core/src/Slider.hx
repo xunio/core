@@ -96,6 +96,7 @@ class Slider implements IObserver {
         var template : js.io.xun.ui.slider.DefaultTemplate = new js.io.xun.ui.slider.DefaultTemplate(container);
 
         var slider : js.io.xun.ui.slider.Slider = new js.io.xun.ui.slider.Slider(template);
+
         slider.attach(
             this,
             SliderEvent.PRE_STAGE_ADDED | SliderEvent.POST_STAGE_ADDED |
