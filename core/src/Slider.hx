@@ -34,6 +34,10 @@ class Slider implements IObserver {
 
     public function onUpdate(type:Int, source:IObservable, userData:Dynamic):Void {
         switch (type) {
+            case SliderEvent.PRE_STAGE_ADDED:
+                var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
+                if(slideEvt.stagePosition == 4)
+                    slideEvt.veto = true;
             case SliderEvent.POST_STAGE_ADDED:
                 var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
 
@@ -49,6 +53,16 @@ class Slider implements IObserver {
                         slider.switchStage(slideEvt.stagePosition);
                     } );
                 }
+            case SliderEvent.VETOED_STAGE_ADDED:
+                var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
+                trace("cant add stage #" + (slideEvt.stagePosition + 1) + "!");
+
+            case SliderEvent.PRE_STAGE_CHANGE:
+                var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
+                if(slideEvt.stagePosition == 1 && slideEvt.oldStagePosition == 3) {
+                    slideEvt.veto = true;
+                }
+
             case SliderEvent.POST_STAGE_CHANGE:
                 var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
                 var old : Null<Int> = slideEvt.oldStagePosition;
@@ -58,6 +72,10 @@ class Slider implements IObserver {
                     trace("move to " + slideEvt.stagePosition);
                 }
 
+            case SliderEvent.VETOED_STAGE_CHANGE:
+                var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
+                var old : Null<Int> = slideEvt.oldStagePosition;
+                trace("move from " + old + " to " + slideEvt.stagePosition + " is vetoed!");
 
         }
     }
@@ -78,11 +96,18 @@ class Slider implements IObserver {
         var template : js.io.xun.ui.slider.DefaultTemplate = new js.io.xun.ui.slider.DefaultTemplate(container);
 
         var slider : js.io.xun.ui.slider.Slider = new js.io.xun.ui.slider.Slider(template);
-        slider.attach(this, SliderEvent.POST_STAGE_ADDED | SliderEvent.POST_STAGE_CHANGE);
+        slider.attach(
+            this,
+            SliderEvent.PRE_STAGE_ADDED | SliderEvent.POST_STAGE_ADDED |
+            SliderEvent.PRE_STAGE_CHANGE | SliderEvent.POST_STAGE_CHANGE |
+            SliderEvent.VETOED_STAGE_ADDED | SliderEvent.VETOED_STAGE_CHANGE
+        );
 
         slider.addStage(new js.io.xun.ui.slider.DefaultStage("AAA"));
         slider.addStage(new js.io.xun.ui.slider.DefaultStage("BBB"));
         slider.addStage(new js.io.xun.ui.slider.DefaultStage("CCC"));
+        slider.addStage(new js.io.xun.ui.slider.DefaultStage("DDD"));
+        slider.addStage(new js.io.xun.ui.slider.DefaultStage("EEE"));
 
         slider.switchStage(0);
 
