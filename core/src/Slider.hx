@@ -49,6 +49,16 @@ class Slider implements IObserver {
                         slider.switchStage(slideEvt.stagePosition);
                     } );
                 }
+            case SliderEvent.POST_STAGE_CHANGE:
+                var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
+                var old : Null<Int> = slideEvt.oldStagePosition;
+                if(old != null) {
+                    trace("move from " + old + " to " + slideEvt.stagePosition);
+                } else {
+                    trace("move to " + slideEvt.stagePosition);
+                }
+
+
         }
     }
 
@@ -79,6 +89,8 @@ class Slider implements IObserver {
         //add prev and next buttons, use helper function for that
         addButton(template.getPrevButton, slider.switchPrevStage);
         addButton(template.getNextButton, slider.switchNextStage);
+
+        slider.attach(this, SliderEvent.POST_STAGE_CHANGE);
 
     }
 
