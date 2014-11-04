@@ -32,8 +32,10 @@ class Slider implements ISlider
 
 	public function addStage(stage : IStage) : Void
 	{
+        // notifiy the stage wich slider it got added
 		stage.setSlider(this);
 
+        // set eventData object. Fill it with both new stage data
         var eventData : SliderEventState = {
         stagePosition: _stages.length,
         stage: stage,
@@ -41,19 +43,27 @@ class Slider implements ISlider
         oldStage: null,
         veto: false
         };
+
+        //notify pre stage add event
         _observer.notify(SliderEvent.PRE_STAGE_ADDED, eventData);
 
+        //the stage add got vetoed, throw veto event and breakup operation
         if(eventData.veto) {
             _observer.notify(SliderEvent.VETOED_STAGE_ADDED, eventData);
             return;
         }
+
+        //add stage to the array holder and tell the template that a stage got added
         _stages.push(stage);
         _sliderTemplate.addStage(stage);
 
+        //notify post stage add event
         _observer.notify(SliderEvent.POST_STAGE_ADDED, eventData);
 
+        //run latest init for the added stage
 		stage.initialize();
 	}
+
 
 	public function getStage(stagePosition : Int) : IStage
 	{
@@ -97,6 +107,9 @@ class Slider implements ISlider
 		return _currentStagePosition;
 	}
 
+    /**
+     *  move the slider to the given position
+    **/
 	public function switchStage(stagePosition : Int) : Void
 	{
 		if (stagePosition >= _stages.length) {
@@ -110,7 +123,7 @@ class Slider implements ISlider
 
 		var oldStage : Null<IStage> = _currentStage;
         var oldStagePosition : Null<Int> = _currentStagePosition;
-
+        // set eventData object. Fill it with both old and new stage data
 		var eventData : SliderEventState = {
 			stagePosition: stagePosition,
 			stage: _stages[stagePosition],
@@ -118,24 +131,36 @@ class Slider implements ISlider
             oldStagePosition: oldStagePosition,
             veto: false
 		};
+
+        //notify pre stage change event
 		_observer.notify(SliderEvent.PRE_STAGE_CHANGE, eventData);
 
+        //the stage change got vetoed, throw veto event and breakup operation
         if(eventData.veto) {
             _observer.notify(SliderEvent.VETOED_STAGE_CHANGE, eventData);
             return;
         }
 
+        //set the current state to the new position
         _currentStage = _stages[stagePosition];
         _currentStagePosition = stagePosition;
+
+        // tell the template that the positions got changed
         _sliderTemplate.switchStage(stagePosition);
 
+        // hide the old stage and show the new one
 		if (oldStage != null) {
 			oldStage.hide();
 		}
 		_currentStage.show();
+
+        //notify post stage change event
 		_observer.notify(SliderEvent.POST_STAGE_CHANGE, eventData);
 	}
 
+    /**
+     *  move the slider to the position before the current one
+    **/
 	public function switchPrevStage() : Void
 	{
 		if (_stages.length <= 0) {
@@ -149,6 +174,9 @@ class Slider implements ISlider
 		switchStage(nextPosition);
 	}
 
+    /**
+     *  move the slider to the position after the current one
+    **/
 	public function switchNextStage() : Void
 	{
 		if (_stages.length <= 0) {
