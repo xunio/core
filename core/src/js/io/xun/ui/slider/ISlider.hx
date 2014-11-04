@@ -38,14 +38,18 @@ interface ISlider extends IObservable
 @:build(io.xun.core.event.ObserverMacro.create([
 PRE_STAGE_CHANGE,
 POST_STAGE_CHANGE,
+VETOED_STAGE_CHANGE,
 PRE_STAGE_ADDED,
-POST_STAGE_ADDED
+POST_STAGE_ADDED,
+VETOED_STAGE_ADDED
 ]))
 class SliderEvent {
     public inline static var PRE_STAGE_CHANGE;
     public inline static var POST_STAGE_CHANGE;
+    public inline static var VETOED_STAGE_CHANGE;
     public inline static var PRE_STAGE_ADDED;
     public inline static var POST_STAGE_ADDED;
+    public inline static var VETOED_STAGE_ADDED;
     public inline static var GROUP_ID;
     public inline static var GROUP_MASK;
     public inline static var EVENT_MASK;
@@ -62,6 +66,7 @@ typedef SliderEventState = {
 stagePosition: Int,
 stage: IStage,
 oldStagePosition: Null<Int>,
-oldStage: Null<IStage>
+oldStage: Null<IStage>,
+veto: Bool
 
 }
