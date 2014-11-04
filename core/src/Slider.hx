@@ -44,13 +44,23 @@ class Slider implements IObserver {
                 //add button event if button does exist
                 var b : Null<Element> = slideEvt.stage.getButton();
                 if(b != null) {
-                    var jb : JQuery = new JQuery(b);
-                    jb.click( function( evt : JqEvent ) {
+                    new JQuery(b).click( function( evt : JqEvent ) {
                         var slider : js.io.xun.ui.slider.ISlider = cast source;
                         slider.switchStage(slideEvt.stagePosition);
                     } );
                 }
         }
+    }
+
+    // helper function for adding prev and next buttons
+    function addButton( get: Void -> Null<Element>, switchfunc: Void -> Void ) {
+        var b : Null<Element> = get();
+        if(b != null) {
+            new JQuery(b).click( function( evt : JqEvent ) {
+                switchfunc();
+            });
+        }
+
     }
 
     public function new() {
@@ -65,6 +75,11 @@ class Slider implements IObserver {
         slider.addStage(new js.io.xun.ui.slider.DefaultStage("CCC"));
 
         slider.switchStage(0);
+
+        //add prev and next buttons, use helper function for that
+        addButton(template.getPrevButton, slider.switchPrevStage);
+        addButton(template.getNextButton, slider.switchNextStage);
+
     }
 
 	public static function main() {
