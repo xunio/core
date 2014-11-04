@@ -36,7 +36,9 @@ class Slider implements ISlider
 
         var eventData : SliderEventState = {
         stagePosition: _stages.length,
-        stage: stage
+        stage: stage,
+        oldStagePosition: null,
+        oldStage: null
         };
         _observer.notify(SliderEvent.PRE_STAGE_ADDED, eventData);
 
@@ -97,13 +99,16 @@ class Slider implements ISlider
 		}
 
 		var oldStage : Null<IStage> = _currentStage;
+        var oldStagePosition : Null<Int> = _currentStagePosition;
 
 		_currentStage = _stages[stagePosition];
 		_currentStagePosition = stagePosition;
 		_sliderTemplate.switchStage(stagePosition);
 		var eventData : SliderEventState = {
 			stagePosition: _currentStagePosition,
-			stage: _currentStage
+			stage: _currentStage,
+            oldStage: oldStage,
+            oldStagePosition: oldStagePosition
 		};
 		_observer.notify(SliderEvent.PRE_STAGE_CHANGE, eventData);
 		if (oldStage != null) {
