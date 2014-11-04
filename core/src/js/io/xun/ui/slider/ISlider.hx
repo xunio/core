@@ -60,5 +60,8 @@ class SliderEvent {
  */
 typedef SliderEventState = {
 stagePosition: Int,
-stage: IStage
+stage: IStage,
+oldStagePosition: Null<Int>,
+oldStage: Null<IStage>
+
 }
