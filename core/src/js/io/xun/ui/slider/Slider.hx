@@ -98,6 +98,11 @@ class Slider implements ISlider
 			throw new OutOfRangeException("No stage with index " + stagePosition + " exists");
 		}
 
+        //dont make the stage events if stage position does not change
+        if(_currentStagePosition == stagePosition) {
+            return;
+        }
+
 		var oldStage : Null<IStage> = _currentStage;
         var oldStagePosition : Null<Int> = _currentStagePosition;
 
