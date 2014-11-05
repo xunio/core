@@ -20,11 +20,19 @@ class DefaultStage implements IStage
     }
 
     public function show():Void {
-        new JQuery(getContainer()).show();
+        var j : JQuery = new JQuery(getContainer());
+        //j.scrollLeft(25);
+        //j.show();
+        j.fadeIn(300);
+        //j.scrollLeft(25);
     }
 
     public function hide():Void {
-        new JQuery(getContainer()).hide();
+        var j : JQuery = new JQuery(getContainer());
+        //j.scrollLeft(-25);
+        j.fadeOut(300);
+        //j.hide();
+        //j.scrollLeft(-25);
     }
 
     public function initialize():Void {

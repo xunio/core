@@ -5,6 +5,29 @@
     <title></title>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="out/slider.js"></script>
+    <style>
+        .stagesContainer li {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            vertical-align: middle;
+            align-self: center;
+            float: left;
+        }
+        .prev, .next {
+            float: left;
+        }
+
+        .controls {
+            clear: both;
+        }
+        .stagesContainer li:nth-child(even) {
+            background: red;
+        }
+        .stagesContainer li:nth-child(odd) {
+            background: yellow;
+        }
+    </style>
 </head>
 <body>
     <div id="sliderContainer">
