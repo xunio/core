@@ -33,6 +33,8 @@ class Slider implements IObserver {
 
 
     public function onUpdate(type:Int, source:IObservable, userData:Dynamic):Void {
+        var slider : js.io.xun.ui.slider.Slider = cast source;
+
         switch (type) {
             case SliderEvent.PRE_STAGE_ADDED:
                 var slideEvt : js.io.xun.ui.slider.ISlider.SliderEventState = cast userData;
@@ -77,6 +79,13 @@ class Slider implements IObserver {
                 var old : Null<Int> = slideEvt.oldStagePosition;
                 trace("move from " + old + " to " + slideEvt.stagePosition + " is vetoed!");
 
+            case SliderEvent.STAGE_ENTER:
+                trace("stage enter");
+                slider.stopTimer();
+            case SliderEvent.STAGE_LEAVE:
+                trace("stage leave");
+                slider.startTimer(2000);
+
         }
     }
 
@@ -101,7 +110,8 @@ class Slider implements IObserver {
             this,
             SliderEvent.PRE_STAGE_ADDED | SliderEvent.POST_STAGE_ADDED |
             SliderEvent.PRE_STAGE_CHANGE | SliderEvent.POST_STAGE_CHANGE |
-            SliderEvent.VETOED_STAGE_ADDED | SliderEvent.VETOED_STAGE_CHANGE
+            SliderEvent.VETOED_STAGE_ADDED | SliderEvent.VETOED_STAGE_CHANGE |
+            SliderEvent.STAGE_ENTER | SliderEvent.STAGE_LEAVE
         );
 
         slider.addStage(new js.io.xun.ui.slider.DefaultStage("AAA"));
@@ -115,6 +125,8 @@ class Slider implements IObserver {
         //add prev and next buttons, use helper function for that
         addButton(template.getPrevButton, slider.switchPrevStage);
         addButton(template.getNextButton, slider.switchNextStage);
+
+        slider.startTimer(2000);
 
     }
 
