@@ -26,6 +26,10 @@ interface ISlider extends IObservable
 
 	public function switchPrevStage() : Void;
 
+    public function startTimer( ms : Int) : Void;
+
+    public function stopTimer() : Void;
+
 }
 
 /**
@@ -41,7 +45,9 @@ POST_STAGE_CHANGE,
 VETOED_STAGE_CHANGE,
 PRE_STAGE_ADDED,
 POST_STAGE_ADDED,
-VETOED_STAGE_ADDED
+VETOED_STAGE_ADDED,
+STAGE_ENTER,
+STAGE_LEAVE
 ]))
 class SliderEvent {
     public inline static var PRE_STAGE_CHANGE;
@@ -50,6 +56,8 @@ class SliderEvent {
     public inline static var PRE_STAGE_ADDED;
     public inline static var POST_STAGE_ADDED;
     public inline static var VETOED_STAGE_ADDED;
+    public inline static var STAGE_ENTER;
+    public inline static var STAGE_LEAVE;
     public inline static var GROUP_ID;
     public inline static var GROUP_MASK;
     public inline static var EVENT_MASK;
@@ -63,8 +71,8 @@ class SliderEvent {
  * @package       js.io.xun.ui.slider.Slider
  */
 typedef SliderEventState = {
-stagePosition: Int,
-stage: IStage,
+stagePosition: Null<Int>,
+stage: Null<IStage>,
 oldStagePosition: Null<Int>,
 oldStage: Null<IStage>,
 veto: Bool
