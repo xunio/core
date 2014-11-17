@@ -1,5 +1,7 @@
 package js.io.xun.ui.slider;
 
+import js.JQuery.JqEvent;
+import haxe.Timer;
 import js.io.xun.ui.slider.ISlider.SliderEventState;
 import js.io.xun.ui.slider.ISlider.SliderEvent;
 import io.xun.core.event.IObserver;
@@ -24,11 +26,28 @@ class Slider implements ISlider
 	private var _currentStagePosition : Null<Int> = null;
 	private var _sliderTemplate : ISliderTemplate;
 
+    private var _timer : Null<Timer> = null;
+
 	public function new(sliderTemplate : ISliderTemplate)
 	{
 		_sliderTemplate = sliderTemplate;
 		_observer = new Observable(this);
 	}
+
+    public function startTimer( ms : Int) : Void {
+        if(_timer != null) {
+            _timer.stop();
+        }
+
+        _timer = new Timer(ms);
+        _timer.run = this.switchNextStage;
+    }
+
+    public function stopTimer() : Void {
+        if(_timer != null) {
+            _timer.stop();
+        }
+    }
 
 	public function addStage(stage : IStage) : Void
 	{
@@ -62,6 +81,37 @@ class Slider implements ISlider
 
         //run latest init for the added stage
 		stage.initialize();
+
+        var jqstate : JQuery = new JQuery(stage.getContainer());
+        jqstate.mouseenter( function( evt : JqEvent) {
+            // set eventData object. Fill it with both new stage data
+            var idx : Int = _stages.indexOf(stage);
+            var eventData : SliderEventState = {
+                stagePosition: idx,
+                stage: stage,
+                oldStagePosition: null,
+                oldStage: null,
+                veto: false
+            };
+
+            //notify pre stage enter event
+            _observer.notify(SliderEvent.STAGE_ENTER, eventData);
+        });
+
+        jqstate.mouseleave( function( evt : JqEvent) {
+            // set eventData object. Fill it with both new stage data
+            var idx : Int = _stages.indexOf(stage);
+            var eventData : SliderEventState = {
+                stagePosition: idx,
+                stage: stage,
+                oldStagePosition: null,
+                oldStage: null,
+                veto: false
+            };
+
+            //notify pre stage enter event
+            _observer.notify(SliderEvent.STAGE_LEAVE, eventData);
+        });
 	}
 
 
