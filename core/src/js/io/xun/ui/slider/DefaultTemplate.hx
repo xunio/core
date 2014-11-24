@@ -5,27 +5,40 @@ import js.JQuery;
 import js.html.Element;
 
 import io.xun.core.event.IObservable;
+import io.xun.core.event.Observable;
+import io.xun.core.event.IObserver;
 
 import js.io.xun.ui.slider.ISlider;
 import js.io.xun.ui.slider.ISlider.SliderEvent;
 import js.io.xun.ui.slider.ISlider.SliderEventState;
+import js.io.xun.ui.slider.ISliderTemplate.SliderTemplateEvent;
+import js.io.xun.ui.slider.ISliderTemplate.SliderTemplateEventState;
 
 class DefaultTemplate implements ISliderTemplate
 {
 
+    public function attach(o : IObserver, mask : Null<Int> = 0):Void {
+        _observer.attach(o, mask);
+    }
+
+    public function detach(o : IObserver, mask : Null<Int> = null):Void {
+        _observer.detach(o, mask);
+    }
+
+    private var _observer : Observable;
     var _container : JQuery;
     var _slider : ISlider;
     var _stagecount : Int = 0;
     var _animation : Bool = true;
 
-    public function addStage(stage:IStage):Void {
+    public function addStage(stage : IStage) : Void {
         new JQuery(getStagesContainer()).append(stage.getContainer());
 
         // add buttons but only if both the template and the stage does support it
         var buttons : Null<Element> = getSlideButtonContainer();
         if (buttons != null) {
             var button : Null<Element> = stage.getButton();
-            if(button != null) {
+            if (button != null) {
                 new JQuery(buttons).append(button);
             }
         }
@@ -34,26 +47,21 @@ class DefaultTemplate implements ISliderTemplate
         var jqstate : JQuery = new JQuery(stage.getContainer());
 
         // set eventData object. Fill it with both new stage data
-        var eventData : SliderEventState = {
-        stagePosition:  _stagecount,
-        stage: stage,
-        oldStagePosition: null,
-        oldStage: null,
-        veto: false
+        var eventData : SliderTemplateEventState = {
+            stagePosition:  _stagecount,
+            stage: stage
         };
 
         _stagecount += 1;
 
-        jqstate.mouseenter( function( evt : JqEvent) {
-
+        jqstate.mouseenter(function(evt : JqEvent) {
             //notify stage enter event
-            _slider.notify(SliderEvent.STAGE_ENTER, eventData);
+            _observer.notify(SliderTemplateEvent.STAGE_ENTER, eventData);
         });
 
-        jqstate.mouseleave( function( evt : JqEvent) {
-
+        jqstate.mouseleave(function(evt : JqEvent) {
             //notify stage leave event
-            _slider.notify(SliderEvent.STAGE_LEAVE, eventData);
+            _observer.notify(SliderTemplateEvent.STAGE_LEAVE, eventData);
         });
     }
 
@@ -68,24 +76,27 @@ class DefaultTemplate implements ISliderTemplate
         return getElement(".stagesContainer");
     }
 
-    public function getStageContainer(stage:IStage):Element {
+    public function getStageContainer(stage : IStage):Element {
         return stage.getContainer();
     }
 
-    public function getNextButton():Null<Element> {
+    public function getNextButton() : Null<Element> {
         return getElement(".next");
     }
 
-    public function getPrevButton():Null<Element> {
+    public function getPrevButton() : Null<Element> {
         return getElement(".prev");
     }
 
-    public function getSlideButtonContainer():Null<Element> {
+    public function getSlideButtonContainer() : Null<Element> {
         return getElement(".slideButtons");
     }
 
     public function new(mainElement : Element) {
         _container = new JQuery(mainElement);
+        _observer = new Observable(this);
+
+        this.attach(this);
 	}
 
     private function getElement(name : String) {
@@ -147,10 +158,10 @@ class DefaultTemplate implements ISliderTemplate
                 var old : Null<Int> = slideEvt.oldStagePosition;
                 trace("move from " + old + " to " + slideEvt.stagePosition + " is vetoed!");
 
-            case SliderEvent.STAGE_ENTER:
+            case SliderTemplateEvent.STAGE_ENTER:
                 trace("stage enter");
                 _slider.stopTimer();
-            case SliderEvent.STAGE_LEAVE:
+            case SliderTemplateEvent.STAGE_LEAVE:
                 trace("stage leave");
                 _slider.startTimer(2000);
 
