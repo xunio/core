@@ -22,11 +22,11 @@ package io.xun.core.event;
 @:autoBuild(io.xun.core.event.ObserverMacro.guid())
 interface IObserver
 {
-	/**
-	 * Invoked upon state changes of an <em>IObservable</em> object.
-	 * @param type     the event type encoded as bit flags.
-	 * @param source   the event source.
-	 * @param userData the event data or null if no additional information was passed.
-	 */
-	public function onUpdate(type:Int, source:IObservable, userData:Dynamic):Void;
+    /**
+     * Invoked upon state changes of an <em>IObservable</em> object.
+     * @param type     the event type encoded as bit flags.
+     * @param source   the event source.
+     * @param userData the event data or null if no additional information was passed.
+     */
+    public function onUpdate(type:Int, source:IObservable, userData:Dynamic):Void;
 }

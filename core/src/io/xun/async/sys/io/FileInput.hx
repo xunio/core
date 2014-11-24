@@ -29,14 +29,14 @@ class FileInput extends io.xun.async.io.Input implements IFileInput {
     }
 
     public function seek(p : Int, pos : FileSeek ) : Promise<Void> {
-	    var r : Promise<Void> = new Promise<Void>();
+        var r : Promise<Void> = new Promise<Void>();
         try {
             this.fileInput.seek(p, pos);
-	        r.resolve();
+            r.resolve();
         } catch (e : Dynamic) {
             r.reject(e);
         }
-	    return r;
+        return r;
     }
 
     public function tell() : Promise<Int> {

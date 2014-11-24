@@ -342,16 +342,16 @@ class Container implements IIntrospectableContainer {
         return scopes.exists(name);
     }
 
-	/**
+    /**
      * Returns whether this scope is currently active
      *
      * This does not actually check if the passed scope actually exists.
      *
      * @author Maximilian Ruta <mr@xtain.net>
      */
-	public function isScopeActive( name : String ) : Bool {
-		return scopedServices.exists(name);
-	}
+    public function isScopeActive( name : String ) : Bool {
+        return scopedServices.exists(name);
+    }
 
     /**
      * This is called when you enter a scope

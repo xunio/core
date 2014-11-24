@@ -32,7 +32,7 @@ class Promise<T> extends promhx.Promise<T> {
                 try {
                     #if !flash
                     Sys.sleep(0.1);
-	                #end
+                    #end
                 } catch(e : Dynamic) {}
             }
 

@@ -9,13 +9,13 @@ import io.xun.async.Promise;
 interface IServer implements IObservable
 {
 
-	public function listen(address : Address) : Void;
+    public function listen(address : Address) : Void;
 
-	public function close() : Void;
+    public function close() : Void;
 
-	public function loop() : Void;
+    public function loop() : Void;
 
-	public function getConnections() : Promise<Int>;
+    public function getConnections() : Promise<Int>;
 
 }
 
@@ -33,11 +33,11 @@ CLOSE,
 ERROR
 ]))
 class ServerEvent {
-	public inline static var LISTENING;
-	public inline static var CONNECTION;
-	public inline static var CLOSE;
-	public inline static var ERROR;
-	public inline static var GROUP_ID;
-	public inline static var GROUP_MASK;
-	public inline static var EVENT_MASK;
+    public inline static var LISTENING;
+    public inline static var CONNECTION;
+    public inline static var CLOSE;
+    public inline static var ERROR;
+    public inline static var GROUP_ID;
+    public inline static var GROUP_MASK;
+    public inline static var EVENT_MASK;
 }

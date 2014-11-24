@@ -50,7 +50,7 @@ class PinnedElement implements IObservable {
         _observer = new Observable(this);
 
         _interval = js.Browser.window.setInterval(function() {
-            trace(_element.get()[0]);
+            //trace(_element.get()[0]);
             if(!JQuery.contains(js.Browser.document.documentElement, _element.get()[0])) {
                 destroy();
             } else {
@@ -74,7 +74,7 @@ class PinnedElement implements IObservable {
 
     private function pin() {
         if(!_isPinned) {
-            trace('pin');
+            //trace('pin');
             _observer.notify(PinnedElementEvent.PIN, null);
             _isPinned = true;
         }
@@ -82,7 +82,7 @@ class PinnedElement implements IObservable {
 
     private function unpin() {
         if(_isPinned) {
-            trace('unpin');
+            //trace('unpin');
             _observer.notify(PinnedElementEvent.UNPIN, null);
             _isPinned = false;
         }

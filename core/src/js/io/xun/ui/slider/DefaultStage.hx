@@ -43,7 +43,7 @@ class DefaultStage implements IStage
         stageContainer = new JQuery('<li>' + content + '</li>');
 
         buttonContainer = new JQuery('<li>' + content + '</li>');
-	}
+    }
 
     public function getAnimation():Bool {
         return _animation;

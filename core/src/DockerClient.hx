@@ -25,13 +25,13 @@ import io.xun.docker.Container;
  */
 class DockerClient {
 
-	public static function main() {
-		var container : Container = new Container('test');
-		container.setCommander(new Commander('docker'));
-		trace(container.isAvailable());
-		trace(container.getId());
-		trace(container.getState());
-	}
+    public static function main() {
+        var container : Container = new Container('test');
+        container.setCommander(new Commander('docker'));
+        trace(container.isAvailable());
+        trace(container.getId());
+        trace(container.getState());
+    }
 
 }
 

@@ -60,12 +60,12 @@ class Slider {
 
     }
 
-	public static function main() {
+    public static function main() {
         var j : JQuery = new JQuery(js.Browser.document.body);
         j.ready(function(e : JqEvent) {
             new Slider();
         });
-	}
+    }
 
 }
 

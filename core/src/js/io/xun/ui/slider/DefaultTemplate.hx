@@ -97,7 +97,7 @@ class DefaultTemplate implements ISliderTemplate
         _observer = new Observable(this);
 
         this.attach(this);
-	}
+    }
 
     private function getElement(name : String) {
         return _container.find(name).get(0);

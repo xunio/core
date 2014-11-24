@@ -6,7 +6,7 @@ import haxe.io.BytesData;
 
 interface ISocketDataEvent
 {
-	public function getData() : Bytes;
+    public function getData() : Bytes;
 
-	public function getAddress() : Address;
+    public function getAddress() : Address;
 }

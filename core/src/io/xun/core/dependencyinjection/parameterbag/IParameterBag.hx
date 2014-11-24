@@ -33,11 +33,11 @@ interface IParameterBag {
 
     public function set( parameter : Parameter ) : Void;
 
-	public function get( key : String ) : Parameter;
+    public function get( key : String ) : Parameter;
 
-	public function all() : Map<String, Parameter>;
+    public function all() : Map<String, Parameter>;
 
-	public function parameterExists( parameter : Parameter ) : Bool;
+    public function parameterExists( parameter : Parameter ) : Bool;
 
     public function exists( key : String ) : Bool;
 

@@ -3,6 +3,6 @@ package io.xun.async.sys.net;
 interface IServerErrorEvent
 {
 
-	public function getError() : Dynamic;
+    public function getError() : Dynamic;
 
 }

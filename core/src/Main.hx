@@ -25,10 +25,10 @@ class Main {
 
     public static function main() {
         #if (js && nodejs)
-		new js.nodejs.Node.NodeFiber(TestingFramework.main).run();
-		#else
-	    TestingFramework.main();
-		#end
+        new js.nodejs.Node.NodeFiber(TestingFramework.main).run();
+        #else
+        TestingFramework.main();
+        #end
     }
 
 }

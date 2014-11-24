@@ -5,5 +5,5 @@ import haxe.io.BytesData;
 
 interface ISocketDataEvent
 {
-	public function getBytes() : Bytes;
+    public function getBytes() : Bytes;
 }

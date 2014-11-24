@@ -10,17 +10,17 @@ import io.xun.async.Promise;
 interface ISocket implements IObservable
 {
 
-	public function connect(address : Address) : Void;
+    public function connect(address : Address) : Void;
 
-	public function setFastSend(fastSend : Bool) : Void;
+    public function setFastSend(fastSend : Bool) : Void;
 
-	public function write(data : Bytes) : Void;
+    public function write(data : Bytes) : Void;
 
-	public function close() : Void;
+    public function close() : Void;
 
-	public function setTimeout(timeout : Int) : Void;
+    public function setTimeout(timeout : Int) : Void;
 
-	public function loop() : Void;
+    public function loop() : Void;
 
 }
 
@@ -41,14 +41,14 @@ ERROR,
 CLOSE
 ]))
 class SocketEvent {
-	public inline static var CONNECT;
-	public inline static var DATA;
-	public inline static var END;
-	public inline static var TIMEOUT;
-	public inline static var DRAIN;
-	public inline static var ERROR;
-	public inline static var CLOSE;
-	public inline static var GROUP_ID;
-	public inline static var GROUP_MASK;
-	public inline static var EVENT_MASK;
+    public inline static var CONNECT;
+    public inline static var DATA;
+    public inline static var END;
+    public inline static var TIMEOUT;
+    public inline static var DRAIN;
+    public inline static var ERROR;
+    public inline static var CLOSE;
+    public inline static var GROUP_ID;
+    public inline static var GROUP_MASK;
+    public inline static var EVENT_MASK;
 }

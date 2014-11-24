@@ -31,7 +31,7 @@ class System {
     public static var OS : Null<OS>;
     public static var OS_FAMILY : Null<OSFamily>;
 
-	public static function getTempDirectory() : String {
+    public static function getTempDirectory() : String {
         #if php
         return untyped __php__('sys_get_temp_dir()');
         #elseif (js && nodejs)
@@ -67,20 +67,20 @@ class System {
         return untyped __cs__("new string(global::System.IO.Path.DirectorySeparatorChar, 1)");
         #elseif java
         return untyped __java__("java.io.File.separator");
-		#elseif neko
-		var path : String = sys.FileSystem.fullPath('.');
-		var pathParent : String = sys.FileSystem.fullPath('..');
+        #elseif neko
+        var path : String = sys.FileSystem.fullPath('.');
+        var pathParent : String = sys.FileSystem.fullPath('..');
         return path.substr(pathParent.length, 1);
         #end
         throw new NotImplementedOnThisPlatformException();
     }
 
     public static function __init__() {
-	    System.DIRECTORY_SEPARATOR = null;
-	    System.PATH_SEPARATOR = null;
-	    System.TEMP_DIECTORY = null;
-	    System.OS = null;
-	    System.OS_FAMILY = null;
+        System.DIRECTORY_SEPARATOR = null;
+        System.PATH_SEPARATOR = null;
+        System.TEMP_DIECTORY = null;
+        System.OS = null;
+        System.OS_FAMILY = null;
 
         try {
             System.DIRECTORY_SEPARATOR = getDirectorySeperator();

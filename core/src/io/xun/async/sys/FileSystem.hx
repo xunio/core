@@ -36,11 +36,11 @@ class FileSystem {
 
     public static function exists( path : String ) : Promise<Bool> {
         var r : Promise<Bool> = new Promise<Bool>();
-	    try {
-	        r.resolve(sys.FileSystem.exists(path));
-	    } catch (e : Dynamic) {
-		    r.reject(e);
-	    }
+        try {
+            r.resolve(sys.FileSystem.exists(path));
+        } catch (e : Dynamic) {
+            r.reject(e);
+        }
         return r;
     }
 
@@ -48,83 +48,83 @@ class FileSystem {
         var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.rename(path, newPath);
-	        r.resolve(null);
+            r.resolve(null);
         } catch (e : Dynamic) {
             r.reject(e);
         }
-	    return r;
+        return r;
     }
 
     public static function stat( path : String ) : Promise<FileStat> {
         var r : Promise<FileStat> = new Promise<FileStat>();
-	    try {
-	        r.resolve(sys.FileSystem.stat(path));
-	    } catch (e : Dynamic) {
-		    r.reject(e);
-	    }
+        try {
+            r.resolve(sys.FileSystem.stat(path));
+        } catch (e : Dynamic) {
+            r.reject(e);
+        }
         return r;
     }
 
     public static function fullPath( relPath : String ) : Promise<String> {
         var r : Promise<String> = new Promise<String>();
-	    try {
-	        r.resolve(sys.FileSystem.fullPath(relPath));
-	    } catch (e : Dynamic) {
-		    r.reject(e);
-	    }
+        try {
+            r.resolve(sys.FileSystem.fullPath(relPath));
+        } catch (e : Dynamic) {
+            r.reject(e);
+        }
         return r;
     }
 
     public static function isDirectory( path : String ) : Promise<Bool> {
         var r : Promise<Bool> = new Promise<Bool>();
-	    try {
-	        r.resolve(sys.FileSystem.isDirectory(path));
-	    } catch (e : Dynamic) {
-		    r.reject(e);
-	    }
+        try {
+            r.resolve(sys.FileSystem.isDirectory(path));
+        } catch (e : Dynamic) {
+            r.reject(e);
+        }
         return r;
     }
 
     public static function createDirectory( path : String ) : Promise<Void> {
-	    var r : Promise<Void> = new Promise<Void>();
+        var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.createDirectory(path);
-	        r.resolve(null);
+            r.resolve(null);
         } catch (e : Dynamic) {
-	        r.reject(e);
+            r.reject(e);
         }
-	    return r;
+        return r;
     }
 
     public static function deleteFile( path : String ) : Promise<Void> {
-	    var r : Promise<Void> = new Promise<Void>();
+        var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.deleteFile(path);
-	        r.resolve(null);
+            r.resolve(null);
         } catch (e : Dynamic) {
-	        r.reject(e);
+            r.reject(e);
         }
-	    return r;
+        return r;
     }
 
     public static function deleteDirectory( path : String ) : Promise<Void> {
-	    var r : Promise<Void> = new Promise<Void>();
+        var r : Promise<Void> = new Promise<Void>();
         try {
             sys.FileSystem.deleteDirectory(path);
-	        r.resolve(null);
+            r.resolve(null);
         } catch (e : Dynamic) {
-	        r.reject(e);
+            r.reject(e);
         }
-	    return r;
+        return r;
     }
 
     public static function readDirectory( path : String ) : Promise<Array<String>> {
         var r : Promise<Array<String>> = new Promise<Array<String>>();
-	    try {
-	        r.resolve(sys.FileSystem.readDirectory(path));
-	    } catch (e : Dynamic) {
-		    r.reject(e);
-	    }
+        try {
+            r.resolve(sys.FileSystem.readDirectory(path));
+        } catch (e : Dynamic) {
+            r.reject(e);
+        }
         return r;
     }
 }

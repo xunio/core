@@ -5,20 +5,20 @@ import io.xun.docker.command.InspectResult.InspectResultState;
 
 interface ContainerInterface {
 
-	public function getReference() : String;
+    public function getReference() : String;
 
-	public function getName() : String;
+    public function getName() : String;
 
-	public function getId() : String;
+    public function getId() : String;
 
-	public function getState() : InspectResultState;
+    public function getState() : InspectResultState;
 
-	public function isAvailable() : Bool;
+    public function isAvailable() : Bool;
 
-	public function start() : Bool;
+    public function start() : Bool;
 
-	public function stop() : Bool;
+    public function stop() : Bool;
 
-	public function inspect() : InspectResult;
+    public function inspect() : InspectResult;
 
 }
