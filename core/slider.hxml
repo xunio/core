@@ -1,7 +1,7 @@
 -js out/slider.js
 --macro allowPackage("sys")
 -debug
--main Slider
+-main Slider2
 -cp /usr/lib/haxe/lib/promhx/0,2,11/
 -cp ../haxe/src/std
 -cp ../haxe/src/std/js/_std
