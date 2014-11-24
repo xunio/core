@@ -6,7 +6,7 @@ import io.xun.core.event.ObserverMacro;
 import io.xun.core.event.IObservable;
 import io.xun.async.Promise;
 
-interface IServer implements IObservable
+interface IServer extends IObservable
 {
 
     public function listen(address : Address) : Void;

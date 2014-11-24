@@ -7,7 +7,7 @@ import io.xun.core.event.IObservable;
 import io.xun.core.event.ObserverMacro;
 import io.xun.async.Promise;
 
-interface ISocket implements IObservable
+interface ISocket extends IObservable
 {
 
     public function connect(address : Address) : Void;

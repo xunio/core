@@ -4,7 +4,7 @@ import haxe.io.Bytes;
 import sys.net.Address;
 import haxe.io.BytesData;
 
-class SocketDataEvent implements ISocketMessageEvent
+class SocketDataEvent implements ISocketDataEvent
 {
     private var data : Bytes;
 

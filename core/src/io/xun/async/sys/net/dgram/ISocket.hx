@@ -7,7 +7,7 @@ import io.xun.core.event.IObservable;
 import haxe.io.BytesData;
 import io.xun.async.Promise;
 
-interface ISocket implements IObservable
+interface ISocket extends IObservable
 {
 
     public function loop() : Void;
