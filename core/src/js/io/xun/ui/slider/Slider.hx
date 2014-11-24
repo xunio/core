@@ -1,11 +1,10 @@
 package js.io.xun.ui.slider;
 
-import js.JQuery.JqEvent;
 import haxe.Timer;
+import js.html.Element;
 import js.io.xun.ui.slider.ISlider.SliderEventState;
 import js.io.xun.ui.slider.ISlider.SliderEvent;
 import io.xun.core.event.IObserver;
-import js.html.Element;
 import io.xun.core.exception.OutOfRangeException;
 import io.xun.core.event.Observable;
 
@@ -31,7 +30,14 @@ class Slider implements ISlider
 	public function new(sliderTemplate : ISliderTemplate)
 	{
 		_sliderTemplate = sliderTemplate;
-		_observer = new Observable(this);
+        _sliderTemplate.setSlider(this);
+
+        _observer = new Observable(this);
+
+        this.attach(
+            _sliderTemplate
+        );
+
 	}
 
     public function startTimer( ms : Int) : Void {
@@ -49,6 +55,18 @@ class Slider implements ISlider
         }
     }
 
+    public function setAnimation(ani : Bool) : Void {
+        _sliderTemplate.setAnimation(ani);
+        var it = _stages.iterator();
+        while(it.hasNext()) {
+            it.next().setAnimation(ani);
+        }
+    }
+
+    public function notify(event : Int, userData : Dynamic) : Void {
+        _observer.notify(event, userData);
+    }
+
 	public function addStage(stage : IStage) : Void
 	{
         // notifiy the stage wich slider it got added
@@ -56,11 +74,11 @@ class Slider implements ISlider
 
         // set eventData object. Fill it with both new stage data
         var eventData : SliderEventState = {
-        stagePosition: _stages.length,
-        stage: stage,
-        oldStagePosition: null,
-        oldStage: null,
-        veto: false
+            stagePosition: _stages.length,
+            stage: stage,
+            oldStagePosition: null,
+            oldStage: null,
+            veto: false
         };
 
         //notify pre stage add event
@@ -80,38 +98,8 @@ class Slider implements ISlider
         _observer.notify(SliderEvent.POST_STAGE_ADDED, eventData);
 
         //run latest init for the added stage
-		stage.initialize();
+		stage.initialize(_stages.length);
 
-        var jqstate : JQuery = new JQuery(stage.getContainer());
-        jqstate.mouseenter( function( evt : JqEvent) {
-            // set eventData object. Fill it with both new stage data
-            var idx : Int = _stages.indexOf(stage);
-            var eventData : SliderEventState = {
-                stagePosition: idx,
-                stage: stage,
-                oldStagePosition: null,
-                oldStage: null,
-                veto: false
-            };
-
-            //notify pre stage enter event
-            _observer.notify(SliderEvent.STAGE_ENTER, eventData);
-        });
-
-        jqstate.mouseleave( function( evt : JqEvent) {
-            // set eventData object. Fill it with both new stage data
-            var idx : Int = _stages.indexOf(stage);
-            var eventData : SliderEventState = {
-                stagePosition: idx,
-                stage: stage,
-                oldStagePosition: null,
-                oldStage: null,
-                veto: false
-            };
-
-            //notify pre stage enter event
-            _observer.notify(SliderEvent.STAGE_LEAVE, eventData);
-        });
 	}
 
 
@@ -199,10 +187,15 @@ class Slider implements ISlider
         _sliderTemplate.switchStage(stagePosition);
 
         // hide the old stage and show the new one
-		if (oldStage != null) {
-			oldStage.hide();
-		}
-		_currentStage.show();
+        if(_sliderTemplate.getAnimation()) {
+            if (oldStage != null  && oldStage.getAnimation()) {
+                oldStage.hide();
+            }
+
+            if(_currentStage.getAnimation()) {
+                _currentStage.show();
+            }
+        }
 
         //notify post stage change event
 		_observer.notify(SliderEvent.POST_STAGE_CHANGE, eventData);

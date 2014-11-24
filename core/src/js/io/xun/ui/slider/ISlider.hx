@@ -30,6 +30,10 @@ interface ISlider extends IObservable
 
     public function stopTimer() : Void;
 
+    public function setAnimation(ani : Bool) : Void;
+
+    public function notify(event : Int, userData : Dynamic) : Void;
+
 }
 
 /**
