@@ -1,0 +1,26 @@
+-neko out/udpserver/neko/UdpServer.n
+-debug
+-main UdpServer
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
+-cp ../haxe/src/std
+-cp ../haxe/src/std/neko/_std
+-cp ./tests
+-cp ./src
+-cp ./src/neko/_std
+-D linux
+--times
+
+--next
+
+-cpp out/udpserver/cpp64
+-debug
+-main UdpServer
+-D HXCPP_M64
+-cp /usr/lib/haxe/lib/promhx/0,2,11/
+-cp ../haxe/src/std
+-cp ../haxe/src/std/cpp/_std
+-cp ./tests
+-cp ./src
+-cp ./src/cpp/_std
+-D linux
+--times
