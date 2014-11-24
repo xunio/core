@@ -13,5 +13,8 @@ interface IStage
 
 	public function hide() : Void;
 
-	public function initialize() : Void;
+	public function initialize(pos : Int) : Void;
+
+    public function getAnimation() : Bool;
+    public function setAnimation(ani : Bool) : Void;
 }

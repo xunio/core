@@ -7,6 +7,7 @@ class DefaultStage implements IStage
     var _slider : ISlider;
     var stageContainer : JQuery;
     var buttonContainer : JQuery;
+    var _animation : Bool = true;
 
     public function setSlider(slider:ISlider):Void {
         _slider = slider;
@@ -35,7 +36,7 @@ class DefaultStage implements IStage
         //j.scrollLeft(-25);
     }
 
-    public function initialize():Void {
+    public function initialize(pos : Int):Void {
     }
 
     public function new( content : String ) {
@@ -43,4 +44,12 @@ class DefaultStage implements IStage
 
         buttonContainer = new JQuery('<li>' + content + '</li>');
 	}
+
+    public function getAnimation():Bool {
+        return _animation;
+    }
+
+    public function setAnimation(ani:Bool):Void {
+        _animation = true;
+    }
 }
