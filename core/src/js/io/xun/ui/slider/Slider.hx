@@ -63,10 +63,6 @@ class Slider implements ISlider
         }
     }
 
-    public function notify(event : Int, userData : Dynamic) : Void {
-        _observer.notify(event, userData);
-    }
-
 	public function addStage(stage : IStage) : Void
 	{
         // notifiy the stage wich slider it got added
