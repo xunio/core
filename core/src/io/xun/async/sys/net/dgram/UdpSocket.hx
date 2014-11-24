@@ -77,8 +77,8 @@ class UdpSocket implements ISocket
             try {
                 var buffer : Bytes = Bytes.alloc(mtu);
                 var addr : Address = new Address();
-                //var length : Int = socket.readFrom(buffer, 0, buffer.length, addr);
-                var length : Int = socket.input.readBytes(buffer, 0, buffer.length);
+                var length : Int = socket.readFrom(buffer, 0, buffer.length, addr);
+                //var length : Int = socket.input.readBytes(buffer, 0, buffer.length);
                 dataQueue.push(new SocketDataEvent(buffer, length, addr));
             } catch (e : Dynamic) {
                 switch (e) {
