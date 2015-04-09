@@ -19,6 +19,7 @@ interface ISlider extends IObservable
     public function getCurrentStage() : Null<IStage>;
 
     public function getCurrentStagePosition() : Null<Int>;
+    public function getStagePosition(stage : IStage) : Null<Int>;
 
     public function switchStage(stagePosition : Int) : Void;
 
