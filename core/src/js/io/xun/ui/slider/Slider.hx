@@ -27,7 +27,7 @@ class Slider implements ISlider
         _observer = new Observable(this);
 
         this.attach(
-            _sliderTemplate
+            _sliderTemplate.getObserver()
         );
 
     }
@@ -82,6 +82,8 @@ class Slider implements ISlider
         _stages.push(stage);
         _sliderTemplate.addStage(stage);
 
+        _sliderTemplate.addStageButton(stage);
+
         //notify post stage add event
         _observer.notify(SliderEvent.POST_STAGE_ADDED, eventData);
 
@@ -131,6 +133,13 @@ class Slider implements ISlider
         }
 
         return _currentStagePosition;
+    }
+
+    public function getStagePosition(stage : IStage) : Null<Int>
+    {
+        var idx = _stages.indexOf(stage);
+
+        return idx < 0 ? null : idx;
     }
 
     /**
