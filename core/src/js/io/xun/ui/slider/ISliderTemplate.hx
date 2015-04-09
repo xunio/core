@@ -5,8 +5,10 @@ import io.xun.core.event.IObservable;
 import io.xun.core.event.IObserver;
 import js.html.Element;
 
-interface ISliderTemplate extends IObserver extends IObservable
+interface ISliderTemplate extends IObservable
 {
+    public function getObserver() : IObserver;
+
     public function setSlider(slider : ISlider) : Void;
     public function addStage(stage : IStage) : Void;
 
@@ -17,12 +19,23 @@ interface ISliderTemplate extends IObserver extends IObservable
     public function getStagesContainer() : Element;
 
     public function getStageContainer(stage : IStage) : Element;
+    public function getStageButton(stage : IStage) : Null<Element>;
 
     public function getNextButton() : Null<Element>;
 
     public function getPrevButton() : Null<Element>;
 
+    public function addStageButton(stage : IStage) : Void;
+
     public function getSlideButtonContainer() : Null<Element>;
+
+    public function getSlideButtonsPerPage( idx : Int) : Array<Element>;
+
+    public function getSlideButtonPageContainer(idx : Int) : Null<Element>;
+
+    public function getSlideButtonPageButtonContainer() : Null<Element>;
+
+    public function getSlideButtonPagesContainer() : Null<Element>;
 
     public function getAnimation() : Bool;
     public function setAnimation(ani : Bool) : Void;
