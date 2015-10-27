@@ -20,7 +20,8 @@ package js.io.xun.ui.ec;
 import io.xun.core.event.IObservable;
 import io.xun.core.event.IObserver;
 import io.xun.core.event.Observable;
-import js.JQuery;
+import js.jquery.JQuery;
+import js.jquery.Event;
 import js.html.Element;
 
 /**
@@ -113,11 +114,11 @@ class PinnedElement implements IObservable {
         checkOutOfBoundaries();
     }
 
-    private function resizeCallback(event : js.JqEvent) {
+    private function resizeCallback(event : Event) {
         resizeCheck();
     }
 
-    private function scrollCallback(event : js.JqEvent) {
+    private function scrollCallback(event : Event) {
         checkOutOfBoundaries();
     }
 
