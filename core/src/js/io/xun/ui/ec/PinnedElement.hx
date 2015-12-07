@@ -43,6 +43,8 @@ class PinnedElement implements IObservable {
     private inline static var FORCE_RECHECK = 1500;
 
     public function new(element : Element) {
+		untyped $ = jQuery;
+
         this._element = new JQuery(element);
         this._containerElement = new JQuery(js.Browser.window);
 
@@ -52,6 +54,7 @@ class PinnedElement implements IObservable {
 
         _interval = js.Browser.window.setInterval(function() {
             //trace(_element.get()[0]);
+			untyped $ = jQuery;
             if(!JQuery.contains(js.Browser.document.documentElement, _element.get()[0])) {
                 destroy();
             } else {
